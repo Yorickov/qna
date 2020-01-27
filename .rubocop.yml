@@ -23,7 +23,7 @@ Style/Documentation:
   Enabled: false
 
 Metrics/BlockLength:
-  Max: 50
+  Max: 100
 
 Style/ClassVars:
   Enabled: false
