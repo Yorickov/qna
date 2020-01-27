@@ -1,8 +1,12 @@
 class QuestionsController < ApplicationController
-  def new; end
+  before_action :load_question, only: %i[show]
 
   def index
     @questions = Question.all
+  end
+
+  def new
+    @question = Question.new
   end
 
   def show; end
@@ -19,11 +23,15 @@ class QuestionsController < ApplicationController
 
   private
 
-  def question
-    @question ||= params[:id] ? Question.find(params[:id]) : Question.new
+  def load_question
+    @question = Question.find(params[:id])
   end
 
-  helper_method :question
+  # def question
+  #   @question ||= params[:id] ? Question.find(params[:id]) : Question.new
+  # end
+
+  # helper_method :question
 
   def question_params
     params.require(:question).permit(:title, :body)

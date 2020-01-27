@@ -15,37 +15,32 @@ RSpec.describe QuestionsController, type: :controller do
     it 'renders index view' do
       expect(response).to render_template :index
     end
-
-    # it 'returns http success' do
-    #   get :index
-    #   expect(response).to have_http_status(:success)
-    # end
   end
 
   describe 'GET #show' do
     before { get :show, params: { id: question } }
 
+    # remove without before_action
+    it 'assigns the requested question to @question' do
+      expect(assigns(:question)).to eq question
+    end
+
     it 'renders show view' do
       expect(response).to render_template :show
     end
-
-    # it 'returns http success' do
-    #   get :show
-    #   expect(response).to have_http_status(:success)
-    # end
   end
 
   describe 'GET #new' do
     before { get :new }
 
+    # remove without before_action
+    it 'assigns a new Question to @question' do
+      expect(assigns(:question)).to be_a_new(Question)
+    end
+
     it 'renders new view' do
       expect(response).to render_template :new
     end
-
-    # it 'returns http success' do
-    #   get :new
-    #   expect(response).to have_http_status(:success)
-    # end
   end
 
   describe 'POST #create' do
