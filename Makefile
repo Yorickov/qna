@@ -19,4 +19,13 @@ s:
 test:
 	RUBYOPT='-W:no-deprecated -W:no-experimental' rspec
 
+test-m:
+	RUBYOPT='-W:no-deprecated -W:no-experimental' rspec spec/models
+
+test-c:
+	RUBYOPT='-W:no-deprecated -W:no-experimental' rspec spec/controllers
+
+push:
+	git push -u origin $(B)
+
 .PHONY:	test
