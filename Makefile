@@ -25,7 +25,13 @@ test-m:
 test-c:
 	RUBYOPT='-W:no-deprecated -W:no-experimental' rspec spec/controllers
 
+test-f:
+	RUBYOPT='-W:no-deprecated -W:no-experimental' rspec spec/features
+
 push:
 	git push -u origin $(B)
+
+c:
+	RUBYOPT='-W:no-deprecated -W:no-experimental' rails console
 
 .PHONY:	test
