@@ -11,6 +11,7 @@ feature 'Guest can create question' do
     fill_in 'Body', with: 'text'
     click_on 'Create Question'
 
+    expect(page).to have_content 'Question successfully created'
     expect(page).to have_content('Test question')
     expect(page).to have_content('text')
   end
