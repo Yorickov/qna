@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe AnswersController, type: :controller do
+describe AnswersController, type: :controller do
   let(:question) { create(:question_with_answers) }
 
   describe 'GET #index' do

@@ -1,2 +1,12 @@
-h1 Questions#show
-p Find me in app/views/questions/show.html.slim
+.row.pt-2.justify-content-center.mb-3
+  .col-10
+    h2 = @question.title
+    hr
+    p = @question.body
+    hr
+
+.row.pt-2.justify-content-center
+  .col-10
+    h5.text-center Answers
+    ul.list-group.list-group-flush
+      = render @question.answers

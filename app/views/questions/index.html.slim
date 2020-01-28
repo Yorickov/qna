@@ -1,2 +1,10 @@
-h1.mt-5 Questions#index
-p Find me in app/views/questions/index.html.slim
+.row.pt-2.justify-content-center.mb-2
+  .col-8.d-flex.justify-content-between
+    h4.text-center All questions
+    = link_to 'Ask question', new_question_path,  class: 'btn btn-dark'
+
+
+.row.pt-2.justify-content-center
+  .col-8
+    ul.list-group.list-group-flush
+      = render @questions
