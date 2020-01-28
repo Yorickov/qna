@@ -53,6 +53,15 @@ RSpec.describe AnswersController, type: :controller do
           .to change(Answer, :count).by(4)
       end
 
+      it 'saves as the answer of correct question' do
+        post :create, params: {
+          question_id: question,
+          answer: attributes_for(:answer)
+        }
+
+        expect(Answer.last.question_id).to eq(question.id)
+      end
+
       it 'redirects to show view' do
         post :create, params: {
           question_id: question,
