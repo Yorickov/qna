@@ -28,8 +28,12 @@ gem 'jbuilder', '~> 2.7'
 # Reduces boot times through caching; required in config/boot.rb
 gem 'bootsnap', '>= 1.4.2', require: false
 
+# Authorization
+gem 'devise'
+
 # Localization
 gem 'rails-i18n', '~> 6.0.0'
+gem 'devise-i18n'
 
 # Templates
 gem 'slim-rails'
@@ -53,6 +57,8 @@ group :development do
   # Spring speeds up development by keeping your application running in the background. Read more: https://github.com/rails/spring
   gem 'spring'
   gem 'spring-watcher-listen', '~> 2.0.0'
+  # mailer tester
+  gem 'letter_opener'
 end
 
 group :test do

@@ -11,6 +11,10 @@ ru:
       title: ВиО
       questions: Вопросы
       ask_question: Задайте вопрос
+      sign_up: Регистрация
+      sign_in: Войти
+      sign_out: Выйти
+      welcome: Добро пожаловать, %{user}
 
   questions:
     index:

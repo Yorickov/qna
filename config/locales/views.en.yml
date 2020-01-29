@@ -11,6 +11,10 @@ en:
       title: QnA
       questions: Questions
       ask_question: Ask question
+      sign_up: Sign Up
+      sign_in: Sign In
+      sign_out: Sign Out
+      welcome: Welcome, %{user}
 
   questions:
     index:
