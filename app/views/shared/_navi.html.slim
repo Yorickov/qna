@@ -1,10 +1,10 @@
 nav.navbar.navbar-expand-lg.navbar-light.bg-light.bg-faded.mb-3
-  = link_to 'QnA', root_path, class: 'navbar-brand'
+  = link_to t('.title'), root_path, class: 'navbar-brand'
   button.navbar-toggler(type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation")
     span.navbar-toggler-icon
   .collapse.navbar-collapse#navbarSupportedContent
     ul.navbar-nav.mr-auto
       li.nav-item.active
-        = link_to 'questions', questions_path, class: 'nav-link'
+        = link_to t('.questions'), questions_path, class: 'nav-link'
       li.nav-item.active
-        = link_to 'ask question', new_question_path, class: 'nav-link'
+        = link_to t('.ask_question'), new_question_path, class: 'nav-link'

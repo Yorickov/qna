@@ -8,16 +8,16 @@ feature 'Guest can create answer' do
   end
 
   scenario 'Create Answer' do
-    fill_in 'Body', with: 'answer text'
-    click_on 'Create Answer'
+    fill_in t('activerecord.attributes.answer.body'), with: 'answer text'
+    click_on t('forms.submit')
 
-    expect(page).to have_content('Answer successfully created')
-    expect(page).to have_content('text')
+    expect(page).to have_content t('answers.create.success')
+    expect(page).to have_content 'text'
   end
 
   scenario 'Create Answer with errors' do
-    click_on 'Create Answer'
+    click_on t('forms.submit')
 
-    expect(page).to have_content("Body can't be blank")
+    expect(page).to have_content t('activerecord.errors.messages.blank')
   end
 end
