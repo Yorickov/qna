@@ -8,12 +8,12 @@ feature 'Guest can create question' do
 
   scenario 'Asks a question' do
     fill_in 'Title', with: 'Test question'
-    fill_in 'Body', with: 'text'
+    fill_in 'Body', with: 'question text'
     click_on 'Create Question'
 
     expect(page).to have_content 'Question successfully created'
     expect(page).to have_content('Test question')
-    expect(page).to have_content('text')
+    expect(page).to have_content('question text')
   end
 
   scenario 'Asks a question with errors' do
