@@ -1,0 +1,18 @@
+ru:
+  activerecord:
+    models:
+      question: Вопрос
+      answer: Ответ
+
+    attributes:
+      question:
+        title: Название
+        body: Тело вопроса
+      answer:
+        body: Тело ответа
+        question_id: Вопрос
+        question: Вопрос
+
+    errors:
+      messages:
+        blank: не может быть пустым

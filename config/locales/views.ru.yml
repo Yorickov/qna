@@ -1,0 +1,30 @@
+ru:
+  layouts:
+    application:
+      title: ВиО
+
+  forms:
+    submit: Отправить
+
+  shared:
+    navi:
+      title: ВиО
+      questions: Вопросы
+      ask_question: Задайте вопрос
+
+  questions:
+    index:
+      all_questions: Все вопросы
+    new:
+      ask_question: Задайте вопрос
+    show:
+      answers: Ответы
+
+  answers:
+    index:
+      all_questions: Все вопросы
+      ask_question: Задайте вопрос
+    new:
+      ask_question: Задайте вопрос
+    show:
+      answers: Ответы

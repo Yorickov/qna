@@ -11,10 +11,12 @@ module Qna
     # Initialize configuration defaults for originally generated Rails version.
     config.load_defaults 6.0
 
-    # Settings in config/environments/* take precedence over those specified here.
-    # Application configuration can go into files in config/initializers
-    # -- all .rb files in that directory are automatically loaded after loading
-    # the framework and any gems in your application.
+    # use zeitwerk
+    config.add_autoload_paths_to_load_path = false
+
+    # tz and locale
+    config.time_zone = 'Europe/Minsk'
+    config.i18n.default_locale = :ru
 
     # remove active-storage action-mailer action-mailbox from rails routes
     initializer(
@@ -33,5 +35,9 @@ module Qna
                        routing_specs: false,
                        request_specs: false
     end
+    # Settings in config/environments/* take precedence over those specified here.
+    # Application configuration can go into files in config/initializers
+    # -- all .rb files in that directory are automatically loaded after loading
+    # the framework and any gems in your application.
   end
 end

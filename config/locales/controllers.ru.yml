@@ -1,0 +1,8 @@
+ru:
+  questions:
+    create:
+      success: "Вопрос успешно создан"
+
+  answers:
+    create:
+      success: "Ответ успешно создан"

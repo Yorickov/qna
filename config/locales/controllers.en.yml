@@ -1,0 +1,8 @@
+en:
+  questions:
+    create:
+      success: "Question was successfully created"
+
+  answers:
+    create:
+      success: "Answer was successfully created"

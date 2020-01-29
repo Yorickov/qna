@@ -1,0 +1,24 @@
+en:
+  activerecord:
+    models:
+      question: Question
+      answer: Answer
+
+    attributes:
+      question:
+        title: title
+        body: Question body
+      answer:
+        body: Answer body
+        question_id: Question
+        question: Question
+
+    errors:
+      messages:
+        blank: can't be blank
+
+    # errors:
+    #   messages:
+    #     taken: "has already such combination title - level"
+    #     not_an_integer: "should be positive integer or nil"
+    #     greater_than_or_equal_to: "should be positive integer or nil"
