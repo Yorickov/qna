@@ -68,7 +68,7 @@ describe AnswersController, type: :controller do
           answer: attributes_for(:answer)
         }
 
-        expect(response).to redirect_to assigns(:answer)
+        expect(response).to redirect_to question
       end
     end
 
@@ -89,7 +89,7 @@ describe AnswersController, type: :controller do
           answer: attributes_for(:answer, :invalid)
         }
 
-        expect(response).to render_template :new
+        expect(response).to render_template 'questions/show'
       end
     end
   end
