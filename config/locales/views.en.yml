@@ -14,7 +14,6 @@ en:
       sign_up: Sign Up
       sign_in: Sign In
       sign_out: Sign Out
-      welcome: Welcome, %{user}
 
   questions:
     index:

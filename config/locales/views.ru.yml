@@ -14,7 +14,6 @@ ru:
       sign_up: Регистрация
       sign_in: Войти
       sign_out: Выйти
-      welcome: Добро пожаловать, %{user}
 
   questions:
     index:

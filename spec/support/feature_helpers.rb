@@ -1,6 +1,6 @@
 module FeatureHelpers
   def sign_in(user)
-    user.skip_confirmation!
+    user.confirmed_at = Time.now
     user.save!
 
     visit new_user_session_path
