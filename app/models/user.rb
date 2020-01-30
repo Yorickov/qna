@@ -8,4 +8,8 @@ class User < ApplicationRecord
          :trackable,
          :confirmable,
          :recoverable
+
+  def to_s
+    email
+  end
 end

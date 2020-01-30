@@ -1,6 +1,6 @@
 module ControllerHelpers
   def login(user)
-    user.skip_confirmation!
+    user.confirmed_at = Time.now
     user.save!
 
     @request.env['devise.mapping'] = Devise.mappings[:user]
