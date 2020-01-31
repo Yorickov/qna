@@ -2,9 +2,7 @@ require 'rails_helper'
 require 'capybara/email/rspec'
 
 feature 'Guest can sign up' do
-  background do
-    visit new_user_registration_path
-  end
+  background { visit new_user_registration_path }
 
   scenario 'Guest registered successfully' do
     within('#new_user') do

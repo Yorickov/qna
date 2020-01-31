@@ -1,17 +1,13 @@
 require 'rails_helper'
 
 feature 'Guest can see questions and answers' do
-  given(:user1) { build(:user_with_questions) }
-  given(:user2) { build(:user_with_questions) }
-
-  background do
-    save_before_sign_in(user1)
-    save_before_sign_in(user2)
-  end
+  given!(:user1) { build(:user_with_questions) }
+  given!(:user2) { build(:user_with_questions) }
 
   scenario 'Guest can see questions list' do
     visit questions_path
 
+    expect(Question.count).to eq(4)
     Question.all.each { |q| expect(page).to have_content(q.title) }
   end
 

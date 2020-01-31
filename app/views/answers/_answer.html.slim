@@ -1,2 +1,6 @@
 li.pl-0.list-group-item
   p = answer.body
+  - if user_signed_in? && answer.author == current_user
+      = link_to t('.delete_answer'),
+                  answer_path(answer),
+                  method: :delete

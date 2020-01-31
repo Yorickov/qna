@@ -4,9 +4,7 @@ describe AnswersController, type: :controller do
   let(:user) { build(:user_with_questions) }
 
   describe 'POST #create' do
-    let(:answer) do
-      create(:answer, question: user.questions.first, author: user)
-    end
+    let(:answer) { create(:answer) }
 
     before { login(user) }
 
@@ -59,6 +57,25 @@ describe AnswersController, type: :controller do
 
         expect(response).to render_template 'questions/show'
       end
+    end
+  end
+
+  describe 'DELETE #destroy' do
+    let!(:answer) do
+      create(:answer, question: user.questions.first, author: user)
+    end
+
+    before { login(user) }
+
+    it 'deletes the answer' do
+      expect { delete :destroy, params: { id: answer } }
+        .to change(Answer, :count).by(-1)
+    end
+
+    it 'redirects to show' do
+      delete :destroy, params: { id: answer }
+
+      expect(response).to redirect_to answer.question
     end
   end
 end

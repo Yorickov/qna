@@ -4,7 +4,6 @@ describe QuestionsController, type: :controller do
   let(:user) { build(:user_with_questions) }
 
   describe 'GET #index' do
-    before { save_before_login(user) }
     before { get :index }
 
     it 'populates an array of all questions' do
@@ -17,7 +16,6 @@ describe QuestionsController, type: :controller do
   end
 
   describe 'GET #show' do
-    before { save_before_login(user) }
     before { get :show, params: { id: user.questions.first } }
 
     it 'assigns the requested question to @question' do

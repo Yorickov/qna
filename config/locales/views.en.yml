@@ -22,4 +22,8 @@ en:
     new:
       ask_question: Ask your question
     show:
-      delete: Delete
+      delete_question: Delete question
+
+  answers:
+    answer:
+      delete_answer: Delete answer

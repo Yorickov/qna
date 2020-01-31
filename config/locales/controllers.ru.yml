@@ -8,3 +8,5 @@ ru:
   answers:
     create:
       success: Ответ успешно создан
+    destroy:
+      success: Ответ успешно удален

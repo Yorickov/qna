@@ -8,3 +8,5 @@ en:
   answers:
     create:
       success: Answer was successfully created
+    destroy:
+      success: Answer was successfully deleted
