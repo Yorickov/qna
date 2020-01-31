@@ -8,14 +8,14 @@ feature 'Autenticated user can delete only his question' do
     sign_in(user1)
   end
 
-  scenario 'Autenticated user can delete his question' do
+  scenario "Question's author user can delete his question" do
     visit question_path(user1.questions.first)
     click_on t('questions.show.delete')
 
     expect(page).to have_content t('questions.destroy.success')
   end
 
-  scenario "Autenticated user can't delete another's question" do
+  scenario "Question's author can't delete another's question" do
     visit question_path(user2.questions.first)
 
     expect(page).not_to have_content t('questions.show.delete')

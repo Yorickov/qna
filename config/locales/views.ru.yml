@@ -19,19 +19,7 @@ ru:
       sign_out: Выйти
 
   questions:
-    index:
-      all_questions: Все вопросы
     new:
       ask_question: Задайте вопрос
     show:
-      answers: Ответы
       delete: Удалить
-
-  answers:
-    index:
-      all_questions: Все вопросы
-      ask_question: Задайте вопрос
-    new:
-      ask_question: Задайте вопрос
-    show:
-      answers: Ответы
