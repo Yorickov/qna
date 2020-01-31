@@ -1,16 +1,14 @@
 require 'rails_helper'
 
 describe QuestionsController, type: :controller do
-  let(:question) { create(:question) }
-  let(:user) { build(:user) }
+  let(:user) { build(:user_with_questions) }
 
   describe 'GET #index' do
-    let(:questions) { create_list(:question, 3) }
-
+    before { save_before_login(user) }
     before { get :index }
 
     it 'populates an array of all questions' do
-      expect(assigns(:questions)).to match_array(questions)
+      expect(assigns(:questions)).to match_array(user.questions)
     end
 
     it 'renders index view' do
@@ -19,11 +17,11 @@ describe QuestionsController, type: :controller do
   end
 
   describe 'GET #show' do
-    before { get :show, params: { id: question } }
+    before { save_before_login(user) }
+    before { get :show, params: { id: user.questions.first } }
 
-    # remove without before_action
     it 'assigns the requested question to @question' do
-      expect(assigns(:question)).to eq question
+      expect(assigns(:question)).to eq user.questions.first
     end
 
     it 'renders show view' do
@@ -35,7 +33,6 @@ describe QuestionsController, type: :controller do
     before { login(user) }
     before { get :new }
 
-    # remove without before_action
     it 'assigns a new Question to @question' do
       expect(assigns(:question)).to be_a_new(Question)
     end
@@ -48,34 +45,49 @@ describe QuestionsController, type: :controller do
   describe 'POST #create' do
     before { login(user) }
 
+    let(:valid_attr) do
+      { title: user.questions.first.title, body: user.questions.first.body }
+    end
+    let(:invalid_attr) { { title: '', body: '' } }
+
     context 'with valid attributes' do
       it 'saves a new question in the database' do
-        expect { post :create, params: { question: attributes_for(:question) } }
+        expect { post :create, params: { question: valid_attr } }
           .to change(Question, :count).by(1)
       end
 
       it 'redirects to show view' do
-        post :create, params: { question: attributes_for(:question) }
+        post :create, params: { question: valid_attr }
 
-        expect(response).to redirect_to assigns(:question)
+        expect(response).to redirect_to user.questions.last
       end
     end
 
     context 'with invalid attributes' do
       it 'does not save the question' do
-        expect do
-          post :create, params: {
-            question: attributes_for(:question, :invalid)
-          }
-        end
+        expect { post :create, params: { question: invalid_attr } }
           .to_not change(Question, :count)
       end
 
       it 're-renders new view' do
-        post :create, params: { question: attributes_for(:question, :invalid) }
+        post :create, params: { question: invalid_attr }
 
         expect(response).to render_template :new
       end
+    end
+  end
+
+  describe 'DELETE #destroy' do
+    before { login(user) }
+
+    it 'deletes the question' do
+      expect { delete :destroy, params: { id: user.questions.first } }
+        .to change(Question, :count).by(-1)
+    end
+
+    it 'redirects to index' do
+      delete :destroy, params: { id: user.questions.first }
+      expect(response).to redirect_to questions_path
     end
   end
 end

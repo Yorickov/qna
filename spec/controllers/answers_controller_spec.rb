@@ -1,74 +1,42 @@
 require 'rails_helper'
 
 describe AnswersController, type: :controller do
-  let(:question) { create(:question_with_answers) }
-
-  describe 'GET #index' do
-    before { get :index, params: { question_id: question } }
-
-    it 'populates an array of all answers' do
-      expect(assigns(:answers)).to match_array(question.answers)
-    end
-
-    it 'renders index view' do
-      expect(response).to render_template :index
-    end
-  end
-
-  describe 'GET #show' do
-    let(:answer) { question.answers.first }
-
-    before { get :show, params: { id: answer } }
-
-    it 'assigns the requested answer to @answer' do
-      expect(assigns(:answer)).to eq answer
-    end
-
-    it 'renders show view' do
-      expect(response).to render_template :show
-    end
-  end
-
-  describe 'GET #new' do
-    before { get :new, params: { question_id: question } }
-
-    it 'assigns a new Answer to @answer' do
-      expect(assigns(:answer)).to be_a_new(Answer)
-    end
-
-    it 'renders new view' do
-      expect(response).to render_template :new
-    end
-  end
+  let(:user) { build(:user_with_questions) }
 
   describe 'POST #create' do
+    let(:answer) do
+      create(:answer, question: user.questions.first, author: user)
+    end
+
+    before { login(user) }
+
     context 'with valid attributes' do
       it 'saves a new answer in the database' do
         expect do
           post :create, params: {
-            question_id: question,
+            question_id: user.questions.first,
             answer: attributes_for(:answer)
           }
         end
-          .to change(Answer, :count).by(4)
+          .to change(Answer, :count).by(1)
       end
 
       it 'saves as the answer of correct question' do
         post :create, params: {
-          question_id: question,
+          question_id: user.questions.first,
           answer: attributes_for(:answer)
         }
 
-        expect(Answer.last.question_id).to eq(question.id)
+        expect(Answer.last.question).to eq(user.questions.first)
       end
 
       it 'redirects to show view' do
         post :create, params: {
-          question_id: question,
+          question_id: user.questions.first,
           answer: attributes_for(:answer)
         }
 
-        expect(response).to redirect_to question
+        expect(response).to redirect_to user.questions.first
       end
     end
 
@@ -76,16 +44,16 @@ describe AnswersController, type: :controller do
       it 'does not save the answer' do
         expect do
           post :create, params: {
-            question_id: question,
+            question_id: user.questions.first,
             answer: attributes_for(:answer, :invalid)
           }
         end
-          .to change(Answer, :count).by(3)
+          .to change(Answer, :count).by(0)
       end
 
       it 're-renders new view' do
         post :create, params: {
-          question_id: question,
+          question_id: user.questions.first,
           answer: attributes_for(:answer, :invalid)
         }
 

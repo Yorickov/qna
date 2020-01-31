@@ -1,10 +1,11 @@
 require 'rails_helper'
 
 feature 'Guest can create answer' do
-  given(:question) { create(:question) }
+  given(:user) { build(:user_with_questions) }
 
   background do
-    visit question_path(question)
+    sign_in(user)
+    visit question_path(user.questions.first)
   end
 
   scenario 'Create Answer' do

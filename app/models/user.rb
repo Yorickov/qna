@@ -9,6 +9,9 @@ class User < ApplicationRecord
          :confirmable,
          :recoverable
 
+  has_many :questions, inverse_of: 'author'
+  has_many :answers, inverse_of: 'author'
+
   def to_s
     email
   end
