@@ -19,19 +19,7 @@ en:
       sign_out: Sign Out
 
   questions:
-    index:
-      all_questions: All questions
     new:
       ask_question: Ask your question
     show:
-      answers: Answers
       delete: Delete
-
-  answers:
-    index:
-      all_questions: All questions
-      ask_question: Ask question
-    new:
-      ask_question: Ask your question
-    show:
-      answers: Answers
