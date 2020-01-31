@@ -1,8 +1,10 @@
 ru:
   questions:
     create:
-      success: "Вопрос успешно создан"
+      success: Вопрос успешно создан
+    destroy:
+      success: Вопрос успешно удален
 
   answers:
     create:
-      success: "Ответ успешно создан"
+      success: Ответ успешно создан

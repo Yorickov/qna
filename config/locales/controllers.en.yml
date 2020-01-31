@@ -1,8 +1,10 @@
 en:
   questions:
     create:
-      success: "Question was successfully created"
+      success: Question was successfully created
+    destroy:
+      success: Question was successfully deleted
 
   answers:
     create:
-      success: "Answer was successfully created"
+      success: Answer was successfully created

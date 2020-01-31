@@ -3,6 +3,9 @@ ru:
     application:
       title: ВиО
 
+  links:
+    confirm: Вы уверены?
+
   forms:
     submit: Отправить
 
@@ -22,6 +25,7 @@ ru:
       ask_question: Задайте вопрос
     show:
       answers: Ответы
+      delete: Удалить
 
   answers:
     index:

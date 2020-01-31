@@ -3,8 +3,11 @@ en:
     application:
       title: QnA
 
-    forms:
-      submit: Send
+  links:
+    confirm: Are you shure?
+
+  forms:
+    submit: Send
 
   shared:
     navi:
@@ -22,6 +25,7 @@ en:
       ask_question: Ask your question
     show:
       answers: Answers
+      delete: Delete
 
   answers:
     index:

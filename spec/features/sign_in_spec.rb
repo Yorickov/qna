@@ -4,8 +4,7 @@ feature 'User can sign in' do
   given(:user) { build(:user) }
 
   background do
-    user.confirmed_at = Time.now
-    user.save!
+    save_before_sign_in(user)
 
     visit new_user_session_path
   end

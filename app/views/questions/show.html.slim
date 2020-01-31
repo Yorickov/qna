@@ -4,6 +4,10 @@
     hr
     p = @question.body
     hr
+    - if user_signed_in? && @question.author == current_user
+      = link_to t('.delete'),
+                  question_path(@question),
+                  method: :delete
 
 .row.pt-2.justify-content-center
   .col-10

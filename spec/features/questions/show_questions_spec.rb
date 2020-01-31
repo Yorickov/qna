@@ -1,6 +1,12 @@
 require 'rails_helper'
 
 feature 'Guest can see questions and answers' do
+  given(:user) { build(:user_with_questions) }
+
+  background do
+    save_before_sign_in(user)
+  end
+
   scenario 'Guest can see questions list' do
     visit questions_path
 
@@ -8,7 +14,7 @@ feature 'Guest can see questions and answers' do
   end
 
   scenario 'Guest can see question and answers to him' do
-    visit question_path(create(:question))
+    visit question_path(user.questions.first)
 
     expect(page).to have_content t('questions.show.answers')
   end
