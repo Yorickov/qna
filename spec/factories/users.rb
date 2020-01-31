@@ -14,8 +14,16 @@ FactoryBot.define do
       end
 
       after(:build) do |user, evaluator|
+        user.confirmed_at = Time.now
+        user.save!
+
         create_list(:question, evaluator.questions_count, author: user)
       end
+    end
+
+    after(:build) do |user|
+      user.confirmed_at = Time.now
+      user.save!
     end
   end
 end

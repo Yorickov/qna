@@ -3,11 +3,7 @@ require 'rails_helper'
 feature 'User can sign in' do
   given(:user) { build(:user) }
 
-  background do
-    save_before_sign_in(user)
-
-    visit new_user_session_path
-  end
+  background { visit new_user_session_path }
 
   scenario 'Registered user tries to sign in' do
     within('#new_user') do

@@ -22,4 +22,8 @@ ru:
     new:
       ask_question: Задайте вопрос
     show:
-      delete: Удалить
+      delete_question: Удалить вопрос
+
+  answers:
+    answer:
+      delete_answer: Удалить ответ

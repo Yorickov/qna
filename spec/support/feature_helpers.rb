@@ -1,7 +1,5 @@
 module FeatureHelpers
   def sign_in(user)
-    save_before_sign_in(user)
-
     visit new_user_session_path
 
     within('#new_user') do
@@ -10,9 +8,4 @@ module FeatureHelpers
       click_on t('devise.shared.links.sign_in')
     end
   end
-end
-
-def save_before_sign_in(user)
-  user.confirmed_at = Time.now
-  user.save!
 end

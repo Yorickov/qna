@@ -15,6 +15,11 @@ class AnswersController < ApplicationController
     end
   end
 
+  def destroy
+    @answer.destroy
+    redirect_to @answer.question, notice: t('.success')
+  end
+
   private
 
   def load_question
