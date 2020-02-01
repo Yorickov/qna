@@ -1,6 +1,7 @@
 class QuestionsController < ApplicationController
   before_action :authenticate_user!, except: %i[index show]
   before_action :load_question, only: %i[show destroy]
+  before_action :check_authority, only: %i[destroy]
 
   def index
     @questions = Question.all
@@ -35,5 +36,11 @@ class QuestionsController < ApplicationController
 
   def question_params
     params.require(:question).permit(:title, :body)
+  end
+
+  def check_authority
+    return if current_user.entity_author?(@question)
+
+    redirect_to root_path, notice: t('.wrong_author')
   end
 end
