@@ -12,10 +12,14 @@ feature 'Autenticated user can delete only his answers' do
   end
 
   scenario "Answer's author user can delete his answer" do
+    answer = user1.answers.first
     visit question_path(user2.questions.first)
+
+    expect(page).to have_content answer.body
 
     click_on t('answers.answer.delete_answer')
 
+    expect(page).not_to have_content answer.body
     expect(page).to have_content t('answers.destroy.success')
   end
 
