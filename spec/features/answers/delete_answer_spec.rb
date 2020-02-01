@@ -7,8 +7,8 @@ feature 'Autenticated user can delete only his answers' do
   background do
     sign_in(user1)
 
-    create(:answer, question: user2.questions.first, author: user1)
-    create(:answer, question: user1.questions.first, author: user2)
+    create(:answer, question: user2.questions.first, user: user1)
+    create(:answer, question: user1.questions.first, user: user2)
   end
 
   scenario "Answer's author user can delete his answer" do

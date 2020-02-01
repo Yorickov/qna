@@ -5,12 +5,11 @@ class AnswersController < ApplicationController
 
   def create
     @answer = current_user.answers.new(answer_params)
-    @answer.question_id = params[:question_id]
+    @answer.question = @question
 
     if @answer.save
       redirect_to @question, notice: t('.success')
     else
-      @question.answers.reload
       render 'questions/show'
     end
   end

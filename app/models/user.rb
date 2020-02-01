@@ -9,8 +9,8 @@ class User < ApplicationRecord
          :confirmable,
          :recoverable
 
-  has_many :questions, inverse_of: 'author'
-  has_many :answers, inverse_of: 'author'
+  has_many :questions
+  has_many :answers
 
   def to_s
     email

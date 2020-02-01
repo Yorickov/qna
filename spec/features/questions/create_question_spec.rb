@@ -31,8 +31,8 @@ feature 'User can create question' do
   end
 
   scenario 'Unauthenticated user tries to ask a question' do
-    visit new_question_path
+    visit root_path
 
-    expect(page).to have_content t('devise.failure.unauthenticated')
+    expect(page).not_to have_content t('shared.navi.ask_question')
   end
 end

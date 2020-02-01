@@ -4,7 +4,7 @@
     hr
     p = @question.body
     hr
-    - if user_signed_in? && @question.author == current_user
+    - if user_signed_in? && @question.user == current_user
       = link_to t('.delete_question'),
                   question_path(@question),
                   method: :delete
