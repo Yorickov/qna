@@ -17,7 +17,7 @@ FactoryBot.define do
         user.confirmed_at = Time.now
         user.save!
 
-        create_list(:question, evaluator.questions_count, author: user)
+        create_list(:question, evaluator.questions_count, user: user)
       end
     end
 

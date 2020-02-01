@@ -41,21 +41,18 @@ describe QuestionsController, type: :controller do
   end
 
   describe 'POST #create' do
-    before { login(user) }
+    let(:question) { create(:question, user: user) }
 
-    let(:valid_attr) do
-      { title: user.questions.first.title, body: user.questions.first.body }
-    end
-    let(:invalid_attr) { { title: '', body: '' } }
+    before { login(user) }
 
     context 'with valid attributes' do
       it 'saves a new question in the database' do
-        expect { post :create, params: { question: valid_attr } }
+        expect { post :create, params: { question: attributes_for(:question) } }
           .to change(Question, :count).by(1)
       end
 
       it 'redirects to show view' do
-        post :create, params: { question: valid_attr }
+        post :create, params: { question: attributes_for(:question) }
 
         expect(response).to redirect_to user.questions.last
       end
@@ -63,12 +60,12 @@ describe QuestionsController, type: :controller do
 
     context 'with invalid attributes' do
       it 'does not save the question' do
-        expect { post :create, params: { question: invalid_attr } }
+        expect { post :create, params: { question: attributes_for(:question, :invalid) } }
           .to_not change(Question, :count)
       end
 
       it 're-renders new view' do
-        post :create, params: { question: invalid_attr }
+        post :create, params: { question: attributes_for(:question, :invalid) }
 
         expect(response).to render_template :new
       end

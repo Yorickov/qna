@@ -5,6 +5,7 @@ describe AnswersController, type: :controller do
 
   describe 'POST #create' do
     let(:answer) { create(:answer) }
+    let(:question) { user.questions.first }
 
     before { login(user) }
 
@@ -12,7 +13,7 @@ describe AnswersController, type: :controller do
       it 'saves a new answer in the database' do
         expect do
           post :create, params: {
-            question_id: user.questions.first,
+            question_id: question,
             answer: attributes_for(:answer)
           }
         end
@@ -21,20 +22,20 @@ describe AnswersController, type: :controller do
 
       it 'saves as the answer of correct question' do
         post :create, params: {
-          question_id: user.questions.first,
+          question_id: question,
           answer: attributes_for(:answer)
         }
 
-        expect(Answer.last.question).to eq(user.questions.first)
+        expect(Answer.order(:created_at).last.question).to eq(question)
       end
 
       it 'redirects to show view' do
         post :create, params: {
-          question_id: user.questions.first,
+          question_id: question,
           answer: attributes_for(:answer)
         }
 
-        expect(response).to redirect_to user.questions.first
+        expect(response).to redirect_to question
       end
     end
 
@@ -42,7 +43,7 @@ describe AnswersController, type: :controller do
       it 'does not save the answer' do
         expect do
           post :create, params: {
-            question_id: user.questions.first,
+            question_id: question,
             answer: attributes_for(:answer, :invalid)
           }
         end
@@ -51,7 +52,7 @@ describe AnswersController, type: :controller do
 
       it 're-renders new view' do
         post :create, params: {
-          question_id: user.questions.first,
+          question_id: question,
           answer: attributes_for(:answer, :invalid)
         }
 
@@ -62,7 +63,7 @@ describe AnswersController, type: :controller do
 
   describe 'DELETE #destroy' do
     let!(:answer) do
-      create(:answer, question: user.questions.first, author: user)
+      create(:answer, question: user.questions.first, user: user)
     end
 
     before { login(user) }
