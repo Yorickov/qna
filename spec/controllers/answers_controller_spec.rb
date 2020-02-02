@@ -3,8 +3,8 @@
 require 'rails_helper'
 
 describe AnswersController, type: :controller do
-  let(:user1) { build(:user_with_questions) }
-  let(:user2) { build(:user) }
+  let(:user1) { create(:user_with_questions) }
+  let(:user2) { create(:user) }
   let(:user1_question) { user1.questions.first }
 
   describe 'POST #create' do

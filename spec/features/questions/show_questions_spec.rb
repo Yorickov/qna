@@ -1,8 +1,8 @@
 require 'rails_helper'
 
 feature 'Guest can see questions and answers' do
-  given!(:user1) { build(:user_with_questions, questions_count: 1) }
-  given!(:user2) { build(:user_with_questions, questions_count: 1) }
+  given!(:user1) { create(:user_with_questions, questions_count: 1) }
+  given!(:user2) { create(:user_with_questions, questions_count: 1) }
 
   scenario 'Guest try to see questions list' do
     visit questions_path

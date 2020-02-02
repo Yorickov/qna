@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 feature 'User can sign out' do
-  given(:user) { build(:user) }
+  given(:user) { create(:user) }
 
   scenario 'Registered user try to sign out' do
     sign_in(user)

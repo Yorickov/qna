@@ -1,8 +1,8 @@
 require 'rails_helper'
 
 feature 'Autenticated user can delete only his question' do
-  given(:user1) { build(:user_with_questions) }
-  given(:user2) { build(:user_with_questions) }
+  given(:user1) { create(:user_with_questions) }
+  given(:user2) { create(:user_with_questions) }
   given(:user1_question) { user1.questions.first }
 
   describe "Question's author try to delete" do

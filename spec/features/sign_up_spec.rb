@@ -80,7 +80,7 @@ feature 'Guest can sign up' do
   end
 
   scenario 'Authorized user failed to register' do
-    user = build(:user)
+    user = create(:user)
     sign_in(user)
 
     expect(page).not_to have_content t('shared.navi.sign_up')

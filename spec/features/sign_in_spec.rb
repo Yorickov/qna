@@ -3,7 +3,7 @@
 require 'rails_helper'
 
 feature 'Registered user can sign in' do
-  given(:user) { build(:user) }
+  given(:user) { create(:user) }
   given(:wrong_email) { Faker::Internet.email }
   given(:wrong_password) { Faker::Internet.password }
 
