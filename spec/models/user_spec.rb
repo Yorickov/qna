@@ -8,8 +8,8 @@ describe User, type: :model do
   it { should validate_presence_of :password }
 
   describe "Is user an resource's author" do
-    let(:user1) { build(:user_with_questions, questions_count: 1) }
-    let(:user2) { build(:user_with_questions, questions_count: 1) }
+    let(:user1) { create(:user_with_questions, questions_count: 1) }
+    let(:user2) { create(:user_with_questions, questions_count: 1) }
 
     it 'Is author of question' do
       expect(user1).to be_author_of(user1.questions.first)

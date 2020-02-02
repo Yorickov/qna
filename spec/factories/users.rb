@@ -7,23 +7,16 @@ FactoryBot.define do
     email
     password { '12345678' }
     password_confirmation { '12345678' }
+    confirmed_at { Time.now }
 
     factory :user_with_questions do
       transient do
         questions_count { 2 }
       end
 
-      after(:build) do |user, evaluator|
-        user.confirmed_at = Time.now
-        user.save!
-
+      after(:create) do |user, evaluator|
         create_list(:question, evaluator.questions_count, user: user)
       end
-    end
-
-    after(:build) do |user|
-      user.confirmed_at = Time.now
-      user.save!
     end
   end
 end
