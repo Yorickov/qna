@@ -4,7 +4,7 @@
     hr
     p = @question.body
     hr
-    - if check_entity_author(@question)
+    - if check_author(@question)
       = link_to t('.delete_question'),
                   question_path(@question),
                   method: :delete

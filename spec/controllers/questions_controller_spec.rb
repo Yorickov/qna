@@ -1,14 +1,17 @@
+# rubocop:disable Metrics/BlockLength
+
 require 'rails_helper'
 
 describe QuestionsController, type: :controller do
-  let(:user) { build(:user_with_questions) }
-  let(:no_author) { build(:user) }
+  let(:user1) { build(:user_with_questions) }
+  let(:user2) { build(:user) }
+  let(:user1_question) { user1.questions.first }
 
   describe 'GET #index' do
     before { get :index }
 
     it 'populates an array of all questions' do
-      expect(assigns(:questions)).to match_array(user.questions)
+      expect(assigns(:questions)).to match_array(user1.questions)
     end
 
     it 'renders index view' do
@@ -17,10 +20,10 @@ describe QuestionsController, type: :controller do
   end
 
   describe 'GET #show' do
-    before { get :show, params: { id: user.questions.first } }
+    before { get :show, params: { id: user1_question } }
 
     it 'assigns the requested question to @question' do
-      expect(assigns(:question)).to eq user.questions.first
+      expect(assigns(:question)).to eq user1_question
     end
 
     it 'renders show view' do
@@ -30,7 +33,7 @@ describe QuestionsController, type: :controller do
 
   describe 'GET #new' do
     context 'as User' do
-      before { login(user) }
+      before { login(user1) }
       before { get :new }
 
       it 'assigns a new Question to @question' do
@@ -52,10 +55,10 @@ describe QuestionsController, type: :controller do
   end
 
   describe 'POST #create' do
-    let(:question) { create(:question, user: user) }
+    let(:question) { create(:question, user: user1) }
 
     context 'as User' do
-      before { login(user) }
+      before { login(user1) }
 
       context 'with valid attributes' do
         it 'saves a new question in the database' do
@@ -63,10 +66,16 @@ describe QuestionsController, type: :controller do
             .to change(Question, :count).by(1)
         end
 
+        it 'saves as the question of correct user' do
+          post :create, params: { question: attributes_for(:question) }
+
+          expect(Question.order(:created_at).last.user).to eq(user1)
+        end
+
         it 'redirects to show view' do
           post :create, params: { question: attributes_for(:question) }
 
-          expect(response).to redirect_to user.questions.last
+          expect(response).to redirect_to user1.questions.last
         end
       end
 
@@ -95,24 +104,25 @@ describe QuestionsController, type: :controller do
 
   describe 'DELETE #destroy' do
     context 'as authorized Author' do
-      before { login(user) }
+      before { login(user1) }
 
       it 'deletes the question' do
-        expect { delete :destroy, params: { id: user.questions.first } }
+        expect { delete :destroy, params: { id: user1_question } }
           .to change(Question, :count).by(-1)
       end
 
       it 'redirects to index' do
-        delete :destroy, params: { id: user.questions.first }
+        delete :destroy, params: { id: user1_question }
+
         expect(response).to redirect_to questions_path
       end
     end
 
     context 'as authorized no Author' do
       it 'redirects to root' do
-        login(no_author)
+        login(user2)
 
-        delete :destroy, params: { id: user.questions.first }
+        delete :destroy, params: { id: user1_question }
 
         expect(response).to redirect_to root_path
       end
@@ -120,7 +130,7 @@ describe QuestionsController, type: :controller do
 
     context 'as Guest' do
       it 'redirects to new session' do
-        delete :destroy, params: { id: user.questions.first }
+        delete :destroy, params: { id: user1_question }
 
         expect(response).to redirect_to new_user_session_path
       end

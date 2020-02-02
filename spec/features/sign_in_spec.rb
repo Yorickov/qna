@@ -1,8 +1,11 @@
+# rubocop:disable Metrics/BlockLength
+
 require 'rails_helper'
 
 feature 'Registered user can sign in' do
   given(:user) { build(:user) }
-  given(:wrong_data) { 'wrong data' }
+  given(:wrong_email) { Faker::Internet.email }
+  given(:wrong_password) { Faker::Internet.password }
 
   background { visit new_user_session_path }
 
@@ -18,7 +21,7 @@ feature 'Registered user can sign in' do
 
   scenario 'User tries to sign in with wrong email' do
     within('#new_user') do
-      fill_in t('activerecord.attributes.user.email'), with: wrong_data
+      fill_in t('activerecord.attributes.user.email'), with: wrong_email
       fill_in t('activerecord.attributes.user.password'), with: user.password
       click_on t('devise.shared.links.sign_in')
     end
@@ -30,7 +33,7 @@ feature 'Registered user can sign in' do
   scenario 'User tries to sign in with wrong password' do
     within('#new_user') do
       fill_in t('activerecord.attributes.user.email'), with: user.email
-      fill_in t('activerecord.attributes.user.password'), with: wrong_data
+      fill_in t('activerecord.attributes.user.password'), with: wrong_password
       click_on t('devise.shared.links.sign_in')
     end
 

@@ -1,9 +1,9 @@
 require 'rails_helper'
 
-feature 'User try to sign out' do
+feature 'User can sign out' do
   given(:user) { build(:user) }
 
-  scenario 'Registered user signs out' do
+  scenario 'Registered user try to sign out' do
     sign_in(user)
 
     click_on t('shared.navi.sign_out')

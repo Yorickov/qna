@@ -12,11 +12,9 @@ feature 'User can create question' do
     end
 
     scenario 'Asks a question' do
-      fill_in t('activerecord.attributes.question.title'),
-              with: 'Test question'
-      fill_in t('activerecord.attributes.question.body'),
-              with: 'question text'
-      click_on t('forms.submit')
+      fill_in t('activerecord.attributes.question.title'), with: 'Test question'
+      fill_in t('activerecord.attributes.question.body'),  with: 'question text'
+      click_on t('forms.submit_question')
 
       expect(page).to have_content t('questions.create.success')
       expect(page).to have_content 'Test question'
@@ -24,7 +22,7 @@ feature 'User can create question' do
     end
 
     scenario 'Asks a question with errors' do
-      click_on t('forms.submit')
+      click_on t('forms.submit_question')
 
       expect(page).to have_content t('activerecord.errors.messages.blank')
     end

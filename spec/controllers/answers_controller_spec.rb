@@ -1,21 +1,23 @@
+# rubocop:disable Metrics/BlockLength
+
 require 'rails_helper'
 
 describe AnswersController, type: :controller do
-  let(:user) { build(:user_with_questions) }
-  let(:no_author) { build(:user) }
+  let(:user1) { build(:user_with_questions) }
+  let(:user2) { build(:user) }
+  let(:user1_question) { user1.questions.first }
 
   describe 'POST #create' do
     let(:answer) { create(:answer) }
-    let(:question) { user.questions.first }
 
     context 'as User' do
-      before { login(user) }
+      before { login(user1) }
 
       context 'with valid attributes' do
         it 'saves a new answer in the database' do
           expect do
             post :create, params: {
-              question_id: question,
+              question_id: user1_question,
               answer: attributes_for(:answer)
             }
           end
@@ -24,20 +26,20 @@ describe AnswersController, type: :controller do
 
         it 'saves as the answer of correct question' do
           post :create, params: {
-            question_id: question,
+            question_id: user1_question,
             answer: attributes_for(:answer)
           }
 
-          expect(Answer.order(:created_at).last.question).to eq(question)
+          expect(Answer.order(:created_at).last.question).to eq(user1_question)
         end
 
         it 'redirects to show view' do
           post :create, params: {
-            question_id: question,
+            question_id: user1_question,
             answer: attributes_for(:answer)
           }
 
-          expect(response).to redirect_to question
+          expect(response).to redirect_to user1_question
         end
       end
 
@@ -45,7 +47,7 @@ describe AnswersController, type: :controller do
         it 'does not save the answer' do
           expect do
             post :create, params: {
-              question_id: question,
+              question_id: user1_question,
               answer: attributes_for(:answer, :invalid)
             }
           end
@@ -54,7 +56,7 @@ describe AnswersController, type: :controller do
 
         it 're-renders new view' do
           post :create, params: {
-            question_id: question,
+            question_id: user1_question,
             answer: attributes_for(:answer, :invalid)
           }
 
@@ -66,7 +68,7 @@ describe AnswersController, type: :controller do
     context 'as Guest' do
       it 'redirects to new session' do
         post :create, params: {
-          question_id: question,
+          question_id: user1_question,
           answer: attributes_for(:answer, :invalid)
         }
 
@@ -76,12 +78,10 @@ describe AnswersController, type: :controller do
   end
 
   describe 'DELETE #destroy' do
-    let!(:answer) do
-      create(:answer, question: user.questions.first, user: user)
-    end
+    let!(:answer) { create(:answer, question: user1_question, user: user1) }
 
     context 'as authorized Author' do
-      before { login(user) }
+      before { login(user1) }
 
       it 'deletes the answer' do
         expect { delete :destroy, params: { id: answer } }
@@ -97,7 +97,7 @@ describe AnswersController, type: :controller do
 
     context 'as authorized no Author' do
       it 'redirects to root' do
-        login(no_author)
+        login(user2)
 
         delete :destroy, params: { id: answer }
 
