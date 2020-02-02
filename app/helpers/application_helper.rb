@@ -6,7 +6,7 @@ module ApplicationHelper
     end
   end
 
-  def check_author(resource)
-    user_signed_in? && current_user.author_of?(resource)
+  def resource_author_present?(resource)
+    current_user&.author_of?(resource)
   end
 end

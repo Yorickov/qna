@@ -4,7 +4,7 @@ require 'rails_helper'
 
 describe QuestionsController, type: :controller do
   let(:user1) { create(:user_with_questions) }
-  let(:user2) { create(:user) }
+  let(:user2) { create(:user_with_questions) }
   let(:user1_question) { user1.questions.first }
 
   describe 'GET #index' do
@@ -55,8 +55,6 @@ describe QuestionsController, type: :controller do
   end
 
   describe 'POST #create' do
-    let(:question) { create(:question, user: user1) }
-
     context 'as User' do
       before { login(user1) }
 
@@ -69,7 +67,9 @@ describe QuestionsController, type: :controller do
         it 'saves as the question of correct user' do
           post :create, params: { question: attributes_for(:question) }
 
-          expect(Question.order(:created_at).last.user).to eq(user1)
+          question_author = Question.order(:created_at).last.user
+
+          expect(question_author).to eq(user1)
         end
 
         it 'redirects to show view' do
@@ -94,6 +94,11 @@ describe QuestionsController, type: :controller do
     end
 
     context 'as Guest' do
+      it 'does not save the question' do
+        expect { post :create, params: { question: attributes_for(:question) } }
+          .to_not change(Question, :count)
+      end
+
       it 'redirects to new session' do
         post :create, params: { question: attributes_for(:question) }
 
@@ -119,18 +124,32 @@ describe QuestionsController, type: :controller do
     end
 
     context 'as authorized no Author' do
-      it 'redirects to root' do
-        login(user2)
+      let!(:user2_question) { user2.questions.first }
 
-        delete :destroy, params: { id: user1_question }
+      before { login(user1) }
+
+      it 'does not delete the question' do
+        expect { delete :destroy, params: { id: user2_question } }
+          .to_not change(Question, :count)
+      end
+
+      it 'redirects to root' do
+        delete :destroy, params: { id: user2_question }
 
         expect(response).to redirect_to root_path
       end
     end
 
     context 'as Guest' do
+      let!(:user2_question) { user2.questions.first }
+
+      it 'does not delete the question' do
+        expect { delete :destroy, params: { id: user2_question } }
+          .to_not change(Question, :count)
+      end
+
       it 'redirects to new session' do
-        delete :destroy, params: { id: user1_question }
+        delete :destroy, params: { id: user2_question }
 
         expect(response).to redirect_to new_user_session_path
       end

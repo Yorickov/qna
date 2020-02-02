@@ -4,7 +4,7 @@
     hr
     p = @question.body
     hr
-    - if check_author(@question)
+    - if resource_author_present?(@question)
       = link_to t('.delete_question'),
                   question_path(@question),
                   method: :delete
