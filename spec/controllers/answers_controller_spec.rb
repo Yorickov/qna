@@ -4,12 +4,10 @@ require 'rails_helper'
 
 describe AnswersController, type: :controller do
   let(:user1) { create(:user_with_questions) }
-  let(:user2) { create(:user) }
+  let(:user2) { create(:user_with_questions) }
   let(:user1_question) { user1.questions.first }
 
   describe 'POST #create' do
-    let(:answer) { create(:answer) }
-
     context 'as User' do
       before { login(user1) }
 
@@ -30,7 +28,9 @@ describe AnswersController, type: :controller do
             answer: attributes_for(:answer)
           }
 
-          expect(Answer.order(:created_at).last.question).to eq(user1_question)
+          question = Answer.order(:created_at).last.question
+
+          expect(question).to eq(user1_question)
         end
 
         it 'redirects to show view' do
@@ -66,10 +66,20 @@ describe AnswersController, type: :controller do
     end
 
     context 'as Guest' do
+      it 'does not save the answer' do
+        expect do
+          post :create, params: {
+            question_id: user1_question,
+            answer: attributes_for(:answer)
+          }
+        end
+          .to change(Answer, :count).by(0)
+      end
+
       it 'redirects to new session' do
         post :create, params: {
           question_id: user1_question,
-          answer: attributes_for(:answer, :invalid)
+          answer: attributes_for(:answer)
         }
 
         expect(response).to redirect_to new_user_session_path
@@ -96,9 +106,14 @@ describe AnswersController, type: :controller do
     end
 
     context 'as authorized no Author' do
-      it 'redirects to root' do
-        login(user2)
+      before { login(user2) }
 
+      it 'does not delete the answer' do
+        expect { delete :destroy, params: { id: answer } }
+          .to_not change(Answer, :count)
+      end
+
+      it 'redirects to root' do
         delete :destroy, params: { id: answer }
 
         expect(response).to redirect_to root_path
@@ -106,6 +121,11 @@ describe AnswersController, type: :controller do
     end
 
     context 'as Guest' do
+      it 'does not delete the answer' do
+        expect { delete :destroy, params: { id: answer } }
+          .to_not change(Answer, :count)
+      end
+
       it 'redirects to new session' do
         delete :destroy, params: { id: answer }
 
