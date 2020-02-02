@@ -2,7 +2,7 @@ class AnswersController < ApplicationController
   before_action :authenticate_user!
   before_action :load_question, only: %i[create new]
   before_action :load_answer, only: %i[destroy]
-  before_action :check_authority, only: %i[destroy]
+  before_action :check_author, only: %i[destroy]
 
   def create
     @answer = current_user.answers.new(answer_params)
@@ -34,8 +34,8 @@ class AnswersController < ApplicationController
     params.require(:answer).permit(:body)
   end
 
-  def check_authority
-    return if current_user.entity_author?(@answer)
+  def check_author
+    return if current_user.author_of?(@answer)
 
     redirect_to root_path, notice: t('.wrong_author')
   end

@@ -7,7 +7,8 @@ en:
     confirm: Are you shure?
 
   forms:
-    submit: Send
+    submit_question: Send question
+    submit_answer: Send answer
 
   shared:
     navi:

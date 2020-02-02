@@ -7,7 +7,8 @@ ru:
     confirm: Вы уверены?
 
   forms:
-    submit: Отправить
+    submit_question: Отправить вопрос
+    submit_answer: Отправить ответ
 
   shared:
     navi:

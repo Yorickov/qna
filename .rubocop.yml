@@ -16,13 +16,16 @@ AllCops:
     - '.git/**/*'
     - Gemfile
 
+Lint/MissingCopEnableDirective:
+  Enabled: false
+
 Style/FrozenStringLiteralComment:
   Enabled: false
 
 Style/Documentation:
   Enabled: false
 
-Metrics/BlockLength:
+Layout/LineLength:
   Max: 100
 
 Style/ClassVars:
