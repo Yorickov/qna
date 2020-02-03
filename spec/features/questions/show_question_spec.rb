@@ -1,20 +1,18 @@
 require 'rails_helper'
 
 feature 'Guest can see questions and answers' do
-  given!(:user1) { create(:user_with_questions, questions_count: 1) }
-  given!(:user2) { create(:user_with_questions, questions_count: 1) }
+  given(:user) { create(:user_with_questions, questions_count: 1) }
+  given(:question) { user.questions.first }
+  given!(:answers) { create_list(:answer, 2, question: question, user: user) }
 
-  given!(:answer1) { create(:answer, question: user2.questions.first, user: user1) }
-  given!(:answer2) { create(:answer, question: user1.questions.first, user: user2) }
+  background { visit question_path(question) }
 
-  scenario 'Guest try to see question and answers to him' do
-    question = user1.questions.first
-
-    visit question_path(question)
-
+  scenario 'Guest try to see question' do
     expect(page).to have_content(question.title)
     expect(page).to have_content(question.body)
+  end
 
-    question.answers.each { |a| expect(page).to have_content(a.body) }
+  scenario 'Guest try to see answers to the question' do
+    answers.each { |answer| expect(page).to have_content(answer.body) }
   end
 end

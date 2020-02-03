@@ -67,9 +67,9 @@ describe QuestionsController, type: :controller do
         it 'saves as the question of correct user' do
           post :create, params: { question: attributes_for(:question) }
 
-          question_author = Question.order(:created_at).last.user
+          created_question = Question.order(:created_at).last
 
-          expect(question_author).to eq(user1)
+          expect(created_question.user).to eq(user1)
         end
 
         it 'redirects to show view' do

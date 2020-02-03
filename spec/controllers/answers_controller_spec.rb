@@ -28,9 +28,9 @@ describe AnswersController, type: :controller do
             answer: attributes_for(:answer)
           }
 
-          question = Answer.order(:created_at).last.question
+          created_answer = Answer.order(:created_at).last
 
-          expect(question).to eq(user1_question)
+          expect(created_answer.question).to eq(user1_question)
         end
 
         it 'redirects to show view' do
