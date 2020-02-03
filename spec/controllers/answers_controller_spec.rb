@@ -27,7 +27,6 @@ describe AnswersController, type: :controller do
             question_id: user1_question,
             answer: attributes_for(:answer)
           }
-
           created_answer = Answer.order(:created_at).last
 
           expect(created_answer.question).to eq(user1_question)
@@ -38,8 +37,9 @@ describe AnswersController, type: :controller do
             question_id: user1_question,
             answer: attributes_for(:answer)
           }
+          created_answer = Answer.order(:created_at).last
 
-          expect(response).to redirect_to user1_question
+          expect(response).to redirect_to created_answer.question
         end
       end
 
