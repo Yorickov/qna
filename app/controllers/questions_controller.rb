@@ -1,7 +1,7 @@
 class QuestionsController < ApplicationController
   before_action :authenticate_user!, except: %i[index show]
   before_action :load_question, only: %i[show destroy]
-  before_action :filter_user_by_authorship, only: %i[destroy]
+  before_action :ensure_current_user_is_question_author!, only: %i[destroy]
 
   def index
     @questions = Question.all
@@ -38,7 +38,7 @@ class QuestionsController < ApplicationController
     params.require(:question).permit(:title, :body)
   end
 
-  def filter_user_by_authorship
+  def ensure_current_user_is_question_author!
     return if current_user.author_of?(@question)
 
     redirect_to root_path, notice: t('.wrong_author')

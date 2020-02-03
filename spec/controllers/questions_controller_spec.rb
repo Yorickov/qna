@@ -66,7 +66,6 @@ describe QuestionsController, type: :controller do
 
         it 'saves as the question of correct user' do
           post :create, params: { question: attributes_for(:question) }
-
           created_question = Question.order(:created_at).last
 
           expect(created_question.user).to eq(user1)
@@ -74,8 +73,9 @@ describe QuestionsController, type: :controller do
 
         it 'redirects to show view' do
           post :create, params: { question: attributes_for(:question) }
+          created_question = Question.order(:created_at).last
 
-          expect(response).to redirect_to user1.questions.last
+          expect(response).to redirect_to created_question
         end
       end
 
