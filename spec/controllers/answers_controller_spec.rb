@@ -17,7 +17,7 @@ describe AnswersController, type: :controller do
             post :create, params: {
               question_id: user1_question,
               answer: attributes_for(:answer)
-            }
+            }, format: :js
           end
             .to change(Answer, :count).by(1)
         end
@@ -26,7 +26,7 @@ describe AnswersController, type: :controller do
           post :create, params: {
             question_id: user1_question,
             answer: attributes_for(:answer)
-          }
+          }, format: :js
           created_answer = Answer.order(:created_at).last
 
           expect(created_answer.question).to eq(user1_question)
@@ -36,10 +36,9 @@ describe AnswersController, type: :controller do
           post :create, params: {
             question_id: user1_question,
             answer: attributes_for(:answer)
-          }
-          created_answer = Answer.order(:created_at).last
+          }, format: :js
 
-          expect(response).to redirect_to created_answer.question
+          expect(response).to render_template :create
         end
       end
 
@@ -49,7 +48,7 @@ describe AnswersController, type: :controller do
             post :create, params: {
               question_id: user1_question,
               answer: attributes_for(:answer, :invalid)
-            }
+            }, format: :js
           end
             .to change(Answer, :count).by(0)
         end
@@ -58,9 +57,9 @@ describe AnswersController, type: :controller do
           post :create, params: {
             question_id: user1_question,
             answer: attributes_for(:answer, :invalid)
-          }
+          }, format: :js
 
-          expect(response).to render_template 'questions/show'
+          expect(response).to render_template :create
         end
       end
     end
@@ -85,6 +84,94 @@ describe AnswersController, type: :controller do
         expect(response).to redirect_to new_user_session_path
       end
     end
+  end
+
+  describe 'PATCH #update' do
+    let!(:answer) { create(:answer, question: user1_question, user: user1) }
+
+    context 'as authorized Author' do
+      before { login(user1) }
+
+      context 'with valid attributes' do
+        it 'changes answer attributes' do
+          patch :update, params: { id: answer, answer: { body: 'new body' } }, format: :js
+          answer.reload
+
+          expect(answer.body).to eq 'new body'
+        end
+
+        # it 'saves as the answer of correct question' do
+        #   post :create, params: {
+        #     question_id: user1_question,
+        #     answer: attributes_for(:answer)
+        #   }, format: :js
+        #   created_answer = Answer.order(:created_at).last
+
+        #   expect(created_answer.question).to eq(user1_question)
+        # end
+
+        it 'renders update view' do
+          patch :update, params: { id: answer, answer: { body: 'new body' } }, format: :js
+
+          expect(response).to render_template :update
+        end
+      end
+
+      context 'with invalid attributes' do
+        it 'does not change answer attributes' do
+          expect do
+            patch :update,
+                  params: { id: answer, answer: attributes_for(:answer, :invalid) },
+                  format: :js
+          end
+            .to_not change(answer, :body)
+        end
+
+        it 'renders update view' do
+          patch :update,
+                params: { id: answer, answer: attributes_for(:answer, :invalid) },
+                format: :js
+
+          expect(response).to render_template :update
+        end
+      end
+    end
+
+    # context 'as no authorized Author' do
+    #   before { login(user1) }
+
+    #     it 'redirects to show view' do
+    #       post :create, params: {
+    #         question_id: user1_question,
+    #         answer: attributes_for(:answer)
+    #       }, format: :js
+    #       # created_answer = Answer.order(:created_at).last
+
+    #       expect(response).to render_template :create
+    #     end
+    #   end
+    # end
+
+    # context 'as Guest' do
+    #   it 'does not save the answer' do
+    #     expect do
+    #       post :create, params: {
+    #         question_id: user1_question,
+    #         answer: attributes_for(:answer)
+    #       }
+    #     end
+    #       .to change(Answer, :count).by(0)
+    #   end
+
+    #   it 'redirects to new session' do
+    #     post :create, params: {
+    #       question_id: user1_question,
+    #       answer: attributes_for(:answer)
+    #     }
+
+    #     expect(response).to redirect_to new_user_session_path
+    #   end
+    # end
   end
 
   describe 'DELETE #destroy' do

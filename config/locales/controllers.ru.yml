@@ -7,8 +7,6 @@ ru:
       wrong_author: Вы не можете удалить чужой вопрос
 
   answers:
-    create:
-      success: Ответ успешно создан
     destroy:
       success: Ответ успешно удален
       wrong_author: Вы не можете удалить чужой ответ

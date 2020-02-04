@@ -7,8 +7,6 @@ en:
       wrong_author: Your can't delete another's question
 
   answers:
-    create:
-      success: Answer was successfully created
     destroy:
       success: Answer was successfully deleted
       wrong_author: Your can't delete another's answer

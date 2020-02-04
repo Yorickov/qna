@@ -18,6 +18,12 @@ ru:
       sign_up: Регистрация
       sign_in: Войти
       sign_out: Выйти
+    errors:
+      header:
+        one: Найдена %{count} ошибка
+        few: Найдены %{count} ошибки
+        many: Найдено %{count} ошибок
+        other: Найдено %{count} ошибки
 
   questions:
     new:
@@ -28,3 +34,4 @@ ru:
   answers:
     answer:
       delete_answer: Удалить ответ
+      edit_answer: Редактировать ответ

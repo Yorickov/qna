@@ -18,6 +18,10 @@ en:
       sign_up: Sign Up
       sign_in: Sign In
       sign_out: Sign Out
+    errors:
+      header:
+        one: Found %{count} mistake founded
+        other: Found %{count} mistakes founded
 
   questions:
     new:
@@ -28,3 +32,4 @@ en:
   answers:
     answer:
       delete_answer: Delete answer
+      edit_answer: Edit answer
