@@ -1,0 +1,9 @@
+document.querySelector('.answers-errors')
+  .insertAdjacentHTML('afterBegin', '<%= render 'shared/errors', resource: @answer %>');
+
+<% if @answer.persisted? %>
+  document.querySelector('.answers')
+    .insertAdjacentHTML('beforeEnd', '<%= j render @answer %>');
+
+  document.querySelector('#new_answer').reset();
+<% end %>
