@@ -50,7 +50,7 @@ describe AnswersController, type: :controller do
               answer: attributes_for(:answer, :invalid)
             }, format: :js
           end
-            .to change(Answer, :count).by(0)
+            .not_to change(Answer, :count)
         end
 
         it 're-renders new view' do
@@ -72,7 +72,7 @@ describe AnswersController, type: :controller do
             answer: attributes_for(:answer)
           }
         end
-          .to change(Answer, :count).by(0)
+          .not_to change(Answer, :count)
       end
 
       it 'redirects to new session' do
@@ -99,16 +99,6 @@ describe AnswersController, type: :controller do
 
           expect(answer.body).to eq 'new body'
         end
-
-        # it 'saves as the answer of correct question' do
-        #   post :create, params: {
-        #     question_id: user1_question,
-        #     answer: attributes_for(:answer)
-        #   }, format: :js
-        #   created_answer = Answer.order(:created_at).last
-
-        #   expect(created_answer.question).to eq(user1_question)
-        # end
 
         it 'renders update view' do
           patch :update, params: { id: answer, answer: { body: 'new body' } }, format: :js
@@ -137,41 +127,46 @@ describe AnswersController, type: :controller do
       end
     end
 
-    # context 'as no authorized Author' do
-    #   before { login(user1) }
+    context 'as no authorized Author' do
+      before { login(user2) }
 
-    #     it 'redirects to show view' do
-    #       post :create, params: {
-    #         question_id: user1_question,
-    #         answer: attributes_for(:answer)
-    #       }, format: :js
-    #       # created_answer = Answer.order(:created_at).last
+      it 'does not update the answer' do
+        expect do
+          patch :update,
+                params: { id: answer, answer: attributes_for(:answer, body: 'new body') },
+                format: :js
+        end
+          .to_not change(Answer, :count)
+      end
 
-    #       expect(response).to render_template :create
-    #     end
-    #   end
-    # end
+      it 'redirects to root' do
+        patch :update,
+              params: { id: answer, answer: attributes_for(:answer, body: 'new body') },
+              format: :js
 
-    # context 'as Guest' do
-    #   it 'does not save the answer' do
-    #     expect do
-    #       post :create, params: {
-    #         question_id: user1_question,
-    #         answer: attributes_for(:answer)
-    #       }
-    #     end
-    #       .to change(Answer, :count).by(0)
-    #   end
+        expect(response).to redirect_to root_path
+      end
+    end
 
-    #   it 'redirects to new session' do
-    #     post :create, params: {
-    #       question_id: user1_question,
-    #       answer: attributes_for(:answer)
-    #     }
+    context 'as Guest' do
+      it 'does not update the answer' do
+        expect do
+          patch :update,
+                params: { id: answer, answer: attributes_for(:answer, body: 'new body') },
+                format: :js
+        end
+          .to_not change(Answer, :count)
+      end
 
-    #     expect(response).to redirect_to new_user_session_path
-    #   end
-    # end
+      it 'no-authenticate message' do
+        patch :update,
+              params: { id: answer, answer: attributes_for(:answer, body: 'new body') },
+              format: :js
+
+        expect(response.status).to eq 401
+        expect(response.body).to eq t('devise.failure.unauthenticated')
+      end
+    end
   end
 
   describe 'DELETE #destroy' do

@@ -1,11 +1,7 @@
-<%# for every answer %>
-
-document.querySelector('.answers-errors')
+document.querySelector('<%= "#answer-node-#{@answer.id}" %>')
     .insertAdjacentHTML('afterBegin', '<%= render 'shared/errors', resource: @answer %>');
 
-<%# forrender one answer %>
-
 <% if !@answer.errors.present? %>
-  document.querySelector('.answers')
-    .innerHTML = '<%= j render @question.answers %>';
+  document.querySelector('<%= "#answer-node-#{@answer.id}" %>')
+    .innerHTML = '<%= j render @answer %>';
 <% end %>
