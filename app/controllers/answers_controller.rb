@@ -2,7 +2,7 @@ class AnswersController < ApplicationController
   before_action :authenticate_user!
   before_action :load_question, only: %i[create new]
   before_action :load_answer, only: %i[destroy update]
-  before_action :ensure_current_user_is_answer_author!, only: %i[destroy]
+  before_action :ensure_current_user_is_answer_author!, only: %i[update destroy]
 
   def create
     @answer = current_user.answers.new(answer_params)

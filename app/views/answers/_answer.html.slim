@@ -1,4 +1,4 @@
-li.pl-0.list-group-item
+li.pl-0.list-group-item(id="answer-node-#{answer.id}")
   p = answer.body
 
   - if current_user&.author_of?(answer) && answer.persisted?

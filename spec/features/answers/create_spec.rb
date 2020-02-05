@@ -34,13 +34,4 @@ feature 'Authenticated user can create answer' do
 
     expect(page).not_to have_content t('forms.submit_answer')
   end
-
-  scenario 'Authenticated user creates answer with errors', js: true do
-    sign_in(user)
-
-    visit question_path(question)
-    click_on t('forms.submit_answer')
-
-    expect(page).to have_content t('activerecord.errors.messages.blank')
-  end
 end
