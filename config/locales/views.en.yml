@@ -28,6 +28,7 @@ en:
       ask_question: Ask your question
     show:
       delete_question: Delete question
+      edit_question: Edit question
 
   answers:
     answer:

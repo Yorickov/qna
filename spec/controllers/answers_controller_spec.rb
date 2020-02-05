@@ -93,6 +93,13 @@ describe AnswersController, type: :controller do
       before { login(user1) }
 
       context 'with valid attributes' do
+        it 'assigns the requested answer to @answer' do
+          patch :update, params: { id: answer, answer: { body: 'new body' } }, format: :js
+          answer.reload
+
+          expect(assigns(:answer)).to eq answer
+        end
+
         it 'changes answer attributes' do
           patch :update, params: { id: answer, answer: { body: 'new body' } }, format: :js
           answer.reload
@@ -136,7 +143,7 @@ describe AnswersController, type: :controller do
                 params: { id: answer, answer: attributes_for(:answer, body: 'new body') },
                 format: :js
         end
-          .to_not change(Answer, :count)
+          .to_not change(answer, :body)
       end
 
       it 'redirects to root' do
@@ -155,7 +162,7 @@ describe AnswersController, type: :controller do
                 params: { id: answer, answer: attributes_for(:answer, body: 'new body') },
                 format: :js
         end
-          .to_not change(Answer, :count)
+          .to_not change(answer, :body)
       end
 
       it 'no-authenticate response' do

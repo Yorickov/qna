@@ -1,0 +1,16 @@
+document.querySelector('.question-node .question-node-errors ')
+  .innerHTML = '<%= render 'shared/errors', resource: @question %>';
+
+<% if !@question.errors.present? %>
+  document.querySelector('.question-node .question-title')
+    .innerHTML = '<%= @question.title %>';
+
+  document.querySelector('.question-node .question-body')
+    .innerHTML = '<%= @question.body %>';
+
+  document.querySelector('.question-node form')
+    .classList.add('hidden');
+
+  document.querySelector('.question-node .edit-question-link')
+    .classList.remove('hidden');
+<% end %>

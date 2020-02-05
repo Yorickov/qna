@@ -1,5 +1,5 @@
-document.querySelector('.answers-errors')
-  .insertAdjacentHTML('afterBegin', '<%= render 'shared/errors', resource: @answer %>');
+document.querySelector('.answer-form-errors')
+  .innerHTML = '<%= render 'shared/errors', resource: @answer %>';
 
 <% if @answer.persisted? %>
   document.querySelector('.answers')
