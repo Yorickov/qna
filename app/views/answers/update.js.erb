@@ -1,5 +1,5 @@
-document.querySelector('<%= "#answer-node-#{@answer.id}" %>')
-  .insertAdjacentHTML('afterBegin', '<%= render 'shared/errors', resource: @answer %>');
+document.querySelector('<%= "#answer-node-#{@answer.id}" %> .answer-node-errors')
+  .innerHTML = '<%= render 'shared/errors', resource: @answer %>';
 
 <% if !@answer.errors.present? %>
   document.querySelector('<%= "#answer-node-#{@answer.id}" %>')

@@ -1,13 +1,19 @@
 .row.pt-2.justify-content-center.mb-3
-  .col-10
-    h2 = @question.title
+  .col-10.question-node
+    .question-node-errors
+    h2.question-title = @question.title
     hr
-    p = @question.body
+    p.question-body = @question.body
     hr
     - if current_user&.author_of?(@question)
-      = link_to t('.delete_question'),
-                  question_path(@question),
-                  method: :delete
+      section.d-flex.justify-content-between.pt-4.mb-2
+        = link_to t('.delete_question'), question_path(@question), method: :delete
+        = link_to t('.edit_question'), '#', class: 'edit-question-link'
+
+      = simple_form_for @question, remote: true, html: { class: 'hidden edit-question-form' } do |f|
+        = f.input :title
+        = f.input :body
+        = f.button :submit, t('forms.submit_question'), class: 'btn btn-secondary'
 
 .row.pt-2.justify-content-center
   .col-10
@@ -16,6 +22,6 @@
 
 - if user_signed_in?
   .row.pt-2.justify-content-center
-    .col-10.answers-errors
-      = render 'shared/errors', resource: @answer
+    .col-10
+      .answer-form-errors
       = render 'answers/form', model: [@question, @answer ? @answer : Answer.new]

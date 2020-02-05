@@ -30,6 +30,7 @@ ru:
       ask_question: Задайте вопрос
     show:
       delete_question: Удалить вопрос
+      edit_question: Редактировать вопрос
 
   answers:
     answer:
