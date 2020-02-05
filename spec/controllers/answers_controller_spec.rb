@@ -158,7 +158,7 @@ describe AnswersController, type: :controller do
           .to_not change(Answer, :count)
       end
 
-      it 'no-authenticate message' do
+      it 'no-authenticate response' do
         patch :update,
               params: { id: answer, answer: attributes_for(:answer, body: 'new body') },
               format: :js
@@ -176,14 +176,14 @@ describe AnswersController, type: :controller do
       before { login(user1) }
 
       it 'deletes the answer' do
-        expect { delete :destroy, params: { id: answer } }
+        expect { delete :destroy, params: { id: answer }, format: :js }
           .to change(Answer, :count).by(-1)
       end
 
-      it 'redirects to show' do
-        delete :destroy, params: { id: answer }
+      it 'render destroy view' do
+        delete :destroy, params: { id: answer }, format: :js
 
-        expect(response).to redirect_to answer.question
+        expect(response).to render_template :destroy
       end
     end
 
@@ -191,12 +191,12 @@ describe AnswersController, type: :controller do
       before { login(user2) }
 
       it 'does not delete the answer' do
-        expect { delete :destroy, params: { id: answer } }
+        expect { delete :destroy, params: { id: answer }, format: :js }
           .to_not change(Answer, :count)
       end
 
       it 'redirects to root' do
-        delete :destroy, params: { id: answer }
+        delete :destroy, params: { id: answer }, format: :js
 
         expect(response).to redirect_to root_path
       end
@@ -204,14 +204,15 @@ describe AnswersController, type: :controller do
 
     context 'as Guest' do
       it 'does not delete the answer' do
-        expect { delete :destroy, params: { id: answer } }
+        expect { delete :destroy, params: { id: answer }, format: :js }
           .to_not change(Answer, :count)
       end
 
-      it 'redirects to new session' do
-        delete :destroy, params: { id: answer }
+      it 'no-authenticate response' do
+        delete :destroy, params: { id: answer }, format: :js
 
-        expect(response).to redirect_to new_user_session_path
+        expect(response.status).to eq 401
+        expect(response.body).to eq t('devise.failure.unauthenticated')
       end
     end
   end
