@@ -17,7 +17,7 @@ class AnswersController < ApplicationController
 
   def destroy
     @answer.destroy
-    redirect_to @answer.question, notice: t('.success')
+    @question = @answer.question
   end
 
   private
