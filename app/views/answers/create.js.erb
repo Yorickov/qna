@@ -1,5 +1,5 @@
 document.querySelector('.answer-form-errors')
-  .innerHTML = '<%= render 'shared/errors', resource: @answer %>';
+  .innerHTML = '<%= j render 'shared/errors', resource: @answer %>';
 
 <% if @answer.persisted? %>
   document.querySelector('.answers')
