@@ -10,6 +10,9 @@ en:
     submit_question: Send question
     submit_answer: Send answer
 
+  errors:
+    answers_count: No more then one best answer in the question
+
   shared:
     navi:
       title: QnA
@@ -34,3 +37,5 @@ en:
     answer:
       delete_answer: Delete answer
       edit_answer: Edit answer
+      choose_best: Best answer
+      best: This is the best answer

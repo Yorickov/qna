@@ -1,8 +1,9 @@
 class AnswersController < ApplicationController
   before_action :authenticate_user!
   before_action :load_question, only: %i[create new]
-  before_action :load_answer, only: %i[destroy update]
+  before_action :load_answer, only: %i[destroy update choose_best]
   before_action :ensure_current_user_is_answer_author!, only: %i[update destroy]
+  before_action :ensure_current_user_is_question_of_answer_author!, only: %i[choose_best]
 
   def create
     @answer = current_user.answers.new(answer_params)
@@ -17,6 +18,10 @@ class AnswersController < ApplicationController
 
   def destroy
     @answer.destroy
+  end
+
+  def choose_best
+    @current_best_answer = @answer.update_and_get_current_best!
   end
 
   private
@@ -35,6 +40,12 @@ class AnswersController < ApplicationController
 
   def ensure_current_user_is_answer_author!
     return if current_user.author_of?(@answer)
+
+    redirect_to root_path, notice: t('.wrong_author')
+  end
+
+  def ensure_current_user_is_question_of_answer_author!
+    return if current_user.author_of?(@answer.question)
 
     redirect_to root_path, notice: t('.wrong_author')
   end

@@ -1,0 +1,77 @@
+# rubocop:disable Metrics/BlockLength
+
+require 'rails_helper'
+
+feature 'User can choose one answer to his question as the best and redo' do
+  given(:user1) { create(:user_with_questions, questions_count: 1) }
+  given(:user2) { create(:user_with_questions, questions_count: 1) }
+  given(:user1_question) { user1.questions.first }
+  given(:user2_question) { user2.questions.first }
+
+  given!(:user1_answer) { create(:answer, question: user1_question, user: user1) }
+  given!(:user2_answer) { create(:answer, question: user1_question, user: user2) }
+
+  describe 'Authenticated user' do
+    scenario 'Picks best answer, then picks another anwer', js: true do
+      sign_in(user1)
+
+      visit question_path(user1_question)
+
+      within('.answers>li:first-child') do
+        expect(page).to have_content user1_answer.body
+        expect(page).not_to have_content t('answers.answer.best')
+        expect(page).to have_link t('answers.answer.choose_best')
+      end
+
+      within('.answers>li:last-child') do
+        expect(page).to have_content user2_answer.body
+        expect(page).not_to have_content t('answers.answer.best')
+        expect(page).to have_link t('answers.answer.choose_best')
+
+        click_on t('answers.answer.choose_best')
+      end
+
+      within('.answers>li:first-child') do
+        expect(page).to have_content user2_answer.body
+        expect(page).to have_content t('answers.answer.best')
+        expect(page).not_to have_link t('answers.answer.choose_best')
+      end
+
+      within('.answers>li:last-child') do
+        expect(page).to have_content user1_answer.body
+        expect(page).not_to have_content t('answers.answer.best')
+        expect(page).to have_link t('answers.answer.choose_best')
+
+        click_on t('answers.answer.choose_best')
+      end
+
+      within('.answers>li:first-child') do
+        expect(page).to have_content user1_answer.body
+        expect(page).to have_content t('answers.answer.best')
+        expect(page).not_to have_link t('answers.answer.choose_best')
+      end
+
+      within('.answers>li:last-child') do
+        expect(page).to have_content user2_answer.body
+        expect(page).not_to have_content t('answers.answer.best')
+        expect(page).to have_link t('answers.answer.choose_best')
+      end
+    end
+
+    scenario "Picks answer to another's question", js: true do
+      sign_in(user2)
+
+      visit question_path(user1_question)
+      within('.answers>li:last-child') do
+        expect(page).not_to have_link t('answers.answer.choose_best')
+      end
+    end
+  end
+
+  scenario 'Guest try to choose answer', js: true do
+    visit question_path(user1_question)
+    within('.answers>li:last-child') do
+      expect(page).not_to have_link t('answers.answer.choose_best')
+    end
+  end
+end
