@@ -1,5 +1,5 @@
 document.querySelector('.question-node .question-node-errors ')
-  .innerHTML = '<%= render 'shared/errors', resource: @question %>';
+  .innerHTML = '<%= j render 'shared/errors', resource: @question %>';
 
 <% if !@question.errors.present? %>
   document.querySelector('.question-node .question-title')
