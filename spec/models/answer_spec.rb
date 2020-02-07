@@ -42,6 +42,19 @@ describe Answer, type: :model do
     end
   end
 
+  describe 'Scopes: answers sortes by arrtibute best by default' do
+    let!(:answer1) { create(:answer, question: question, user: user) }
+    let!(:answer2) { create(:answer, question: question, user: user, best: true) }
+
+    it 'Best answer should be in first place' do
+      expect(question.answers.first).to eq answer2
+    end
+
+    it 'Best answer should be in last place' do
+      expect(question.answers.unscope(:order).first).to eq answer1
+    end
+  end
+
   describe 'Methods: question can have only one best answer' do
     let!(:answer1) { create(:answer, question: question, user: user) }
     let!(:answer2) { create(:answer, question: question, user: user, best: true) }

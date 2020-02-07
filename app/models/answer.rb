@@ -5,6 +5,8 @@ class Answer < ApplicationRecord
   validates :body, presence: true
   validate :validate_best_max_count
 
+  default_scope { order(best: :desc) }
+
   def update_and_get_current_best!
     best_answer = question.answers.find_by(best: true)
     best_answer&.update(best: false)
