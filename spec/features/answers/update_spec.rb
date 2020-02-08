@@ -38,6 +38,7 @@ feature 'Autenticated user can edit his answer' do
         click_on t('forms.submit_answer')
 
         expect(page).to have_content t('activerecord.errors.messages.blank')
+        expect(page).to have_content user1_answer.body
       end
     end
 

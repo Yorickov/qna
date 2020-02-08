@@ -112,19 +112,19 @@ describe QuestionsController, type: :controller do
       before { login(user1) }
 
       context 'with valid attributes' do
-        it 'assigns the requested question to @question' do
-          patch :update,
-                params: { id: user1_question, question: attributes_for(:question), format: :js }
+        before do
+          patch :update, params: {
+            id: user1_question,
+            question: attributes_for(:question, title: 'new title', body: 'new body'),
+            format: :js
+          }
+        end
 
+        it 'assigns the requested question to @question' do
           expect(assigns(:question)).to eq user1_question
         end
 
         it 'changes question attributes' do
-          patch :update, params: {
-            id: user1_question,
-            question: { title: 'new title', body: 'new body' },
-            format: :js
-          }
           user1_question.reload
 
           expect(user1_question.title).to eq 'new title'
@@ -132,26 +132,27 @@ describe QuestionsController, type: :controller do
         end
 
         it 'renders update view' do
-          patch :update,
-                params: { id: user1_question, question: attributes_for(:question), format: :js }
-
           expect(response).to render_template :update
         end
       end
 
       context 'with invalid attributes' do
+        before do
+          patch :update, params: {
+            id: user1_question,
+            question: attributes_for(:question, :invalid),
+            format: :js
+          }
+        end
+
         it 'does not change question' do
-          expect do
-            patch :update,
-                  params: { id: user1_question, question: attributes_for(:question), format: :js }
-          end
-            .to_not change(user1_question, :body)
+          original_body = user1_question.body
+          user1_question.reload
+
+          expect(user1_question.body).to eq original_body
         end
 
         it 're-renders edit view' do
-          patch :update,
-                params: { id: user1_question, question: attributes_for(:question), format: :js }
-
           expect(response).to render_template :update
         end
       end
@@ -159,36 +160,43 @@ describe QuestionsController, type: :controller do
 
     context 'as no authorized Author' do
       before { login(user2) }
+      before do
+        patch :update, params: {
+          id: user1_question,
+          question: attributes_for(:question, body: 'new body'),
+          format: :js
+        }
+      end
 
       it 'does not update the question' do
-        expect do
-          patch :update,
-                params: { id: user1_question, question: attributes_for(:question), format: :js }
-        end
-          .to_not change(user1_question, :body)
+        original_body = user1_question.body
+        user1_question.reload
+
+        expect(user1_question.body).to eq original_body
       end
 
       it 'redirects to root' do
-        patch :update,
-              params: { id: user1_question, question: attributes_for(:question), format: :js }
-
         expect(response).to redirect_to root_path
       end
     end
 
     context 'as Guest' do
+      before do
+        patch :update, params: {
+          id: user1_question,
+          question: attributes_for(:question, body: 'new body'),
+          format: :js
+        }
+      end
+
       it 'does not update the answer' do
-        expect do
-          patch :update,
-                params: { id: user1_question, question: attributes_for(:question), format: :js }
-        end
-          .to_not change(user1_question, :body)
+        original_body = user1_question.body
+        user1_question.reload
+
+        expect(user1_question.body).to eq original_body
       end
 
       it 'no-authenticate response' do
-        patch :update,
-              params: { id: user1_question, question: attributes_for(:question), format: :js }
-
         expect(response.status).to eq 401
         expect(response.body).to eq t('devise.failure.unauthenticated')
       end

@@ -35,6 +35,18 @@ describe AnswersController, type: :controller do
           expect(created_answer.question).to eq(user1_question)
         end
 
+        it 'saves as the answer of correct user' do
+          post :create, params: {
+            question_id: user1_question,
+            answer: attributes_for(:answer),
+            format: :js
+          }
+
+          created_answer = Answer.order(:created_at).last
+
+          expect(created_answer.user).to eq(user1)
+        end
+
         it 'redirects to show view' do
           post :create, params: {
             question_id: user1_question,
@@ -102,40 +114,42 @@ describe AnswersController, type: :controller do
       before { login(user1) }
 
       context 'with valid attributes' do
+        before { patch :update, params: { id: answer, answer: { body: 'new body' }, format: :js } }
+
         it 'assigns the requested answer to @answer' do
-          patch :update, params: { id: answer, answer: { body: 'new body' }, format: :js }
           answer.reload
 
           expect(assigns(:answer)).to eq answer
         end
 
         it 'changes answer attributes' do
-          patch :update, params: { id: answer, answer: { body: 'new body' }, format: :js }
           answer.reload
 
           expect(answer.body).to eq 'new body'
         end
 
         it 'renders update view' do
-          patch :update, params: { id: answer, answer: { body: 'new body' }, format: :js }
-
           expect(response).to render_template :update
         end
       end
 
       context 'with invalid attributes' do
+        before do
+          patch :update, params: {
+            id: answer,
+            answer: attributes_for(:answer, :invalid),
+            format: :js
+          }
+        end
+
         it 'does not change answer attributes' do
-          expect do
-            patch :update,
-                  params: { id: answer, answer: attributes_for(:answer, :invalid), format: :js }
-          end
-            .to_not change(answer, :body)
+          original_body = answer.body
+          answer.reload
+
+          expect(answer.body).to eq original_body
         end
 
         it 'renders update view' do
-          patch :update,
-                params: { id: answer, answer: attributes_for(:answer, :invalid), format: :js }
-
           expect(response).to render_template :update
         end
       end
@@ -143,45 +157,43 @@ describe AnswersController, type: :controller do
 
     context 'as no authorized Author' do
       before { login(user2) }
-
-      it 'does not update the answer' do
-        expect do
-          patch :update, params: {
-            id: answer,
-            answer: attributes_for(:answer, body: 'new body'),
-            format: :js
-          }
-        end
-          .to_not change(answer, :body)
-      end
-
-      it 'redirects to root' do
+      before do
         patch :update, params: {
           id: answer,
           answer: attributes_for(:answer, body: 'new body'),
           format: :js
         }
+      end
 
+      it 'does not update the answer' do
+        original_body = answer.body
+        answer.reload
+
+        expect(answer.body).to eq original_body
+      end
+
+      it 'redirects to root' do
         expect(response).to redirect_to root_path
       end
     end
 
     context 'as Guest' do
+      before do
+        patch :update, params: {
+          id: answer,
+          answer: attributes_for(:answer, body: 'new body'),
+          format: :js
+        }
+      end
+
       it 'does not update the answer' do
-        expect do
-          patch :update, params: {
-            id: answer,
-            answer: attributes_for(:answer, body: 'new body'),
-            format: :js
-          }
-        end
-          .to_not change(answer, :body)
+        original_body = answer.body
+        answer.reload
+
+        expect(answer.body).to eq original_body
       end
 
       it 'no-authenticate response' do
-        patch :update,
-              params: { id: answer, answer: attributes_for(:answer, body: 'new body'), format: :js }
-
         expect(response.status).to eq 401
         expect(response.body).to eq t('devise.failure.unauthenticated')
       end
@@ -251,19 +263,11 @@ describe AnswersController, type: :controller do
           expect(assigns(:answer)).to eq answer2
         end
 
-        it 'assigns the current best answer to @answer' do
-          answer1.update(best: true)
-          patch :choose_best, params: { id: answer2, format: :js }
-          [answer1, answer2].each(&:reload)
-
-          expect(assigns(:current_best_answer)).to eq answer1
-        end
-
         it 'changes answer attributes' do
           patch :choose_best, params: { id: answer2, format: :js }
           answer2.reload
 
-          expect(answer2.best).to be true
+          expect(answer2).to be_best
         end
 
         it 'swap value best attribute' do
@@ -271,8 +275,8 @@ describe AnswersController, type: :controller do
           patch :choose_best, params: { id: answer2, format: :js }
           [answer1, answer2].each(&:reload)
 
-          expect(answer2.best).to be true
-          expect(answer1.best).to be false
+          expect(answer2).to be_best
+          expect(answer1).not_to be_best
         end
 
         it 'renders update view' do
@@ -285,28 +289,31 @@ describe AnswersController, type: :controller do
 
     context 'as no authorized Author' do
       before { login(user2) }
+      before { patch :choose_best, params: { id: answer2, format: :js } }
 
       it 'does not update the answer' do
-        expect { patch :choose_best, params: { id: answer2, format: :js } }
-          .to_not change(answer2, :best)
+        original_body = answer2.body
+        answer2.reload
+
+        expect(answer2.body).to eq original_body
       end
 
       it 'redirects to root' do
-        patch :choose_best, params: { id: answer2, format: :js }
-
         expect(response).to redirect_to root_path
       end
     end
 
     context 'as Guest' do
+      before { patch :choose_best, params: { id: answer2, format: :js } }
+
       it 'does not update the answer' do
-        expect { patch :choose_best, params: { id: answer2, format: :js } }
-          .to_not change(answer2, :best)
+        original_body = answer2.body
+        answer2.reload
+
+        expect(answer2.body).to eq original_body
       end
 
       it 'no-authenticate response' do
-        patch :choose_best, params: { id: answer2, format: :js }
-
         expect(response.status).to eq 401
         expect(response.body).to eq t('devise.failure.unauthenticated')
       end
