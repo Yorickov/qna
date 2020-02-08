@@ -47,11 +47,11 @@ describe Answer, type: :model do
     let!(:answer2) { create(:answer, question: question, user: user, best: true) }
     let!(:answer3) { create(:answer, question: question, user: user) }
 
-    it 'Best answer should be and others are sorted' do
+    it 'Best answer should be first and others are sorted' do
       expect(question.answers).to eq [answer2, answer1, answer3]
     end
 
-    it 'Best answer should be in last place' do
+    it 'Best answer should be in the original place' do
       expect(question.answers.unscope(:order)).to eq [answer1, answer2, answer3]
     end
   end
