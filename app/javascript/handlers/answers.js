@@ -1,8 +1,8 @@
-const answerHandler = (e) => {
-  const { target } = e;
+const answerHandler = (event) => {
+  const { target } = event;
   if (!target.classList.contains('edit-answer-link')) return;
 
-  e.preventDefault();
+  event.preventDefault();
 
   const answerId = target.dataset.answerId;
   const form = document.querySelector(`form#edit-answer-${answerId}`);

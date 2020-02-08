@@ -1,7 +1,7 @@
-const questionHandler = (e) => {
-  e.preventDefault();
+const questionHandler = (event) => {
+  event.preventDefault();
 
-  const { target } = e;
+  const { target } = event;
   const form = document.querySelector('.question-node .edit-question-form');
 
   target.classList.add('hidden');

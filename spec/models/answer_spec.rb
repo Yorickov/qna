@@ -47,11 +47,11 @@ describe Answer, type: :model do
     let!(:answer2) { create(:answer, question: question, user: user, best: true) }
 
     it 'Best answer should be in first place' do
-      expect(question.answers.first).to eq answer2
+      expect(question.answers).to eq [answer2, answer1]
     end
 
     it 'Best answer should be in last place' do
-      expect(question.answers.unscope(:order).first).to eq answer1
+      expect(question.answers.unscope(:order)).to eq [answer1, answer2]
     end
   end
 
@@ -64,8 +64,8 @@ describe Answer, type: :model do
     it 'Should swap answers as the best' do
       [answer1, answer2].each(&:reload)
 
-      expect(answer1.best).to be true
-      expect(answer2.best).to be false
+      expect(answer1).to be_best
+      expect(answer2).not_to be_best
     end
 
     it 'Should return previous best answer' do

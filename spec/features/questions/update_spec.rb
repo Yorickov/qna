@@ -37,6 +37,7 @@ feature 'Only author can edit his question' do
       click_on t('forms.submit_question')
 
       expect(page).to have_content t('activerecord.errors.messages.blank')
+      expect(page).to have_content user1_question.body
     end
 
     scenario "edits another's question", js: true do
