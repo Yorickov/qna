@@ -1,10 +1,2 @@
-<% if @current_best_answer %>
-  document.querySelector('li[data-answer-node-id="<%= @current_best_answer.id %>"]')
-    .innerHTML = '<%= j render "answer", answer: @current_best_answer %>';
-<% end %>
-
-document.querySelector('li[data-answer-node-id="<%= @answer.id %>"]')
-  .innerHTML = '<%= j render @answer %>';
-
-document.querySelector('.answers')
-  .prepend(document.querySelector('li[data-answer-node-id="<%= @answer.id %>"]'));
+var answersNode = document.querySelector('.answers');
+answersNode.innerHTML = '<%= j render @question.answers %>';

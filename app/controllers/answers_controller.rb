@@ -21,7 +21,8 @@ class AnswersController < ApplicationController
   end
 
   def choose_best
-    @current_best_answer = @answer.update_and_get_current_best!
+    @answer.update_to_best!
+    @question = @answer.question
   end
 
   private
