@@ -13,7 +13,7 @@ feature 'Only author can edit his question' do
 
     scenario 'edits his question', js: true do
       visit question_path(user1_question)
-      click_on t('questions.show.edit_question')
+      click_on t('questions.question_body.edit_question')
 
       within '.question-node' do
         fill_in t('activerecord.attributes.question.title'), with: 'edited title'
@@ -30,7 +30,7 @@ feature 'Only author can edit his question' do
 
     scenario 'edits his question with errors', js: true do
       visit question_path(user1_question)
-      click_on t('questions.show.edit_question')
+      click_on t('questions.question_body.edit_question')
 
       fill_in t('activerecord.attributes.question.title'), with: 'edited title'
       fill_in t('activerecord.attributes.question.body'), with: ''
@@ -44,7 +44,7 @@ feature 'Only author can edit his question' do
       visit question_path(user2_question)
 
       expect(page).to have_content user2_question.body
-      expect(page).not_to have_content t('questions.show.edit_question')
+      expect(page).not_to have_content t('questions.question_body.edit_question')
     end
   end
 
@@ -52,6 +52,6 @@ feature 'Only author can edit his question' do
     visit question_path(user1_question)
 
     expect(page).to have_content user1_question.body
-    expect(page).not_to have_content t('questions.show.edit_question')
+    expect(page).not_to have_content t('questions.question_body.edit_question')
   end
 end

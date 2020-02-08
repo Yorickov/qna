@@ -1,4 +1,4 @@
-- if resource.present? && resource.errors.any?
+- if resource&.errors.any?
   = content_tag :div do
     h4 = t('.header', count: resource.errors.count)
     ul

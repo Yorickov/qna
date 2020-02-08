@@ -1,2 +1,2 @@
-document.querySelector('li[data-answer-node-id="<%= @answer.id %>"]')
-  .remove();
+var answerNode = document.querySelector('li[data-answer-node-id="<%= @answer.id %>"]');
+answerNode.remove();
