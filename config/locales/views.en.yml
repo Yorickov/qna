@@ -29,9 +29,9 @@ en:
   questions:
     new:
       ask_question: Ask your question
-    show:
-      delete_question: Delete question
-      edit_question: Edit question
+      question_body:
+        delete_question: Delete question
+        edit_question: Edit question
 
   answers:
     answer:

@@ -13,7 +13,7 @@ feature 'Autenticated user can delete only his question' do
 
       expect(page).to have_content user1_question.title
 
-      click_on t('questions.show.delete_question')
+      click_on t('questions.question_body.delete_question')
 
       expect(page).not_to have_content user1_question.title
       expect(page).to have_content t('questions.destroy.success')
@@ -22,13 +22,13 @@ feature 'Autenticated user can delete only his question' do
     scenario "Another's question" do
       visit question_path(user2.questions.first)
 
-      expect(page).not_to have_content t('questions.show.delete_question')
+      expect(page).not_to have_content t('questions.question_body.delete_question')
     end
   end
 
   scenario 'Guest try to delete question' do
     visit question_path(user1_question)
 
-    expect(page).not_to have_content t('questions.show.delete_question')
+    expect(page).not_to have_content t('questions.question_body.delete_question')
   end
 end

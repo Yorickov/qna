@@ -31,7 +31,7 @@ ru:
   questions:
     new:
       ask_question: Задайте вопрос
-    show:
+    question_body:
       delete_question: Удалить вопрос
       edit_question: Редактировать вопрос
 

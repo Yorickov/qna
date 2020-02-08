@@ -2,11 +2,11 @@ li.pl-0.list-group-item(data-answer-node-id="#{answer.id}")
   .answer-node-errors
   p = answer.body
 
-  - if answer.best
+  - if answer.best?
     .text-center.best-answer
       = t('.best')
 
-  - if !answer.best && current_user&.author_of?(answer.question)
+  - if !answer.best? && current_user&.author_of?(answer.question)
     = link_to t('.choose_best'), choose_best_answer_path(answer), class: 'best-answer-link', method: :patch, remote: true
 
   - if current_user&.author_of?(answer) && answer.persisted?

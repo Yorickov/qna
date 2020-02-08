@@ -1,7 +1,7 @@
-document.querySelector('li[data-answer-node-id="<%= @answer.id %>"] .answer-node-errors')
-  .innerHTML = '<%= j render 'shared/errors', resource: @answer %>';
+var answerErrorsNode = document.querySelector('li[data-answer-node-id="<%= @answer.id %>"] .answer-node-errors');
+answerErrorsNode.innerHTML = '<%= j render 'shared/errors', resource: @answer %>';
 
-<% if !@answer.errors.present? %>
-  document.querySelector('li[data-answer-node-id="<%= @answer.id %>"]')
-    .innerHTML = '<%= j render @answer %>';
+<% if @answer.errors.blank? %>
+  var answerNode = document.querySelector('li[data-answer-node-id="<%= @answer.id %>"]');
+  answerNode.innerHTML = '<%= j render @answer %>';
 <% end %>
