@@ -18,15 +18,6 @@ module Qna
     config.time_zone = 'Europe/Minsk'
     config.i18n.default_locale = :ru
 
-    # remove active-storage action-mailer action-mailbox from rails routes
-    initializer(
-      :remove_action_mailbox_and_activestorage_routes,
-      after: :add_routing_paths
-    ) do |app|
-      app.routes_reloader.paths.delete_if { |path| path =~ /activestorage/ }
-      app.routes_reloader.paths.delete_if { |path| path =~ /actionmailbox/ }
-    end
-
     # config generators for tests
     config.generators do |g|
       g.test_framework :rspec,

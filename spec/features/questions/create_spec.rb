@@ -1,3 +1,5 @@
+# rubocop:disable Metrics/BlockLength
+
 require 'rails_helper'
 
 feature 'User can create question' do
@@ -25,6 +27,20 @@ feature 'User can create question' do
       click_on t('forms.submit_question')
 
       expect(page).to have_content t('activerecord.errors.messages.blank')
+    end
+
+    scenario 'asks a question with attached file' do
+      fill_in t('activerecord.attributes.question.title'), with: 'Test question'
+      fill_in t('activerecord.attributes.question.body'),  with: 'question text'
+
+      attach_file 'Files', [
+        "#{Rails.root}/spec/rails_helper.rb",
+        "#{Rails.root}/spec/spec_helper.rb"
+      ]
+      click_on t('forms.submit_question')
+
+      expect(page).to have_link 'rails_helper.rb'
+      expect(page).to have_link 'spec_helper.rb'
     end
   end
 

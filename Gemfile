@@ -70,6 +70,7 @@ group :test do
   gem 'shoulda-matchers'
   gem 'capybara-email'
   gem 'faker', git: 'https://github.com/faker-ruby/faker.git', branch: 'master'
+  gem 'i18n-debug', '~> 1.2'
 end
 
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem
