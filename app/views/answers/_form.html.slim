@@ -1,3 +1,5 @@
 = simple_form_for model, remote: true do |f|
   = f.input :body
-  = f.button :submit, t('forms.submit_answer'), class: 'btn btn-secondary'
+  p = f.label :files
+  p = f.file_field :files, multiple: true
+  p = f.button :submit, t('forms.submit_answer'), class: 'btn btn-secondary'

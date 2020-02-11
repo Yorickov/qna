@@ -1,3 +1,5 @@
+# rubocop:disable Metrics/BlockLength
+
 require 'rails_helper'
 
 feature 'Authenticated user can create answer' do
@@ -18,6 +20,19 @@ feature 'Authenticated user can create answer' do
       within '.answers' do
         expect(page).to have_content 'answer text'
       end
+    end
+
+    scenario 'Create Answer with attached file', js: true do
+      fill_in t('activerecord.attributes.answer.body'), with: 'answer text'
+
+      attach_file 'Files', [
+        "#{Rails.root}/spec/rails_helper.rb",
+        "#{Rails.root}/spec/spec_helper.rb"
+      ]
+      click_on t('forms.submit_answer')
+
+      expect(page).to have_link 'rails_helper.rb'
+      expect(page).to have_link 'spec_helper.rb'
     end
 
     scenario 'Create Answer with errors', js: true do

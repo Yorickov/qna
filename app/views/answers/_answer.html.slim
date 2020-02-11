@@ -2,6 +2,10 @@ li.pl-0.list-group-item(data-answer-node-id="#{answer.id}")
   .answer-node-errors
   p = answer.body
 
+  - if answer.files.attached?
+    - answer.files.each do |file|
+      p = link_to file.filename.to_s, url_for(file)
+
   - if answer.best?
     .text-center.best-answer
       = t('.best')
