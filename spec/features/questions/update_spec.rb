@@ -11,7 +11,7 @@ feature 'Only author can edit his question' do
   describe 'Authenticated user' do
     background { sign_in(user1) }
 
-    scenario 'edits his question', js: true do
+    scenario 'edits his question by changing title and body', js: true do
       visit question_path(user1_question)
       click_on t('questions.question_body.edit_question')
 
@@ -25,6 +25,23 @@ feature 'Only author can edit his question' do
         expect(page).to have_content 'edited title'
         expect(page).to have_content 'edited body'
         expect(page).to_not have_selector 'textarea'
+      end
+    end
+
+    scenario 'edits his question by attaching files', js: true do
+      visit question_path(user1_question)
+      click_on t('questions.question_body.edit_question')
+
+      within '.question-node' do
+        fill_in t('activerecord.attributes.question.body'), with: 'edited body'
+        attach_file 'Files', [
+          "#{Rails.root}/spec/rails_helper.rb",
+          "#{Rails.root}/spec/spec_helper.rb"
+        ]
+        click_on t('forms.submit_question')
+
+        expect(page).to have_link 'rails_helper.rb'
+        expect(page).to have_link 'spec_helper.rb'
       end
     end
 
