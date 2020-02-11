@@ -15,7 +15,7 @@ feature 'Autenticated user can edit his answer' do
   describe 'Authenticated user' do
     background { sign_in(user1) }
 
-    scenario 'edits his answer', js: true do
+    scenario 'edits his answer by changing body', js: true do
       visit question_path(user2_question)
       click_on t('answers.answer.edit_answer')
 
@@ -26,6 +26,23 @@ feature 'Autenticated user can edit his answer' do
         expect(page).to_not have_content user1_answer.body
         expect(page).to have_content 'edited answer'
         expect(page).to_not have_selector 'textarea'
+      end
+    end
+
+    scenario 'edits his answer by adding files', js: true do
+      visit question_path(user2_question)
+      click_on t('answers.answer.edit_answer')
+
+      within '.answers' do
+        fill_in t('activerecord.attributes.answer.body'), with: 'edited answer'
+        attach_file 'Files', [
+          "#{Rails.root}/spec/rails_helper.rb",
+          "#{Rails.root}/spec/spec_helper.rb"
+        ]
+        click_on t('forms.submit_answer')
+
+        expect(page).to have_link 'rails_helper.rb'
+        expect(page).to have_link 'spec_helper.rb'
       end
     end
 

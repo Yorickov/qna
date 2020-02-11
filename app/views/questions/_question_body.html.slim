@@ -9,7 +9,7 @@ p.question-body = question.body
 
 - if current_user&.author_of?(question)
   section.d-flex.justify-content-between.mb-2
-    = link_to t('.delete_question'), question_path(question), method: :delete
+    = link_to t('.delete_question'), question_path(question), method: :delete,  data: { confirm: 'Are you sure?' }
     = link_to t('.edit_question'), '#', class: 'edit-question-link'
 
   = simple_form_for question, remote: true, html: { class: 'hidden edit-question-form' } do |f|
