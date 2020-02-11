@@ -1,7 +1,7 @@
 var questionErrorsNode = document.querySelector('.question-node .question-node-errors ');
-questionErrorsNode.innerHTML = '<%= j render 'shared/errors', resource: @question %>';
+questionErrorsNode.innerHTML = '<%= j render 'shared/errors', resource: question %>';
 
 <% if @question.errors.blank? %>
   var questionNode = document.querySelector('.question-node');
-  questionNode.innerHTML = '<%= j render 'question_body', question: @question %>';
+  questionNode.innerHTML = '<%= j render 'question_body', question: question %>';
 <% end %>

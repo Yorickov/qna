@@ -1,14 +1,14 @@
 .row.pt-2.justify-content-center
   .col-10.question-node
-    = render 'question_body', question: @question
+    = render 'question_body', question: question
 
 .row.pt-2.justify-content-center
   .col-10
     ul.list-group.list-group-flush.answers
-      = render @question.answers
+      = render question.answers
 
 - if user_signed_in?
   .row.pt-2.justify-content-center
     .col-10
       .answer-form-errors
-      = render 'answers/form', model: [@question, @answer ? @answer : Answer.new]
+      = render 'answers/form', model: [question, @answer ? @answer : Answer.new]

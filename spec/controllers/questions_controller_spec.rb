@@ -22,10 +22,6 @@ describe QuestionsController, type: :controller do
   describe 'GET #show' do
     before { get :show, params: { id: user1_question } }
 
-    it 'assigns the requested question to @question' do
-      expect(assigns(:question)).to eq user1_question
-    end
-
     it 'renders show view' do
       expect(response).to render_template :show
     end
