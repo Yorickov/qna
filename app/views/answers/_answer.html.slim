@@ -19,5 +19,5 @@ li.pl-0.list-group-item(data-answer-node-id="#{answer.id}")
     = simple_form_for answer, remote: true, html: { class: 'hidden', id: "edit-answer-#{answer.id}" } do |f|
       = f.input :body
       p = f.label :files
-      p = f.file_field :files, multiple: true
+      p = f.file_field :files, multiple: true, html: { class: 'files' }, direct_upload: true
       = f.button :submit, t('forms.submit_answer'), class: 'btn btn-secondary'

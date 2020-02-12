@@ -11,4 +11,5 @@
   .row.pt-2.justify-content-center
     .col-10
       .answer-form-errors
-      = render 'answers/form', model: [question, @answer ? @answer : Answer.new]
+      .answer-form
+        = render 'answers/form'

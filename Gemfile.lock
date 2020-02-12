@@ -47,11 +47,6 @@ GEM
       erubi (~> 1.4)
       rails-dom-testing (~> 2.0)
       rails-html-sanitizer (~> 1.1, >= 1.2.0)
-    active_model_serializers (0.10.10)
-      actionpack (>= 4.1, < 6.1)
-      activemodel (>= 4.1, < 6.1)
-      case_transform (>= 0.2)
-      jsonapi-renderer (>= 0.1.1.beta1, < 0.3)
     activejob (6.0.2.1)
       activesupport (= 6.0.2.1)
       globalid (>= 0.3.6)
@@ -73,6 +68,22 @@ GEM
       zeitwerk (~> 2.2)
     addressable (2.7.0)
       public_suffix (>= 2.0.2, < 5.0)
+    aws-eventstream (1.0.3)
+    aws-partitions (1.272.0)
+    aws-sdk-core (3.89.1)
+      aws-eventstream (~> 1.0, >= 1.0.2)
+      aws-partitions (~> 1, >= 1.239.0)
+      aws-sigv4 (~> 1.1)
+      jmespath (~> 1.0)
+    aws-sdk-kms (1.29.0)
+      aws-sdk-core (~> 3, >= 3.71.0)
+      aws-sigv4 (~> 1.1)
+    aws-sdk-s3 (1.60.2)
+      aws-sdk-core (~> 3, >= 3.83.0)
+      aws-sdk-kms (~> 1)
+      aws-sigv4 (~> 1.1)
+    aws-sigv4 (1.1.0)
+      aws-eventstream (~> 1.0, >= 1.0.2)
     bcrypt (3.1.13)
     bcrypt (3.1.13-java)
     bindex (0.8.1)
@@ -93,8 +104,6 @@ GEM
     capybara-email (3.0.1)
       capybara (>= 2.4, < 4.0)
       mail
-    case_transform (0.2)
-      activesupport
     childprocess (3.0.0)
     concurrent-ruby (1.1.5)
     crass (1.0.6)
@@ -125,7 +134,7 @@ GEM
       i18n (< 2)
     jbuilder (2.9.1)
       activesupport (>= 4.2.0)
-    jsonapi-renderer (0.2.2)
+    jmespath (1.4.0)
     launchy (2.4.3)
       addressable (~> 2.3)
     launchy (2.4.3-java)
@@ -323,7 +332,7 @@ PLATFORMS
 
 DEPENDENCIES
   aasm
-  active_model_serializers (~> 0.10.10)
+  aws-sdk-s3
   bootsnap (>= 1.4.2)
   byebug
   capybara (>= 2.15)

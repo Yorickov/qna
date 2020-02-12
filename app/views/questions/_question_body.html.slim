@@ -14,6 +14,6 @@ p.question-body = question.body
     = f.input :title
     = f.input :body
     p = f.label :files
-    p = f.file_field :files, multiple: true
+    p = f.file_field :files, multiple: true, direct_upload: true
     = f.button :submit, t('forms.submit_question'), class: 'btn btn-secondary'
 hr
