@@ -1,0 +1,8 @@
+.attachments
+  - if resource.files.attached?
+    - resource.files.each do |file|
+      p(data-attachment-id="#{file.id}")
+        = link_to file.filename.to_s, url_for(file)
+        span = ' '
+        - if current_user&.author_of?(resource)
+          = link_to t('.delete_attachment'), attachment_path(file), method: :delete, remote: true

@@ -32,7 +32,6 @@ en:
       question_body:
         delete_question: Delete question
         edit_question: Edit question
-        delete_attachment: Delete file
 
   answers:
     answer:
@@ -40,3 +39,7 @@ en:
       edit_answer: Edit answer
       choose_best: Best answer
       best: This is the best answer
+
+  attachments:
+    attachment:
+      delete_attachment: Delete file

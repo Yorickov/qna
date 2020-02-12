@@ -34,7 +34,6 @@ ru:
     question_body:
       delete_question: Удалить вопрос
       edit_question: Редактировать вопрос
-      delete_attachment: Удалить файл
 
   answers:
     answer:
@@ -42,3 +41,6 @@ ru:
       edit_answer: Редактировать ответ
       choose_best: Лучший ответ
       best: Это лучший ответ
+  attachments:
+    attachment:
+      delete_attachment: Удалить файл

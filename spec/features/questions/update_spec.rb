@@ -34,12 +34,16 @@ feature 'Only author can edit his question' do
       click_on t('questions.question_body.edit_question')
 
       within '.question-node' do
-        fill_in t('activerecord.attributes.question.body'), with: 'edited body'
+        expect(page).not_to have_link 'test-image1.png'
+        expect(page).not_to have_link 'test-image2.png'
+
         attach_file 'Files', [
           "#{Rails.root}/spec/rails_helper.rb",
           "#{Rails.root}/spec/spec_helper.rb"
         ]
+
         click_on t('forms.submit_question')
+        sleep 1
 
         expect(page).to have_link 'rails_helper.rb'
         expect(page).to have_link 'spec_helper.rb'
@@ -53,7 +57,8 @@ feature 'Only author can edit his question' do
       expect(page).to have_link 'test-image2.png'
 
       within('.attachments>p:last-child') do
-        click_on t('questions.question_body.delete_attachment')
+        click_on t('attachments.attachment.delete_attachment')
+        sleep 1
       end
 
       expect(page).to have_link 'test-image1.png'
@@ -77,7 +82,7 @@ feature 'Only author can edit his question' do
 
       expect(page).to have_content question_with_files2.body
       expect(page).not_to have_content t('questions.question_body.edit_question')
-      expect(page).not_to have_link t('questions.question_body.delete_attachment')
+      expect(page).not_to have_link t('attachments.attachment.delete_attachment')
     end
   end
 
@@ -86,6 +91,6 @@ feature 'Only author can edit his question' do
 
     expect(page).to have_content question_with_files1.body
     expect(page).not_to have_content t('questions.question_body.edit_question')
-    expect(page).not_to have_link t('questions.question_body.delete_attachment')
+    expect(page).not_to have_link t('attachments.attachment.delete_attachment')
   end
 end
