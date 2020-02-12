@@ -13,7 +13,7 @@ li.pl-0.list-group-item(data-answer-node-id="#{answer.id}")
 
   - if current_user&.author_of?(answer) && answer.persisted?
     section.d-flex.justify-content-between
-      = link_to t('.delete_answer'), answer_path(answer), method: :delete, remote: true
+      = link_to t('.delete_answer'), answer_path(answer), method: :delete, data: { confirm: 'Are you sure?' }, remote: true
       = link_to t('.edit_answer'), '#', class: 'edit-answer-link', data: { answer_id: answer.id }
 
     = simple_form_for answer, remote: true, html: { class: 'hidden', id: "edit-answer-#{answer.id}" } do |f|

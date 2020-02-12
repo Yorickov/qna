@@ -58,6 +58,7 @@ feature 'Only author can edit his question' do
 
       within('.attachments>p:last-child') do
         click_on t('attachments.attachment.delete_attachment')
+        page.driver.browser.switch_to.alert.accept
         sleep 1
       end
 

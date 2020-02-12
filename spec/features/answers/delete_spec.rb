@@ -1,3 +1,5 @@
+# rubocop:disable Metrics/BlockLength
+
 require 'rails_helper'
 
 feature 'Autenticated user can delete only his answers' do
@@ -19,6 +21,7 @@ feature 'Autenticated user can delete only his answers' do
       expect(page).to have_content user1_answer.body
 
       click_on t('answers.answer.delete_answer')
+      page.driver.browser.switch_to.alert.accept
 
       expect(page).not_to have_content user1_answer.body
     end
