@@ -6,7 +6,8 @@ feature 'Only author can edit his question' do
   given(:user1) { create(:user_with_questions, questions_count: 1) }
   given(:user2) { create(:user_with_questions, questions_count: 1) }
   given(:user1_question) { user1.questions.first }
-  given(:user2_question) { user2.questions.first }
+  given!(:question_with_files1) { create(:question, :with_files, user: user1) }
+  given!(:question_with_files2) { create(:question, :with_files, user: user2) }
 
   describe 'Authenticated user' do
     background { sign_in(user1) }
@@ -45,6 +46,20 @@ feature 'Only author can edit his question' do
       end
     end
 
+    scenario 'delete attaching files', js: true do
+      visit question_path(question_with_files1)
+
+      expect(page).to have_link 'test-image1.png'
+      expect(page).to have_link 'test-image2.png'
+
+      within('.attachments>p:last-child') do
+        click_on t('questions.question_body.delete_attachment')
+      end
+
+      expect(page).to have_link 'test-image1.png'
+      expect(page).not_to have_link 'test-image2.png'
+    end
+
     scenario 'edits his question with errors', js: true do
       visit question_path(user1_question)
       click_on t('questions.question_body.edit_question')
@@ -58,17 +73,19 @@ feature 'Only author can edit his question' do
     end
 
     scenario "edits another's question", js: true do
-      visit question_path(user2_question)
+      visit question_path(question_with_files2)
 
-      expect(page).to have_content user2_question.body
+      expect(page).to have_content question_with_files2.body
       expect(page).not_to have_content t('questions.question_body.edit_question')
+      expect(page).not_to have_link t('questions.question_body.delete_attachment')
     end
   end
 
-  scenario 'Guest try to edit answer', js: true do
-    visit question_path(user1_question)
+  scenario 'Guest try to edit question', js: true do
+    visit question_path(question_with_files1)
 
-    expect(page).to have_content user1_question.body
+    expect(page).to have_content question_with_files1.body
     expect(page).not_to have_content t('questions.question_body.edit_question')
+    expect(page).not_to have_link t('questions.question_body.delete_attachment')
   end
 end

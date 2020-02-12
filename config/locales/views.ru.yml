@@ -34,6 +34,7 @@ ru:
     question_body:
       delete_question: Удалить вопрос
       edit_question: Редактировать вопрос
+      delete_attachment: Удалить файл
 
   answers:
     answer:
