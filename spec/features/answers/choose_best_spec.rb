@@ -19,42 +19,42 @@ feature 'User can choose one answer to his question as the best and redo' do
 
       within('.answers>li:first-child') do
         expect(page).to have_content user1_answer.body
-        expect(page).not_to have_content t('answers.answer.best')
-        expect(page).to have_link t('answers.answer.choose_best')
+        expect(page).not_to have_selector(:css, '.best-answer')
+        expect(page).to have_selector(:css, '.best-answer-link')
       end
 
       within('.answers>li:last-child') do
         expect(page).to have_content user2_answer.body
-        expect(page).not_to have_content t('answers.answer.best')
-        expect(page).to have_link t('answers.answer.choose_best')
+        expect(page).not_to have_selector(:css, '.best-answer')
+        expect(page).to have_selector(:css, '.best-answer-link')
 
-        click_on t('answers.answer.choose_best')
+        accept_confirm { click_on t('answers.answer.choose_best') }
       end
 
       within('.answers>li:first-child') do
         expect(page).to have_content user2_answer.body
-        expect(page).to have_content t('answers.answer.best')
-        expect(page).not_to have_link t('answers.answer.choose_best')
+        expect(page).to have_selector(:css, '.best-answer')
+        expect(page).not_to have_selector(:css, '.best-answer-link')
       end
 
       within('.answers>li:last-child') do
         expect(page).to have_content user1_answer.body
-        expect(page).not_to have_content t('answers.answer.best')
-        expect(page).to have_link t('answers.answer.choose_best')
+        expect(page).not_to have_selector(:css, '.best-answer')
+        expect(page).to have_selector(:css, '.best-answer-link')
 
-        click_on t('answers.answer.choose_best')
+        accept_confirm { click_on t('answers.answer.choose_best') }
       end
 
       within('.answers>li:first-child') do
         expect(page).to have_content user1_answer.body
-        expect(page).to have_content t('answers.answer.best')
-        expect(page).not_to have_link t('answers.answer.choose_best')
+        expect(page).to have_selector(:css, '.best-answer')
+        expect(page).not_to have_selector(:css, '.best-answer-link')
       end
 
       within('.answers>li:last-child') do
         expect(page).to have_content user2_answer.body
-        expect(page).not_to have_content t('answers.answer.best')
-        expect(page).to have_link t('answers.answer.choose_best')
+        expect(page).not_to have_selector(:css, '.best-answer')
+        expect(page).to have_selector(:css, '.best-answer-link')
       end
     end
 
@@ -63,7 +63,7 @@ feature 'User can choose one answer to his question as the best and redo' do
 
       visit question_path(user1_question)
       within('.answers>li:last-child') do
-        expect(page).not_to have_link t('answers.answer.choose_best')
+        expect(page).not_to have_selector(:css, '.best-answer-link')
       end
     end
   end
@@ -71,7 +71,7 @@ feature 'User can choose one answer to his question as the best and redo' do
   scenario 'Guest try to choose answer', js: true do
     visit question_path(user1_question)
     within('.answers>li:last-child') do
-      expect(page).not_to have_link t('answers.answer.choose_best')
+      expect(page).not_to have_selector(:css, '.best-answer-link')
     end
   end
 end

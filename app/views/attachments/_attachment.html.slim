@@ -1,8 +1,9 @@
 .attachments
   - if resource.files.attached?
-    - resource.files.each do |file|
-      p(data-attachment-id="#{file.id}")
-        = link_to file.filename.to_s, url_for(file)
-        span = ' '
-        - if current_user&.author_of?(resource)
-          = link_to t('.delete_attachment'), attachment_path(file), method: :delete, data: { confirm: 'Are you sure?' }, remote: true
+    .d-flex.mb-2
+      - resource.files.each do |file|
+        p.mr-3(data-attachment-id="#{file.id}")
+          = link_to file.filename.to_s, url_for(file)
+          span = ' '
+          - if current_user&.author_of?(resource)
+            = link_to octicon('x', width: 14), attachment_path(file), title: t('.delete_attachment'), method: :delete, data: { confirm: 'Are you sure?' }, remote: true

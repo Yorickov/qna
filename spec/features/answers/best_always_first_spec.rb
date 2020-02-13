@@ -14,17 +14,17 @@ feature 'The best answer to question is always in first place' do
 
     within('.answers>li:nth-child(1)') do
       expect(page).to have_content answer2.body
-      expect(page).to have_content t('answers.answer.best')
+      expect(page).to have_selector(:css, '.best-answer')
     end
 
     within('.answers>li:nth-child(2)') do
       expect(page).to have_content answer1.body
-      expect(page).not_to have_content t('answers.answer.best')
+      expect(page).not_to have_selector(:css, '.best-answer')
     end
 
     within('.answers>li:nth-child(3)') do
       expect(page).to have_content answer3.body
-      expect(page).not_to have_content t('answers.answer.best')
+      expect(page).not_to have_selector(:css, '.best-answer')
     end
   end
 end

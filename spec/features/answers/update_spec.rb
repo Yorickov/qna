@@ -58,10 +58,8 @@ feature 'Autenticated user can edit his answer' do
         expect(page).to have_link 'test-image1.png'
         expect(page).to have_link 'test-image2.png'
 
-        within('.attachments>p:last-child') do
-          click_on t('attachments.attachment.delete_attachment')
-          page.driver.browser.switch_to.alert.accept
-          sleep 1
+        within('.attachments>div>p:last-child') do
+          accept_confirm { click_on t('attachments.attachment.delete_attachment') }
         end
 
         expect(page).to have_link 'test-image1.png'

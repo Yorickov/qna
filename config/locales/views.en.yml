@@ -38,8 +38,8 @@ en:
       delete_answer: Delete answer
       edit_answer: Edit answer
       choose_best: Best answer
-      best: This is the best answer
 
   attachments:
     attachment:
       delete_attachment: Delete file
+      attachments: Attached files

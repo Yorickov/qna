@@ -78,3 +78,6 @@ gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
 
 # Amazon S3 storage support
 gem 'aws-sdk-s3', require: false
+
+# Icon helpers
+gem 'octicons_helper'
