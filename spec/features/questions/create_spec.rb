@@ -33,7 +33,7 @@ feature 'User can create question' do
       fill_in t('activerecord.attributes.question.title'), with: 'Test question'
       fill_in t('activerecord.attributes.question.body'),  with: 'question text'
 
-      attach_file 'Files', [
+      attach_file t('activerecord.attributes.question.files'), [
         "#{Rails.root}/spec/rails_helper.rb",
         "#{Rails.root}/spec/spec_helper.rb"
       ]

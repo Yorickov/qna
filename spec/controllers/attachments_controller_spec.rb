@@ -9,16 +9,20 @@ describe AttachmentsController, type: :controller do
   let!(:attachment) { question.files.first }
 
   describe 'DELETE #destroy' do
+    def trigger
+      delete :destroy, params: { id: attachment, format: :js }
+    end
+
     context 'as authorized Author' do
       before { login(user1) }
 
       it 'deletes his attached file' do
-        expect { delete :destroy, params: { id: attachment, format: :js } }
+        expect { trigger }
           .to change(ActiveStorage::Attachment, :count).by(-1)
       end
 
       it 'redirects to index' do
-        delete :destroy, params: { id: attachment, format: :js }
+        trigger
 
         expect(response).to render_template :destroy
       end
@@ -28,12 +32,12 @@ describe AttachmentsController, type: :controller do
       before { login(user2) }
 
       it 'does not delete not his attached file' do
-        expect { delete :destroy, params: { id: attachment, format: :js } }
+        expect { trigger }
           .to_not change(ActiveStorage::Attachment, :count)
       end
 
       it 'redirects to root' do
-        delete :destroy, params: { id: attachment, format: :js }
+        trigger
 
         expect(response).to redirect_to root_path
       end
@@ -41,12 +45,12 @@ describe AttachmentsController, type: :controller do
 
     context 'as Guest' do
       it 'does not delete not his attached file' do
-        expect { delete :destroy, params: { id: attachment, format: :js } }
+        expect { trigger }
           .to_not change(ActiveStorage::Attachment, :count)
       end
 
       it 'redirects to new session' do
-        delete :destroy, params: { id: attachment, format: :js }
+        trigger
 
         expect(response.status).to eq 401
         expect(response.body).to eq t('devise.failure.unauthenticated')

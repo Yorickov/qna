@@ -37,7 +37,7 @@ feature 'Only author can edit his question' do
         expect(page).not_to have_link 'test-image1.png'
         expect(page).not_to have_link 'test-image2.png'
 
-        attach_file 'Files', [
+        attach_file t('activerecord.attributes.question.files'), [
           "#{Rails.root}/spec/rails_helper.rb",
           "#{Rails.root}/spec/spec_helper.rb"
         ]

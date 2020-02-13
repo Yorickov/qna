@@ -8,74 +8,58 @@ describe AnswersController, type: :controller do
   let(:user1_question) { user1.questions.first }
 
   describe 'POST #create' do
+    def trigger_post
+      post :create, params: {
+        question_id: user1_question,
+        answer: attributes_for(:answer),
+        format: :js
+      }
+    end
+
     context 'as User' do
       before { login(user1) }
 
       context 'with valid attributes' do
         it 'saves a new answer in the database' do
-          expect do
-            post :create, params: {
-              question_id: user1_question,
-              answer: attributes_for(:answer),
-              format: :js
-            }
-          end
-            .to change(Answer, :count).by(1)
+          expect { trigger_post }.to change(Answer, :count).by(1)
         end
 
         it 'saves as the answer of correct question' do
-          post :create, params: {
-            question_id: user1_question,
-            answer: attributes_for(:answer),
-            format: :js
-          }
-
+          trigger_post
           created_answer = Answer.order(:created_at).last
 
           expect(created_answer.question).to eq(user1_question)
         end
 
         it 'saves as the answer of correct user' do
-          post :create, params: {
-            question_id: user1_question,
-            answer: attributes_for(:answer),
-            format: :js
-          }
-
+          trigger_post
           created_answer = Answer.order(:created_at).last
 
           expect(created_answer.user).to eq(user1)
         end
 
         it 'redirects to show view' do
-          post :create, params: {
-            question_id: user1_question,
-            answer: attributes_for(:answer),
-            format: :js
-          }
+          trigger_post
 
           expect(response).to render_template :create
         end
       end
 
       context 'with invalid attributes' do
-        it 'does not save the answer' do
-          expect do
-            post :create, params: {
-              question_id: user1_question,
-              answer: attributes_for(:answer, :invalid),
-              format: :js
-            }
-          end
-            .not_to change(Answer, :count)
-        end
-
-        it 're-renders new view' do
+        def trigger
           post :create, params: {
             question_id: user1_question,
             answer: attributes_for(:answer, :invalid),
             format: :js
           }
+        end
+
+        it 'does not save the answer' do
+          expect { trigger }.not_to change(Answer, :count)
+        end
+
+        it 're-renders new view' do
+          trigger
 
           expect(response).to render_template :create
         end
@@ -84,22 +68,11 @@ describe AnswersController, type: :controller do
 
     context 'as Guest' do
       it 'does not save the answer' do
-        expect do
-          post :create, params: {
-            question_id: user1_question,
-            answer: attributes_for(:answer),
-            format: :js
-          }
-        end
-          .not_to change(Answer, :count)
+        expect { trigger_post }.not_to change(Answer, :count)
       end
 
       it 'no-authenticate response' do
-        post :create, params: {
-          question_id: user1_question,
-          answer: attributes_for(:answer),
-          format: :js
-        }
+        trigger_post
 
         expect(response.status).to eq 401
         expect(response.body).to eq t('devise.failure.unauthenticated')
@@ -203,16 +176,19 @@ describe AnswersController, type: :controller do
   describe 'DELETE #destroy' do
     let!(:answer) { create(:answer, question: user1_question, user: user1) }
 
+    def trigger
+      delete :destroy, params: { id: answer, format: :js }
+    end
+
     context 'as authorized Author' do
       before { login(user1) }
 
       it 'deletes the answer' do
-        expect { delete :destroy, params: { id: answer, format: :js } }
-          .to change(Answer, :count).by(-1)
+        expect { trigger }.to change(Answer, :count).by(-1)
       end
 
       it 'render destroy view' do
-        delete :destroy, params: { id: answer, format: :js }
+        trigger
 
         expect(response).to render_template :destroy
       end
@@ -222,12 +198,11 @@ describe AnswersController, type: :controller do
       before { login(user2) }
 
       it 'does not delete the answer' do
-        expect { delete :destroy, params: { id: answer, format: :js } }
-          .to_not change(Answer, :count)
+        expect { trigger }.to_not change(Answer, :count)
       end
 
       it 'redirects to root' do
-        delete :destroy, params: { id: answer }, format: :js
+        trigger
 
         expect(response).to redirect_to root_path
       end
@@ -235,12 +210,11 @@ describe AnswersController, type: :controller do
 
     context 'as Guest' do
       it 'does not delete the answer' do
-        expect { delete :destroy, params: { id: answer, format: :js } }
-          .to_not change(Answer, :count)
+        expect { trigger }.to_not change(Answer, :count)
       end
 
       it 'no-authenticate response' do
-        delete :destroy, params: { id: answer, format: :js }
+        trigger
 
         expect(response.status).to eq 401
         expect(response.body).to eq t('devise.failure.unauthenticated')
@@ -252,19 +226,23 @@ describe AnswersController, type: :controller do
     let!(:answer1) { create(:answer, question: user1_question, user: user1) }
     let!(:answer2) { create(:answer, question: user1_question, user: user2) }
 
+    def trigger
+      patch :choose_best, params: { id: answer2, format: :js }
+    end
+
     context 'as authorized Author' do
       before { login(user1) }
 
       context 'with valid attributes' do
         it 'assigns the requested answer to @answer' do
-          patch :choose_best, params: { id: answer2, format: :js }
+          trigger
           answer2.reload
 
           expect(assigns(:answer)).to eq answer2
         end
 
         it 'changes answer attributes' do
-          patch :choose_best, params: { id: answer2, format: :js }
+          trigger
           answer2.reload
 
           expect(answer2).to be_best
@@ -272,7 +250,7 @@ describe AnswersController, type: :controller do
 
         it 'swap value best attribute' do
           answer1.update(best: true)
-          patch :choose_best, params: { id: answer2, format: :js }
+          trigger
           [answer1, answer2].each(&:reload)
 
           expect(answer2).to be_best
@@ -280,7 +258,7 @@ describe AnswersController, type: :controller do
         end
 
         it 'renders update view' do
-          patch :choose_best, params: { id: answer2, format: :js }
+          trigger
 
           expect(response).to render_template :choose_best
         end
@@ -289,7 +267,7 @@ describe AnswersController, type: :controller do
 
     context 'as no authorized Author' do
       before { login(user2) }
-      before { patch :choose_best, params: { id: answer2, format: :js } }
+      before { trigger }
 
       it 'does not update the answer' do
         original_body = answer2.body
@@ -304,7 +282,7 @@ describe AnswersController, type: :controller do
     end
 
     context 'as Guest' do
-      before { patch :choose_best, params: { id: answer2, format: :js } }
+      before { trigger }
 
       it 'does not update the answer' do
         original_body = answer2.body

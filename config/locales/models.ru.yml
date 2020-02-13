@@ -8,10 +8,12 @@ ru:
       question:
         title: Название
         body: Тело вопроса
+        files: Файлы
       answer:
         body: Тело ответа
         question_id: Вопрос
         question: Вопрос
+        files: Файлы
 
     errors:
       messages:

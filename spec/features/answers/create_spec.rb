@@ -25,7 +25,7 @@ feature 'Authenticated user can create answer' do
     scenario 'Create Answer with attached file', js: true do
       fill_in t('activerecord.attributes.answer.body'), with: 'answer text'
 
-      attach_file 'Files', [
+      attach_file t('activerecord.attributes.answer.files'), [
         "#{Rails.root}/spec/rails_helper.rb",
         "#{Rails.root}/spec/spec_helper.rb"
       ]

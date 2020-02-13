@@ -8,10 +8,12 @@ en:
       question:
         title: title
         body: Question body
+        files: Files
       answer:
         body: Answer body
         question_id: Question
         question: Question
+        files: Files
 
     errors:
       messages:

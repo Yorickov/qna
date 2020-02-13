@@ -41,6 +41,7 @@ ru:
       edit_answer: Редактировать ответ
       choose_best: Лучший ответ
       best: Это лучший ответ
+
   attachments:
     attachment:
       delete_attachment: Удалить файл

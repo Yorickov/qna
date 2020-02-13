@@ -1,5 +1,4 @@
 = simple_form_for [question, Answer.new], remote: true do |f|
   = f.input :body
-  p = f.label :files
-  p = f.file_field :files, multiple: true, direct_upload: true
-  p = f.button :submit, t('forms.submit_answer'), class: 'btn btn-secondary'
+  = f.input :files, as: :file, input_html: { multiple: true, direct_upload: true }
+  = f.button :submit, t('forms.submit_answer'), class: 'btn btn-secondary'
