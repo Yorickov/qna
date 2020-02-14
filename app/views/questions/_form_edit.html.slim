@@ -1,0 +1,6 @@
+= simple_form_for question, remote: true, html: { class: 'hidden edit-question-form' } do |f|
+  .question-node-errors
+  = f.input :title
+  = f.input :body
+  = f.input :files, as: :file, input_html: { multiple: true, direct_upload: true }
+  = f.button :submit, t('forms.submit_question'), class: 'btn btn-secondary'

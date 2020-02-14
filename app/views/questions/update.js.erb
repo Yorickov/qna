@@ -1,7 +1,10 @@
-var questionErrorsNode = document.querySelector('.question-node .question-node-errors ');
-questionErrorsNode.innerHTML = '<%= j render 'shared/errors', resource: question %>';
+<% if @question.errors.any? %>
+  var questionFormNode = document.querySelector('.question-form-node');
+  questionFormNode.innerHTML = '<%= j render 'form_edit', question: question %>';
 
-<% if @question.errors.blank? %>
+  var editQuestionForm = document.querySelector('.edit-question-form');
+  editQuestionForm.classList.remove('hidden');
+<% else %>
   var questionNode = document.querySelector('.question-node');
   questionNode.innerHTML = '<%= j render 'question_body', question: question %>';
 <% end %>

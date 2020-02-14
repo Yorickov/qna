@@ -1,7 +1,9 @@
 const questionHandler = (event) => {
+  const { target } = event;
+  if (!target.classList.contains('edit-question-link')) return;
+
   event.preventDefault();
 
-  const { target } = event;
   const form = document.querySelector('.question-node .edit-question-form');
 
   target.classList.add('hidden');
@@ -9,7 +11,7 @@ const questionHandler = (event) => {
 };
 
 export default () => {
-  const control = document.querySelector('.edit-question-link');
+  const control = document.querySelector('.question-node');
   if (control) {
     control.addEventListener('click', questionHandler.bind(this));
   }
