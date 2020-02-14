@@ -54,25 +54,21 @@ describe QuestionsController, type: :controller do
     context 'as User' do
       before { login(user1) }
 
-      def trigger
-        post :create, params: { question: attributes_for(:question) }
-      end
-
       context 'with valid attributes' do
         it 'saves a new question in the database' do
-          expect { trigger }
+          expect { post :create, params: { question: attributes_for(:question) } }
             .to change(Question, :count).by(1)
         end
 
         it 'saves as the question of correct user' do
-          trigger
+          post :create, params: { question: attributes_for(:question) }
           created_question = Question.order(:created_at).last
 
           expect(created_question.user).to eq(user1)
         end
 
         it 'redirects to show view' do
-          trigger
+          post :create, params: { question: attributes_for(:question) }
           created_question = Question.order(:created_at).last
 
           expect(response).to redirect_to created_question
@@ -80,17 +76,13 @@ describe QuestionsController, type: :controller do
       end
 
       context 'with invalid attributes' do
-        def trigger
-          post :create, params: { question: attributes_for(:question, :invalid) }
-        end
-
         it 'does not save the question' do
-          expect { trigger }
+          expect { post :create, params: { question: attributes_for(:question, :invalid) } }
             .to_not change(Question, :count)
         end
 
         it 're-renders new view' do
-          trigger
+          post :create, params: { question: attributes_for(:question, :invalid) }
 
           expect(response).to render_template :new
         end
@@ -98,17 +90,13 @@ describe QuestionsController, type: :controller do
     end
 
     context 'as Guest' do
-      def trigger
-        post :create, params: { question: attributes_for(:question) }
-      end
-
       it 'does not save the question' do
-        expect { trigger }
+        expect { post :create, params: { question: attributes_for(:question) } }
           .to_not change(Question, :count)
       end
 
       it 'redirects to new session' do
-        trigger
+        post :create, params: { question: attributes_for(:question) }
 
         expect(response).to redirect_to new_user_session_path
       end
@@ -215,17 +203,13 @@ describe QuestionsController, type: :controller do
     context 'as authorized Author' do
       before { login(user1) }
 
-      def trigger
-        delete :destroy, params: { id: user1_question }
-      end
-
       it 'deletes the question' do
-        expect { trigger }
+        expect { delete :destroy, params: { id: user1_question } }
           .to change(Question, :count).by(-1)
       end
 
       it 'redirects to index' do
-        trigger
+        delete :destroy, params: { id: user1_question }
 
         expect(response).to redirect_to questions_path
       end
@@ -234,19 +218,15 @@ describe QuestionsController, type: :controller do
     context 'as authorized no Author' do
       let!(:user2_question) { user2.questions.first }
 
-      def trigger
-        delete :destroy, params: { id: user2_question }
-      end
-
       before { login(user1) }
 
       it 'does not delete the question' do
-        expect { trigger }
+        expect { delete :destroy, params: { id: user2_question } }
           .to_not change(Question, :count)
       end
 
       it 'redirects to root' do
-        trigger
+        delete :destroy, params: { id: user2_question }
 
         expect(response).to redirect_to root_path
       end
@@ -255,17 +235,13 @@ describe QuestionsController, type: :controller do
     context 'as Guest' do
       let!(:user2_question) { user2.questions.first }
 
-      def trigger
-        delete :destroy, params: { id: user2_question }
-      end
-
       it 'does not delete the question' do
-        expect { trigger }
+        expect {  delete :destroy, params: { id: user2_question } }
           .to_not change(Question, :count)
       end
 
       it 'redirects to new session' do
-        trigger
+        delete :destroy, params: { id: user2_question }
 
         expect(response).to redirect_to new_user_session_path
       end
