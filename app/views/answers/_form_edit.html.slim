@@ -1,0 +1,4 @@
+= simple_form_for answer, remote: true, html: { class: 'hidden', id: "edit-answer-#{answer.id}" } do |f|
+  = f.input :body
+  = f.input :files, as: :file, input_html: { class: 'files', multiple: true, direct_upload: true }
+  = f.button :submit, t('forms.submit_answer'), class: 'btn btn-secondary'

@@ -1,4 +1,4 @@
-<% if @question.errors.any? %>
+<% if question.errors.any? %>
   var questionFormNode = document.querySelector('.question-form-node');
   questionFormNode.innerHTML = '<%= j render 'form_edit', question: question %>';
 

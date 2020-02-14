@@ -1,7 +1,10 @@
-var answerErrorsNode = document.querySelector('li[data-answer-node-id="<%= answer.id %>"] .answer-node-errors');
-answerErrorsNode.innerHTML = '<%= j render 'shared/errors', resource: answer %>';
+<% if answer.errors.any? %>
+  var questionFormNode = document.querySelector('.answer-form-node');
+  questionFormNode.innerHTML = '<%= j render 'answers/form_edit', answer: answer %>';
 
-<% if @answer.errors.blank? %>
+  var editAnswerForm = document.querySelector('#edit-answer-<%= answer.id %>');
+  editAnswerForm.classList.remove('hidden');
+<% else %>
   var answerNode = document.querySelector('li[data-answer-node-id="<%= answer.id %>"]');
-  answerNode.innerHTML = '<%= j render answer %>';
+  answerNode.parentNode.innerHTML = '<%= j render answer %>';
 <% end %>

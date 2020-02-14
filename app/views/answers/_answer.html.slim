@@ -1,5 +1,4 @@
 li.pl-0.list-group-item(data-answer-node-id="#{answer.id}")
-  .answer-node-errors
   p = answer.body
 
   = render 'attachments/attachment', resource: answer
@@ -15,7 +14,5 @@ li.pl-0.list-group-item(data-answer-node-id="#{answer.id}")
     section.d-flex.justify-content-between
       = link_to t('.delete_answer'), answer_path(answer), method: :delete, data: { confirm: 'Are you sure?' }, remote: true
       = link_to t('.edit_answer'), '#', class: 'edit-answer-link', data: { answer_id: answer.id }
-    = simple_form_for answer, remote: true, html: { class: 'hidden', id: "edit-answer-#{answer.id}" } do |f|
-      = f.input :body
-      = f.input :files, as: :file, input_html: { class: 'files', multiple: true, direct_upload: true }
-      = f.button :submit, t('forms.submit_answer'), class: 'btn btn-secondary'
+    .answer-form-node
+      = render 'answers/form_edit', answer: answer
