@@ -43,7 +43,6 @@ feature 'Only author can edit his question' do
         ]
 
         click_on t('forms.submit_question')
-        sleep 1
 
         expect(page).to have_link 'rails_helper.rb'
         expect(page).to have_link 'spec_helper.rb'

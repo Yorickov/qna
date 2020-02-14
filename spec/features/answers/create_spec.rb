@@ -30,7 +30,6 @@ feature 'Authenticated user can create answer' do
         "#{Rails.root}/spec/spec_helper.rb"
       ]
       click_on t('forms.submit_answer')
-      sleep 1
 
       expect(page).to have_link 'rails_helper.rb'
       expect(page).to have_link 'spec_helper.rb'

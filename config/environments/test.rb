@@ -46,4 +46,7 @@ Rails.application.configure do
 
   # Raises error for missing translations.
   # config.action_view.raise_on_missing_translations = true
+
+  # Stop the development & test logs from taking up to much space
+  config.logger = ActiveSupport::Logger.new(config.paths['log'].first, 1, 50.megabytes)
 end

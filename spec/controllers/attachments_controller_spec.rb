@@ -9,12 +9,12 @@ describe AttachmentsController, type: :controller do
   let!(:attachment) { question.files.first }
 
   describe 'DELETE #destroy' do
-    def trigger
-      delete :destroy, params: { id: attachment, format: :js }
-    end
-
     context 'as authorized Author' do
       before { login(user1) }
+
+      def trigger
+        delete :destroy, params: { id: attachment, format: :js }
+      end
 
       it 'deletes his attached file' do
         expect { trigger }
@@ -31,6 +31,10 @@ describe AttachmentsController, type: :controller do
     context 'as authorized no Author' do
       before { login(user2) }
 
+      def trigger
+        delete :destroy, params: { id: attachment, format: :js }
+      end
+
       it 'does not delete not his attached file' do
         expect { trigger }
           .to_not change(ActiveStorage::Attachment, :count)
@@ -44,6 +48,10 @@ describe AttachmentsController, type: :controller do
     end
 
     context 'as Guest' do
+      def trigger
+        delete :destroy, params: { id: attachment, format: :js }
+      end
+
       it 'does not delete not his attached file' do
         expect { trigger }
           .to_not change(ActiveStorage::Attachment, :count)
