@@ -34,6 +34,12 @@ ru:
     question_body:
       delete_question: Удалить вопрос
       edit_question: Редактировать вопрос
+    question:
+      answers_count:
+        one: ответ
+        few: ответа
+        many: ответов
+        other: ответа
 
   answers:
     answer:

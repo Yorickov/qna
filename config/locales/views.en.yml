@@ -29,9 +29,13 @@ en:
   questions:
     new:
       ask_question: Ask your question
-      question_body:
-        delete_question: Delete question
-        edit_question: Edit question
+    question_body:
+      delete_question: Delete question
+      edit_question: Edit question
+    question:
+      answers_count:
+        one: Got %{count} anwer
+        other: Got %{count} anwers
 
   answers:
     answer:

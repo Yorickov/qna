@@ -1,2 +1,7 @@
 li.list-group-item
-  p = link_to question.title, question_path(question)
+  .row
+    .col-2.text-center.align-top
+      div = question.answers.count
+      div = t('.answers_count', count: question.answers.count)
+    .col-10
+      = link_to question.title, question_path(question)
