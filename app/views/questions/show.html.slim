@@ -1,15 +1,15 @@
-.row.pt-2.justify-content-center
-  .col-10.question-node
+.row.justify-content-center
+  .col-12.question-node
     = render 'question_body', question: question
 
-.row.pt-2.justify-content-center
-  .col-10
-    ul.list-group.list-group-flush.answers
+.row.justify-content-center
+  .col-12
+    .answers
       = render question.answers
 
 - if user_signed_in?
-  .row.pt-2.justify-content-center
-    .col-10
+  .row.justify-content-center
+    .col-12
       .answer-form-errors
       .answer-form
         = render 'answers/form'

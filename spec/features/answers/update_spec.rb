@@ -17,7 +17,7 @@ feature 'Autenticated user can edit his answer' do
 
     scenario 'edits his answer by changing body', js: true do
       visit question_path(user2_question)
-      click_on t('answers.answer.edit_answer')
+      click_on t('answers.answer_body.edit_answer')
 
       within '.answers' do
         fill_in t('activerecord.attributes.answer.body'), with: 'edited answer'
@@ -31,7 +31,7 @@ feature 'Autenticated user can edit his answer' do
 
     scenario 'edits his answer by adding files', js: true do
       visit question_path(user2_question)
-      click_on t('answers.answer.edit_answer')
+      click_on t('answers.answer_body.edit_answer')
 
       within '.answers' do
         expect(page).not_to have_link 'rails_helper.rb'
@@ -68,7 +68,7 @@ feature 'Autenticated user can edit his answer' do
 
     scenario 'edits his answer with errors', js: true do
       visit question_path(user2_question)
-      click_on t('answers.answer.edit_answer')
+      click_on t('answers.answer_body.edit_answer')
 
       within '.answers' do
         fill_in t('activerecord.attributes.answer.body'), with: ''
@@ -83,7 +83,7 @@ feature 'Autenticated user can edit his answer' do
       visit question_path(user1_question)
 
       expect(page).to have_content user2_answer.body
-      expect(page).not_to have_content t('answers.answer.edit_answer')
+      expect(page).not_to have_content t('answers.answer_body.edit_answer')
       expect(page).not_to have_link t('attachments.attachment.delete_attachment')
     end
   end
@@ -92,7 +92,7 @@ feature 'Autenticated user can edit his answer' do
     visit question_path(user1_question)
 
     expect(page).to have_content user2_answer.body
-    expect(page).not_to have_content t('answers.answer.edit_answer')
+    expect(page).not_to have_content t('answers.answer_body.edit_answer')
     expect(page).not_to have_link t('attachments.attachment.delete_attachment')
   end
 end

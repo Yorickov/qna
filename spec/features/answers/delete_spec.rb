@@ -20,7 +20,7 @@ feature 'Autenticated user can delete only his answers' do
 
       expect(page).to have_content user1_answer.body
 
-      click_on t('answers.answer.delete_answer')
+      click_on t('answers.answer_body.delete_answer')
       page.driver.browser.switch_to.alert.accept
 
       expect(page).not_to have_content user1_answer.body
@@ -30,7 +30,7 @@ feature 'Autenticated user can delete only his answers' do
       visit question_path(user1_question)
 
       expect(page).to have_content user2_answer.body
-      expect(page).not_to have_content t('answers.answer.delete_answer')
+      expect(page).not_to have_content t('answers.answer_body.delete_answer')
     end
   end
 
@@ -38,6 +38,6 @@ feature 'Autenticated user can delete only his answers' do
     visit question_path(user1_question)
 
     expect(page).to have_content user2_answer.body
-    expect(page).not_to have_content t('answers.answer.delete_answer')
+    expect(page).not_to have_content t('answers.answer_body.delete_answer')
   end
 end

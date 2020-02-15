@@ -1,18 +1,2 @@
-li.pl-0.list-group-item(data-answer-node-id="#{answer.id}")
-  p = answer.body
-
-  = render 'attachments/attachment', resource: answer
-
-  - if answer.best?
-    .text-center.best-answer
-      = octicon('verified', width: 20)
-
-  - if !answer.best? && current_user&.author_of?(answer.question)
-    = link_to octicon('thumbsup', width: 18), choose_best_answer_path(answer), title: t('.choose_best'), class: 'best-answer-link', method: :patch, data: { confirm: 'Are you sure?' }, remote: true
-
-  - if current_user&.author_of?(answer) && answer.persisted?
-    section.d-flex.justify-content-between
-      = link_to t('.delete_answer'), answer_path(answer), method: :delete, data: { confirm: 'Are you sure?' }, remote: true
-      = link_to t('.edit_answer'), '#', class: 'edit-answer-link', data: { answer_id: answer.id }
-    .answer-form-node
-      = render 'answers/form_edit', answer: answer
+.card.border-0(data-answer-node-id="#{answer.id}")
+  = render 'answers/answer_body', answer: answer

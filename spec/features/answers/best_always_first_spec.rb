@@ -12,17 +12,17 @@ feature 'The best answer to question is always in first place' do
   scenario 'Best answer of the question is first and others are sorted by creation time' do
     visit question_path(user1_question)
 
-    within('.answers>li:nth-child(1)') do
+    within('.answers>.card:nth-child(1)') do
       expect(page).to have_content answer2.body
       expect(page).to have_selector(:css, '.best-answer')
     end
 
-    within('.answers>li:nth-child(2)') do
+    within('.answers>.card:nth-child(2)') do
       expect(page).to have_content answer1.body
       expect(page).not_to have_selector(:css, '.best-answer')
     end
 
-    within('.answers>li:nth-child(3)') do
+    within('.answers>.card:nth-child(3)') do
       expect(page).to have_content answer3.body
       expect(page).not_to have_selector(:css, '.best-answer')
     end

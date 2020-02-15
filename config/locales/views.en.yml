@@ -38,7 +38,7 @@ en:
         other: Got %{count} anwers
 
   answers:
-    answer:
+    answer_body:
       delete_answer: Delete answer
       edit_answer: Edit answer
       choose_best: Best answer

@@ -1,14 +1,18 @@
-h2.question-title = question.title
-hr
-p.question-body = question.body
+.card.border-0
+  .card-body.pb-0
+    h2.card-title.question-title = question.title
+    p.card-text.question-body = question.body
 
-= render 'attachments/attachment', resource: question
+    - if question.files.attached?
+      section
+        = render 'attachments/attachment', resource: question
 
-- if current_user&.author_of?(question)
-  section.d-flex.justify-content-between.mb-2
-    = link_to t('.delete_question'), question_path(question), method: :delete,  data: { confirm: 'Are you sure?' }
-    = link_to t('.edit_question'), '#', class: 'edit-question-link'
+    - if current_user&.author_of?(question)
+      section.d-flex.justify-content-end
+        = link_to t('.delete_question'), question_path(question), method: :delete, class: 'card-link', data: { confirm: 'Are you sure?' }
+        = link_to t('.edit_question'), '#', class: 'card-link edit-question-link'
 
-  .question-form-node
-    = render 'form_edit'
-hr
+    section
+      .question-form-node
+        = render 'form_edit'
+  hr

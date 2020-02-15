@@ -42,7 +42,7 @@ ru:
         other: ответа
 
   answers:
-    answer:
+    answer_body:
       delete_answer: Удалить ответ
       edit_answer: Редактировать ответ
       choose_best: Лучший ответ
