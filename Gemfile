@@ -59,6 +59,7 @@ group :development do
   gem 'spring-watcher-listen', '~> 2.0.0'
   # mailer tester
   gem 'letter_opener'
+  # gem 'i18n-debug', '~> 1.2'
 end
 
 group :test do

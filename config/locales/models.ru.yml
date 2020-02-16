@@ -17,7 +17,7 @@ ru:
         files: Файлы
       link:
         name: Имя ссылки
-        url: адрес ссылки
+        url: Адрес ссылки
 
     errors:
       messages:
