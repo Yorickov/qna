@@ -81,3 +81,5 @@ gem 'aws-sdk-s3', require: false
 
 # Icon helpers
 gem 'octicons_helper'
+
+gem 'cocoon', "~> 1.2"

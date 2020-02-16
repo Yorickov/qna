@@ -3,6 +3,7 @@ ru:
     models:
       question: Вопрос
       answer: Ответ
+      link: Ссылка
 
     attributes:
       question:
@@ -14,6 +15,9 @@ ru:
         question_id: Вопрос
         question: Вопрос
         files: Файлы
+      link:
+        name: Имя ссылки
+        url: адрес ссылки
 
     errors:
       messages:

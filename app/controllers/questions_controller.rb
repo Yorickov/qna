@@ -8,9 +8,13 @@ class QuestionsController < ApplicationController
 
   def new
     @question = current_user.questions.new
+    @question.links.new
   end
 
-  def show; end
+  def show
+    @answer = Answer.new
+    @answer.links.new
+  end
 
   def create
     @question = current_user.questions.new(question_params)
@@ -40,7 +44,9 @@ class QuestionsController < ApplicationController
   helper_method :question
 
   def question_params
-    params.require(:question).permit(:title, :body, files: [])
+    params.require(:question).permit(
+      :title, :body, files: [], links_attributes: %i[name url]
+    )
   end
 
   def ensure_current_user_is_question_author!

@@ -55,7 +55,7 @@ feature 'Only author can edit his question' do
       expect(page).to have_link 'test-image1.png'
       expect(page).to have_link 'test-image2.png'
 
-      within('.attachments>div>p:last-child') do
+      within('.attachments>p:last-child') do
         accept_confirm { click_on t('attachments.attachment.delete_attachment') }
       end
 

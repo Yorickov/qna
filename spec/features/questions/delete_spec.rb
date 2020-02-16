@@ -22,13 +22,17 @@ feature 'Autenticated user can delete only his question' do
     scenario "Another's question" do
       visit question_path(user2.questions.first)
 
-      expect(page).not_to have_content t('questions.question_body.delete_question')
+      within '.question-node' do
+        expect(page).not_to have_link t('questions.question_body.delete_question')
+      end
     end
   end
 
   scenario 'Guest try to delete question' do
     visit question_path(user1_question)
 
-    expect(page).not_to have_content t('questions.question_body.delete_question')
+    within '.question-node' do
+      expect(page).not_to have_link t('questions.question_body.delete_question')
+    end
   end
 end

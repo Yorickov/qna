@@ -3,6 +3,7 @@ en:
     models:
       question: Question
       answer: Answer
+      link: Link
 
     attributes:
       question:
@@ -14,6 +15,9 @@ en:
         question_id: Question
         question: Question
         files: Files
+      link:
+        name: Link name
+        url: Link url
 
     errors:
       messages:

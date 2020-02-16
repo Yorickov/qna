@@ -9,6 +9,8 @@ en:
   forms:
     submit_question: Send question
     submit_answer: Send answer
+    add_link: Add link
+    remove_link: Remove link
 
   errors:
     answers_count: No more then one best answer in the question
@@ -30,8 +32,9 @@ en:
     new:
       ask_question: Ask your question
     question_body:
-      delete_question: Delete question
-      edit_question: Edit question
+      delete_question: Delete
+      edit_question: Edit
+      refs: "Refs:"
     question:
       answers_count:
         one: Got %{count} anwer
@@ -42,8 +45,9 @@ en:
       delete_answer: Delete answer
       edit_answer: Edit answer
       choose_best: Best answer
+      refs: "Refs:"
 
   attachments:
     attachment:
       delete_attachment: Delete file
-      attachments: Attached files
+      attachments: "Files:"
