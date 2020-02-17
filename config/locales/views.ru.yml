@@ -37,6 +37,7 @@ ru:
       delete_question: Удалить
       edit_question: Редактировать
       refs: "Ссылки:"
+      delete_link: Удалить ссылку
     question:
       answers_count:
         one: ответ

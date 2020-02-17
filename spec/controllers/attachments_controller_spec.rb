@@ -27,10 +27,6 @@ describe AttachmentsController, type: :controller do
     context 'as authorized no Author' do
       before { login(user2) }
 
-      def trigger
-        delete :destroy, params: { id: attachment, format: :js }
-      end
-
       it 'does not delete not his attached file' do
         expect { delete :destroy, params: { id: attachment, format: :js } }
           .to_not change(ActiveStorage::Attachment, :count)

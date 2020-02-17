@@ -35,6 +35,7 @@ en:
       delete_question: Delete
       edit_question: Edit
       refs: "Refs:"
+      delete_link: Delete link
     question:
       answers_count:
         one: Got %{count} anwer
