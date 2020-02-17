@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 
-feature 'User can add delete links in his question' do
+feature 'User can delete links in his question' do
   given(:user1) { create(:user_with_questions, questions_count: 1) }
   given(:user2) { create(:user_with_questions, questions_count: 1) }
   given(:user1_question) { user1.questions.first }
@@ -15,7 +15,7 @@ feature 'User can add delete links in his question' do
     scenario 'Link in his question', js: true do
       visit question_path(user1_question)
 
-      within '.question-node' do
+      within '.question-links' do
         expect(page).to have_link link.name, href: link.url
       end
 

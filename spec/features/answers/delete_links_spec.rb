@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 
-feature 'User can add delete links in his answer' do
+feature 'User can delete links in his answer' do
   given(:user1) { create(:user_with_questions, questions_count: 1) }
   given(:user2) { create(:user) }
   given(:question) { user1.questions.first }

@@ -2,4 +2,7 @@
   = f.input :title
   = f.input :body
   = f.input :files, as: :file, input_html: { multiple: true, direct_upload: true }
+
+  = render 'links/form', f: f
+
   = f.button :submit, t('forms.submit_question'), class: 'btn btn-secondary'
