@@ -8,17 +8,7 @@
         = render 'attachments/attachment', resource: question
 
     section.question-links
-      span = t('.refs')
-      div
-        - question.links.each do |link|
-          div(data-link-id="#{link.id}")
-            - if link.body.present?
-              = link.body
-            - else
-              = link_to link.name, link.url
-            '
-            - if current_user&.author_of?(question)
-              = link_to octicon('x', width: 14), link_path(link), title: t('.delete_link'), method: :delete, data: { confirm: 'Are you sure?' }, remote: true
+      = render 'links/links', resourse: question
 
     - if current_user&.author_of?(question)
       section.d-flex.justify-content-end

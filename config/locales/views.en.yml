@@ -35,7 +35,6 @@ en:
       delete_question: Delete
       edit_question: Edit
       refs: "Refs:"
-      delete_link: Delete link
     question:
       answers_count:
         one: Got %{count} anwer
@@ -46,9 +45,13 @@ en:
       delete_answer: Delete answer
       edit_answer: Edit answer
       choose_best: Best answer
-      refs: "Refs:"
 
   attachments:
     attachment:
       delete_attachment: Delete file
       attachments: "Files:"
+
+  links:
+    links:
+      delete_link: Delete link
+      refs: "Refs:"

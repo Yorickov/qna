@@ -37,7 +37,6 @@ ru:
       delete_question: Удалить
       edit_question: Редактировать
       refs: "Ссылки:"
-      delete_link: Удалить ссылку
     question:
       answers_count:
         one: ответ
@@ -50,9 +49,13 @@ ru:
       delete_answer: Удалить ответ
       edit_answer: Редактировать ответ
       choose_best: Лучший ответ
-      refs: "Ссылки:"
 
   attachments:
     attachment:
       delete_attachment: Удалить файл
       attachments: "Файлы:"
+
+  links:
+    links:
+      delete_link: Удалить ссылку
+      refs: "Ссылки:"

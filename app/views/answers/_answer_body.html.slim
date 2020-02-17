@@ -16,13 +16,7 @@
           = render 'attachments/attachment', resource: answer
 
       section.answer-links
-        span = t('.refs')
-        div
-          - answer.links.each do |link|
-            - if link.body.present?
-              = link.body
-            - else
-              = link_to link.name, link.url
+        = render 'links/links', resourse: answer
 
       - if current_user&.author_of?(answer) && answer.persisted?
         section.d-flex.justify-content-end
