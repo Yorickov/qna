@@ -48,6 +48,7 @@ group :development, :test do
   gem 'rspec-rails', '4.0.0.beta3'
   gem 'rails-controller-testing'
   gem 'factory_bot_rails', '~> 5.1'
+  gem 'dotenv-rails'
 end
 
 group :development do
@@ -83,4 +84,5 @@ gem 'aws-sdk-s3', require: false
 # Icon helpers
 gem 'octicons_helper'
 
-gem 'cocoon', "~> 1.2"
+gem 'cocoon', '~> 1.2'
+gem "octokit", '~> 4.0'
