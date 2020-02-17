@@ -8,7 +8,7 @@ class Answer < ApplicationRecord
   validates :body, presence: true
   validates :best, uniqueness: { scope: :question }, if: :best?
 
-  accepts_nested_attributes_for :links, reject_if: :all_blank
+  accepts_nested_attributes_for :links, reject_if: :all_blank, allow_destroy: true
 
   def update_to_best!
     best_answer = question.answers.find_by(best: true)

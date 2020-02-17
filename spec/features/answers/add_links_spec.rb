@@ -35,7 +35,7 @@ feature 'User can add links to answer' do
 
     click_on t('forms.add_link')
 
-    within('.links>.nested-fields') do
+    within '.links>.nested-fields' do
       fill_in t('activerecord.attributes.link.name'), with: 'My gist2'
       fill_in t('activerecord.attributes.link.url'), with: url_alt
     end
