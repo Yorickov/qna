@@ -11,21 +11,36 @@ feature 'Author can add award to his question' do
 
     fill_in t('activerecord.attributes.question.title'), with: 'Test question'
     fill_in t('activerecord.attributes.question.body'),  with: 'question text'
-
-    click_on t('forms.add_award')
   end
 
-  scenario 'Author adds award while adding question' do
-    within('.links>.nested-fields') do
-      fill_in t('activerecord.attributes.award.title'), with: 'My award1'
-      attach_file t('activerecord.attributes.award.image'), [
-        "#{Rails.root}/spec/support/assets/test-image1.png"
-      ]
-    end
+  scenario 'User adds award while adding question' do
+    fill_in t('activerecord.attributes.award.title'), with: 'My award1'
+    attach_file t('activerecord.attributes.award.image'),
+                "#{Rails.root}/spec/support/assets/test-image1.png"
 
     click_on t('forms.submit_question')
 
-    expect(page).to have_content 'My award1'
-    expect(page).to have_selector(:css, 'img')
+    within('.question-image') do
+      expect(page).to have_content 'My award1'
+      expect(page).to have_selector(:css, 'img')
+    end
+  end
+
+  scenario 'User award while adding question without title' do
+    fill_in t('activerecord.attributes.award.title'), with: ''
+    attach_file t('activerecord.attributes.award.image'),
+                "#{Rails.root}/spec/support/assets/test-image1.png"
+
+    click_on t('forms.submit_question')
+
+    expect(page).to have_content t('activerecord.errors.messages.blank')
+  end
+
+  scenario 'User award while adding question without image' do
+    fill_in t('activerecord.attributes.award.title'), with: 'Test'
+
+    click_on t('forms.submit_question')
+
+    expect(page).to have_content t('activerecord.errors.messages.no_image')
   end
 end

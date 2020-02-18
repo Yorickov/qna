@@ -20,7 +20,7 @@ en:
         name: Link name
         url: Link url
       award:
-        title: Title
+        title: Award
         question_id: Question
         question: Question
         user_id: User
@@ -30,6 +30,7 @@ en:
     errors:
       messages:
         blank: can't be blank
+        no_image: should be attached
 
     # errors:
     #   messages:

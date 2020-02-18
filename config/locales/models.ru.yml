@@ -20,7 +20,7 @@ ru:
         name: Имя ссылки
         url: Адрес ссылки
       award:
-        title: Название
+        title: Награда
         question_id: Вопрос
         question: Вопрос
         user_id: Пользователь
@@ -30,3 +30,4 @@ ru:
     errors:
       messages:
         blank: не может быть пустым
+        no_image: должно быть прикреплено

@@ -1,7 +1,11 @@
 = simple_form_for question, local: true do |f|
   = f.input :title
   = f.input :body
-  = f.input :files, as: :file, input_html: { multiple: true, direct_upload: true }
+  = f.input :files, as: :file, required: false, input_html: { multiple: true, direct_upload: true }
+
+  = f.simple_fields_for :award do |a|
+    = a.input :title, required: false
+    = a.input :image, as: :file, required: false, input_html: { direct_upload: true }
 
   = render 'links/form', f: f
 

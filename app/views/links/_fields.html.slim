@@ -1,4 +1,4 @@
 .nested-fields
-  = f.input :name
-  = f.input :url
+  = f.input :name, required: false
+  = f.input :url, required: false
   = link_to_remove_association t('forms.remove_link'), f

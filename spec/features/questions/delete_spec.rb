@@ -19,7 +19,7 @@ feature 'Autenticated user can delete only his question' do
       expect(page).to have_content t('questions.destroy.success')
     end
 
-    scenario "Another's question" do
+    scenario "another's question" do
       visit question_path(user2.questions.first)
 
       within '.question-node' do

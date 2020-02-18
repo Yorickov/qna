@@ -3,12 +3,17 @@
     h2.card-title.question-title = question.title
     p.card-text.question-body = question.body
 
+    - if question.award.present?
+      section.question-image
+        = render 'award', question: question
+
     - if question.files.attached?
-      section
+      section.question-files
         = render 'attachments/attachment', resource: question
 
-    section.question-links
-      = render 'links/links', resourse: question
+    - if question.links.any?
+      section.question-links
+        = render 'links/links', resourse: question
 
     - if current_user&.author_of?(question)
       section.d-flex.justify-content-end

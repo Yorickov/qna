@@ -8,6 +8,6 @@ class Award < ApplicationRecord
   validate :validate_image_presence
 
   def validate_image_presence
-    errors.add(:image, 'should has attached image') unless image.attached?
+    errors.add(:image, :no_image) unless image.attached?
   end
 end
