@@ -1,5 +1,6 @@
 class GistService
   GIST_ID_FORMAT = /\w*$/.freeze
+  GIST_NO_EXIST = 'No such a gist'.freeze
 
   attr_reader :url
   attr_accessor :response
@@ -11,15 +12,16 @@ class GistService
 
   def call
     self.response = @client.gist(gist_id)
+    parsed_body
   rescue Octokit::NotFound
-    false
-  end
-
-  def parsed_body
-    response.files.to_h.values.map { |f| f[:content] }.join("\n")
+    GIST_NO_EXIST
   end
 
   private
+
+  def parsed_body
+    response.files.to_h.values.map { |f| [f[:filename], f[:content]].join('---') }.join('***')
+  end
 
   def gist_id
     GIST_ID_FORMAT.match(url)[0]

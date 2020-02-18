@@ -17,7 +17,6 @@ class Link < ApplicationRecord
   private
 
   def gist_body
-    gist_service = GistService.new(url)
-    gist_service.call ? gist_service.parsed_body : 'No such a gist'
+    GistService.new(url).call
   end
 end
