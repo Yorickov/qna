@@ -4,6 +4,7 @@ describe User, type: :model do
   describe 'Association' do
     it { should have_many(:questions) }
     it { should have_many(:answers) }
+    it { should have_many(:awards) }
   end
 
   describe 'Validation' do

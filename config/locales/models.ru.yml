@@ -4,6 +4,7 @@ ru:
       question: Вопрос
       answer: Ответ
       link: Ссылка
+      award: Награда
 
     attributes:
       question:
@@ -18,6 +19,13 @@ ru:
       link:
         name: Имя ссылки
         url: Адрес ссылки
+      award:
+        title: Название
+        question_id: Вопрос
+        question: Вопрос
+        user_id: Пользователь
+        user: Пользователь
+        image: Изображение
 
     errors:
       messages:
