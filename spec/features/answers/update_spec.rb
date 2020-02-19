@@ -29,13 +29,13 @@ feature 'Autenticated user can edit his answer' do
       end
     end
 
-    scenario 'edits his answer by adding files', js: true do
+    scenario 'edits his answer by attaching files with keeping the old ones', js: true do
       visit question_path(user2_question)
       click_on t('answers.answer_body.edit_answer')
 
       within '.answers' do
-        expect(page).not_to have_link 'rails_helper.rb'
-        expect(page).not_to have_link 'spec_helper.rb'
+        expect(page).to have_link 'test-image1.png'
+        expect(page).to have_link 'test-image2.png'
 
         fill_in t('activerecord.attributes.answer.body'), with: 'edited answer'
         attach_file t('activerecord.attributes.answer.files'), [
@@ -44,6 +44,9 @@ feature 'Autenticated user can edit his answer' do
         ]
 
         click_on t('forms.submit_answer')
+
+        expect(page).to have_link 'test-image1.png'
+        expect(page).to have_link 'test-image2.png'
 
         expect(page).to have_link 'rails_helper.rb'
         expect(page).to have_link 'spec_helper.rb'

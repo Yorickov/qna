@@ -13,7 +13,7 @@
 
     - if question.links.any?
       section.question-links
-        = render 'links/links', resourse: question
+        = render 'links/index', resourse: question
 
     - if current_user&.author_of?(question)
       section.d-flex.justify-content-end

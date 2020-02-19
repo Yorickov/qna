@@ -57,6 +57,6 @@ ru:
       attachments: "Файлы:"
 
   links:
-    links:
+    index:
       delete_link: Удалить ссылку
       refs: "Ссылки:"

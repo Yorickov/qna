@@ -8,11 +8,11 @@ en:
 
     attributes:
       question:
-        title: title
-        body: Question body
+        title: Header
+        body: Question
         files: Files
       answer:
-        body: Answer body
+        body: Answer
         question_id: Question
         question: Question
         files: Files
@@ -31,9 +31,3 @@ en:
       messages:
         blank: can't be blank
         no_image: should be attached
-
-    # errors:
-    #   messages:
-    #     taken: "has already such combination title - level"
-    #     not_an_integer: "should be positive integer or nil"
-    #     greater_than_or_equal_to: "should be positive integer or nil"

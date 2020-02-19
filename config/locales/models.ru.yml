@@ -8,11 +8,11 @@ ru:
 
     attributes:
       question:
-        title: Название
-        body: Тело вопроса
+        title: Заголовок
+        body: Вопрос
         files: Файлы
       answer:
-        body: Тело ответа
+        body: Ответ
         question_id: Вопрос
         question: Вопрос
         files: Файлы

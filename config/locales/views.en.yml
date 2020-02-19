@@ -53,6 +53,6 @@ en:
       attachments: "Files:"
 
   links:
-    links:
+    index:
       delete_link: Delete link
       refs: "Refs:"

@@ -29,13 +29,13 @@ feature 'Only author can edit his question' do
       end
     end
 
-    scenario 'edits his question by attaching files', js: true do
-      visit question_path(user1_question)
+    scenario 'edits his question by attaching files with keeping the old ones', js: true do
+      visit question_path(question_with_files1)
       click_on t('questions.question_body.edit_question')
 
       within '.question-node' do
-        expect(page).not_to have_link 'test-image1.png'
-        expect(page).not_to have_link 'test-image2.png'
+        expect(page).to have_link 'test-image1.png'
+        expect(page).to have_link 'test-image2.png'
 
         attach_file t('activerecord.attributes.question.files'), [
           "#{Rails.root}/spec/rails_helper.rb",
@@ -43,6 +43,9 @@ feature 'Only author can edit his question' do
         ]
 
         click_on t('forms.submit_question')
+
+        expect(page).to have_link 'test-image1.png'
+        expect(page).to have_link 'test-image2.png'
 
         expect(page).to have_link 'rails_helper.rb'
         expect(page).to have_link 'spec_helper.rb'

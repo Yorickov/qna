@@ -15,8 +15,9 @@
         section
           = render 'attachments/attachment', resource: answer
 
-      section.answer-links
-        = render 'links/links', resourse: answer
+      - if answer.links.any?
+        section.answer-links
+          = render 'links/index', resourse: answer
 
       - if current_user&.author_of?(answer) && answer.persisted?
         section.d-flex.justify-content-end

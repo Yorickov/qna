@@ -21,7 +21,7 @@ feature 'User can delete links in his question' do
       within 'section.question-links' do
         expect(page).to have_selector(:css, '.octicon-x')
 
-        accept_confirm { click_on t('links.links.delete_link') }
+        accept_confirm { click_on t('links.index.delete_link') }
         expect(page).not_to have_link link.name, href: link.url
       end
     end

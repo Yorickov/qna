@@ -14,6 +14,9 @@ module Qna
     # use zeitwerk
     config.add_autoload_paths_to_load_path = false
 
+    # attachments will not being overridden
+    config.active_storage.replace_on_assign_to_many = false
+
     # tz and locale
     config.time_zone = 'Europe/Minsk'
     config.i18n.default_locale = :ru
