@@ -50,13 +50,14 @@ describe Answer, type: :model do
   end
 
   describe 'Methods' do
-    let(:user) { create(:user_with_questions, questions_count: 1) }
-    let(:question) { user.questions.first }
+    let(:user1) { create(:user_with_questions, questions_count: 2) }
+    let(:user2) { create(:user) }
+    let(:question) { user1.questions.first }
 
     describe 'Scopes: answers of the question are sorted by best and created_at by default' do
-      let!(:answer1) { create(:answer, question: question, user: user) }
-      let!(:answer2) { create(:answer, question: question, user: user, best: true) }
-      let!(:answer3) { create(:answer, question: question, user: user) }
+      let!(:answer1) { create(:answer, question: question, user: user1) }
+      let!(:answer2) { create(:answer, question: question, user: user2, best: true) }
+      let!(:answer3) { create(:answer, question: question, user: user2) }
 
       it 'Best answer should be first and others are sorted' do
         expect(question.answers).to eq [answer2, answer1, answer3]
@@ -67,17 +68,36 @@ describe Answer, type: :model do
       end
     end
 
-    describe 'Methods: question can have only one best answer' do
-      let!(:answer1) { create(:answer, question: question, user: user) }
-      let!(:answer2) { create(:answer, question: question, user: user, best: true) }
+    describe 'Author can pick one answer to his question as the best' do
+      let!(:answer1) { create(:answer, question: question, user: user2) }
+      let!(:answer2) { create(:answer, question: question, user: user1, best: true) }
 
-      let!(:previous_best_answer) { answer1.update_to_best! }
+      before { answer1.update_to_best! }
 
       it 'Should swap answers as the best' do
         [answer1, answer2].each(&:reload)
 
         expect(answer1).to be_best
         expect(answer2).not_to be_best
+      end
+    end
+
+    describe 'Author can pick one answer to his question as the best' do
+      let(:question_without_award) { user1.questions.last }
+      let!(:answer_with_award) { create(:answer, question: question, user: user2) }
+      let!(:answer_without_award) { create(:answer, question: question_without_award, user: user2) }
+      let!(:award) { build(:award, :with_image_build, question: question) }
+
+      it "Best answer's author get award, attached to question" do
+        expect(user2.awards).to be_empty
+
+        award.save && answer_with_award.update_to_best!
+        expect(user2.awards.first).to eq award
+      end
+
+      it "Best answer's author don't get award, because question hasn't got it" do
+        award.save && answer_without_award.update_to_best!
+        expect(user2.awards).to be_empty
       end
     end
   end
