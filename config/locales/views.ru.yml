@@ -23,6 +23,7 @@ ru:
       sign_up: Регистрация
       sign_in: Войти
       sign_out: Выйти
+      awards: Награды
     errors:
       header:
         one: Найдена %{count} ошибка

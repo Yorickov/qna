@@ -15,7 +15,7 @@ RSpec.describe Award, type: :model do
     describe 'The award should have the image attached' do
       let(:user) { create(:user_with_questions, questions_count: 1) }
       let(:question) { user.questions.first }
-      let(:award_with_image) { build(:award, :with_image_build, question: question) }
+      let(:award_with_image) { build(:award, :with_image, question: question) }
       let(:award_without_image) { build(:award, question: question) }
 
       it 'Should create award with image' do

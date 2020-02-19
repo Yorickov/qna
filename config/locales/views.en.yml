@@ -23,6 +23,7 @@ en:
       sign_up: Sign Up
       sign_in: Sign In
       sign_out: Sign Out
+      awards: Awards
     errors:
       header:
         one: Found %{count} mistake founded

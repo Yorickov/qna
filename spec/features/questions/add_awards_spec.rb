@@ -22,7 +22,7 @@ feature 'Author can add award to his question' do
 
     within('.question-image') do
       expect(page).to have_content 'My award1'
-      expect(page).to have_selector(:css, 'img')
+      expect(page).to have_css("img[src*='test-image1.png']")
     end
   end
 

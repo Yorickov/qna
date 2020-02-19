@@ -86,17 +86,17 @@ describe Answer, type: :model do
       let(:question_without_award) { user1.questions.last }
       let!(:answer_with_award) { create(:answer, question: question, user: user2) }
       let!(:answer_without_award) { create(:answer, question: question_without_award, user: user2) }
-      let!(:award) { build(:award, :with_image_build, question: question) }
+      let!(:award) { create(:award, :with_image, question: question) }
 
       it "Best answer's author get award, attached to question" do
         expect(user2.awards).to be_empty
 
-        award.save && answer_with_award.update_to_best!
+        answer_with_award.update_to_best!
         expect(user2.awards.first).to eq award
       end
 
       it "Best answer's author don't get award, because question hasn't got it" do
-        award.save && answer_without_award.update_to_best!
+        answer_without_award.update_to_best!
         expect(user2.awards).to be_empty
       end
     end

@@ -6,6 +6,9 @@ nav.navbar.navbar-expand-lg.navbar-light.bg-light.bg-faded.mb-3
     ul.navbar-nav.mr-auto
       li.nav-item.active
         = link_to t('.questions'), questions_path, class: 'nav-link'
+      - if user_signed_in?
+        li.nav-item.active
+          = link_to t('.awards'), awards_path, class: 'nav-link'
     ul.navbar-nav
       - if user_signed_in?
         li.nav-item.active

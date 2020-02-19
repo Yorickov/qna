@@ -9,19 +9,7 @@ FactoryBot.define do
     end
 
     trait :with_image do
-      after :create do |award|
-        image_path = Rails.root.join('spec', 'support', 'assets', 'test-image1.png')
-        image = fixture_file_upload(image_path, 'image/png')
-        award.image.attach(image)
-      end
-    end
-
-    trait :with_image_build do
-      after :build do |award|
-        image_path = Rails.root.join('spec', 'support', 'assets', 'test-image1.png')
-        image = fixture_file_upload(image_path, 'image/png')
-        award.image.attach(image)
-      end
+      image { Rack::Test::UploadedFile.new('spec/support/assets/test-image1.png') }
     end
   end
 end
