@@ -21,7 +21,6 @@ feature 'Author can add award to his question' do
     click_on t('forms.submit_question')
 
     within('.question-image') do
-      expect(page).to have_content 'My award1'
       expect(page).to have_css("img[src*='test-image1.png']")
     end
   end

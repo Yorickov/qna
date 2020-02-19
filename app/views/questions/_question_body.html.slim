@@ -1,25 +1,27 @@
 .card.border-0
   .card-body.pb-0
-    h2.card-title.question-title = question.title
-    p.card-text.question-body = question.body
+    .row.no-gutters
+      .col-md-1.d-flex.align-items-center.justify-content-center
+        - if question.award.present?
+          .question-image
+            = image_tag url_for(question.award.image), title: question.award.title, height: '30', width: '30'
 
-    - if question.award.present?
-      section.question-image
-        = render 'award', question: question
+      .col-md-11
+        h2.card-title.question-title = question.title
+        p.card-text.question-body = question.body
+        - if question.files.attached?
+          section.question-files
+            = render 'attachments/attachment', resource: question
 
-    - if question.files.attached?
-      section.question-files
-        = render 'attachments/attachment', resource: question
+        - if question.links.any?
+          section.question-links
+            = render 'links/index', resourse: question
 
-    - if question.links.any?
-      section.question-links
-        = render 'links/index', resourse: question
+        - if current_user&.author_of?(question)
+          section.d-flex.justify-content-end
+            = link_to t('.delete_question'), question_path(question), method: :delete, class: 'card-link', data: { confirm: 'Are you sure?' }
+            = link_to t('.edit_question'), '#', class: 'card-link edit-question-link'
 
-    - if current_user&.author_of?(question)
-      section.d-flex.justify-content-end
-        = link_to t('.delete_question'), question_path(question), method: :delete, class: 'card-link', data: { confirm: 'Are you sure?' }
-        = link_to t('.edit_question'), '#', class: 'card-link edit-question-link'
-
-    section.question-form-node
-      = render 'form_edit'
+        section.question-form-node
+          = render 'form_edit'
   hr
