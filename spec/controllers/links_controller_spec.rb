@@ -1,5 +1,3 @@
-# rubocop:disable Metrics/BlockLength
-
 require 'rails_helper'
 
 describe LinksController, type: :controller do

@@ -1,5 +1,6 @@
 class Answer < ApplicationRecord
-  has_many :links, dependent: :destroy, as: :linkable
+  include Linkable
+
   belongs_to :question
   belongs_to :user
 
@@ -7,8 +8,6 @@ class Answer < ApplicationRecord
 
   validates :body, presence: true
   validates :best, uniqueness: { scope: :question }, if: :best?
-
-  accepts_nested_attributes_for :links, reject_if: :all_blank, allow_destroy: true
 
   def update_to_best!
     best_answer = question.answers.find_by(best: true)
