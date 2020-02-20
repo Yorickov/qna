@@ -1,4 +1,4 @@
-= simple_form_for model, remote: true do |f|
+= simple_form_for resource, remote: true do |f|
   = f.input :body
   = f.input :files, as: :file, input_html: { multiple: true, direct_upload: true }
 

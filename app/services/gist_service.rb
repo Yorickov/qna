@@ -5,9 +5,9 @@ class GistService
   attr_reader :url
   attr_accessor :response
 
-  def initialize(url, client = nil)
+  def initialize(url, client = Octokit::Client.new(access_token: ENV['GITHUB_TOKEN']))
     @url = url
-    @client = client || Octokit::Client.new(access_token: ENV['GITHUB_TOKEN'])
+    @client = client
   end
 
   def call

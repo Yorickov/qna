@@ -60,10 +60,6 @@ describe Answer, type: :model do
       it 'Best answer should be first and others are sorted' do
         expect(question.answers).to eq [answer2, answer1, answer3]
       end
-
-      it 'Best answer should be in the original place' do
-        expect(question.answers.unscope(:order)).to eq [answer1, answer2, answer3]
-      end
     end
 
     describe 'Author can pick one answer to his question as the best' do

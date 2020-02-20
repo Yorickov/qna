@@ -6,8 +6,6 @@ const answerHandler = (event) => {
 
   const answerId = target.dataset.answerId;
   const form = document.querySelector(`form#edit-answer-${answerId}`);
-  console.log(target);
-  console.log(form);
   target.classList.add('hidden');
   form.classList.remove('hidden');
 };

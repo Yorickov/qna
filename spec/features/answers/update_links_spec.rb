@@ -10,8 +10,8 @@ feature 'Author can update links in his question' do
   given!(:link) { create(:link, linkable: answer) }
 
   describe 'User' do
-    background { sign_in(user2) }
     background do
+      sign_in(user2)
       visit question_path(question)
 
       click_on t('answers.answer_body.edit_answer')

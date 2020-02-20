@@ -10,8 +10,7 @@ describe AwardsController, type: :controller do
 
   describe 'GET #index' do
     context 'as authorized Author' do
-      before { sign_in(user2) }
-      before { get :index }
+      before { sign_in(user2) and get :index }
 
       it 'populates an array of hes awards' do
         expect(assigns(:awards)).to match_array([award2])

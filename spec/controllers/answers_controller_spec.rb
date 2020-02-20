@@ -151,8 +151,9 @@ describe AnswersController, type: :controller do
     end
 
     context 'as no authorized Author' do
-      before { login(user2) }
       before do
+        login(user2)
+
         patch :update, params: {
           id: answer,
           answer: attributes_for(:answer, body: 'new body'),
@@ -283,8 +284,10 @@ describe AnswersController, type: :controller do
     end
 
     context 'as no authorized Author' do
-      before { login(user2) }
-      before { patch :choose_best, params: { id: answer2, format: :js } }
+      before do
+        login(user2)
+        patch :choose_best, params: { id: answer2, format: :js }
+      end
 
       it 'does not update the answer' do
         original_body = answer2.body

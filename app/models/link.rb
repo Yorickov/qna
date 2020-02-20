@@ -1,7 +1,7 @@
 class Link < ApplicationRecord
-  GIST_URL_FORMAT = /^https:\/\/gist\.github\.com\/.+$/.freeze
+  GIST_URL_FORMAT = %r{^https://gist.github.com/.+$}.freeze
 
-  after_validation :update_gist, if: ->(link) { link.url =~ GIST_URL_FORMAT }
+  before_create :update_body, if: ->(link) { link.url =~ GIST_URL_FORMAT }
 
   belongs_to :linkable, polymorphic: true
 
@@ -10,7 +10,7 @@ class Link < ApplicationRecord
             format: { with: URI::DEFAULT_PARSER.make_regexp },
             if: ->(link) { link.url.present? }
 
-  def update_gist
+  def update_body
     self.body = gist_body
   end
 

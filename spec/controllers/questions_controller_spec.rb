@@ -31,8 +31,7 @@ describe QuestionsController, type: :controller do
 
   describe 'GET #new' do
     context 'as User' do
-      before { login(user1) }
-      before { get :new }
+      before { login(user1) and get :new }
 
       it 'assigns a new Question to @question' do
         expect(assigns(:question)).to be_a_new(Question)
@@ -161,8 +160,9 @@ describe QuestionsController, type: :controller do
     end
 
     context 'as no authorized Author' do
-      before { login(user2) }
       before do
+        login(user2)
+
         patch :update, params: {
           id: user1_question,
           question: attributes_for(:question, body: 'new body'),
