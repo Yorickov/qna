@@ -36,6 +36,8 @@ en:
       delete_question: Delete
       edit_question: Edit
       refs: "Refs:"
+      vote_up: Like it
+      vote_down: Don't like it
     question:
       answers_count:
         one: Got %{count} anwer
@@ -46,6 +48,8 @@ en:
       delete_answer: Delete answer
       edit_answer: Edit answer
       choose_best: Best answer
+      vote_up: Нравится
+      vote_down: Не нравится
 
   attachments:
     attachment:

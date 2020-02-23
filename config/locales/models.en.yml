@@ -31,3 +31,4 @@ en:
       messages:
         blank: can't be blank
         no_image: should be attached
+        no_author: should not to vote twice

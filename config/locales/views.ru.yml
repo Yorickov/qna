@@ -38,6 +38,8 @@ ru:
       delete_question: Удалить
       edit_question: Редактировать
       refs: "Ссылки:"
+      vote_up: Нравится
+      vote_down: Не нравится
     question:
       answers_count:
         one: ответ
@@ -50,6 +52,8 @@ ru:
       delete_answer: Удалить ответ
       edit_answer: Редактировать ответ
       choose_best: Лучший ответ
+      vote_up: Нравится
+      vote_down: Не нравится
 
   attachments:
     attachment:

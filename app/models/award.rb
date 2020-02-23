@@ -10,4 +10,8 @@ class Award < ApplicationRecord
   def validate_image_presence
     errors.add(:image, :no_image) unless image.attached?
   end
+
+  def to_s
+    title
+  end
 end

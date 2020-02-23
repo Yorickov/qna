@@ -1,6 +1,7 @@
 class Answer < ApplicationRecord
   include Linkable
 
+  has_many :votes, as: :votable, dependent: :destroy
   belongs_to :question
   belongs_to :user
 
@@ -17,5 +18,9 @@ class Answer < ApplicationRecord
       update!(best: true)
       question.award&.update!(user: user)
     end
+  end
+
+  def to_s
+    body
   end
 end

@@ -14,6 +14,10 @@ class Link < ApplicationRecord
     self.body = gist_body
   end
 
+  def to_s
+    name
+  end
+
   private
 
   def gist_body

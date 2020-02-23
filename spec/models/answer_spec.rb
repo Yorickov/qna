@@ -4,6 +4,7 @@ describe Answer, type: :model do
   it_behaves_like 'linkable'
 
   describe 'Association' do
+    it { should have_many(:votes).dependent(:destroy) }
     it { should belong_to(:question) }
     it { should belong_to(:user) }
   end
