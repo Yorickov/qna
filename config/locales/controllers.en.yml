@@ -5,8 +5,16 @@ en:
     destroy:
       success: Question was successfully deleted
       wrong_author: Your can't delete another's question
+    vote_up:
+      message: Error
+    vote_down:
+      message: Error
 
   answers:
     destroy:
       success: Answer was successfully deleted
       wrong_author: Your can't delete another's answer
+    vote_up:
+      message: Error
+    vote_down:
+      message: Error

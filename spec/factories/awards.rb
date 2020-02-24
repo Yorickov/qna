@@ -1,8 +1,8 @@
 FactoryBot.define do
   factory :award do
     title { 'MyTitle' }
-    user { nil }
-    question { nil }
+    user
+    question
 
     trait :invalid do
       title { nil }

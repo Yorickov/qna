@@ -4,12 +4,12 @@
       - if answer.best?
         .mb-2.best-answer
           = octicon('verified', width: 30)
-      .answer-raiting
-        span.text-center 0
+      .rating
+        span.text-center= answer.rating
       - if user_signed_in? && !current_user&.author_of?(answer)
-        .answer-voting
-          = link_to octicon('triangle-up', width: 17), '#', title: t('.vote_up'), class: 'vote-up', remote: true
-          = link_to octicon('triangle-down', width: 17), '#', title: t('.vote_down'), class: 'vote-down', remote: true
+        .voting
+          = link_to octicon('triangle-up', width: 17), vote_up_answer_path(answer), method: :patch, data: { type: :json }, title: t('.vote_up'), class: 'vote-up', remote: true
+          = link_to octicon('triangle-down', width: 17), vote_down_answer_path(answer), method: :patch, data: { type: :json }, title: t('.vote_down'), class: 'vote-down', remote: true
 
       - if !answer.best? && current_user&.author_of?(answer.question)
         = link_to octicon('thumbsup', width: 18), choose_best_answer_path(answer), title: t('.choose_best'), class: 'best-answer-link', method: :patch, data: { confirm: 'Are you sure?' }, remote: true

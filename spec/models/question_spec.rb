@@ -2,12 +2,12 @@ require 'rails_helper'
 
 describe Question, type: :model do
   it_behaves_like 'linkable'
+  it_behaves_like 'votable'
 
   describe 'Association' do
     it { should have_many(:answers).dependent(:destroy) }
     it { should belong_to(:user) }
     it { should have_one(:award).dependent(:destroy) }
-    it { should have_many(:votes).dependent(:destroy) }
   end
 
   describe 'Validation' do

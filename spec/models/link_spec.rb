@@ -22,17 +22,17 @@ describe Link, type: :model do
         let!(:gist_link) { create(:link, :gist, linkable: question) }
         let!(:gist_link_not_exist) { create(:link, :gist_empty, linkable: question) }
 
-        xit 'gist url exist' do
+        it 'gist url exist' do
           expect(gist_link.body).to match 'test test test'
         end
 
-        xit 'gist url does not exist' do
+        it 'gist url does not exist' do
           expect(gist_link_not_exist.body).to match 'No such a gist'
         end
       end
 
       context 'url is not gist-url' do
-        xit 'method does not work' do
+        it 'method does not work' do
           expect(link.body).not_to be_present
         end
       end

@@ -3,8 +3,16 @@ Rails.application.routes.draw do
 
   devise_for :users
 
-  resources :questions do
-    resources :answers, only: %i[create destroy update], shallow: true do
+  concern :votable do
+    member do
+      patch :vote_up
+      patch :vote_down
+      delete :vote_reset
+    end
+  end
+
+  resources :questions, concerns: :votable do
+    resources :answers, only: %i[create destroy update], concerns: :votable, shallow: true do
       patch :choose_best, on: :member
     end
   end

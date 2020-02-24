@@ -1,7 +1,7 @@
 class Answer < ApplicationRecord
   include Linkable
+  include Votable
 
-  has_many :votes, as: :votable, dependent: :destroy
   belongs_to :question
   belongs_to :user
 

@@ -14,34 +14,34 @@ feature 'User can vote for answer' do
 
     scenario "votes pro another's answer", js: true do
       within '.answers>.card:first-child' do
-        expect(find(class: 'answer-raiting')).to have_content('0')
+        expect(find(class: 'rating')).to have_content('0')
 
         find_link(class: 'vote-up').click
-        expect(find(class: 'answer-raiting')).to have_content('1')
+        expect(find(class: 'rating')).to have_content('1')
       end
     end
 
     scenario "votes contra another's answer", js: true do
       within '.answers>.card:first-child' do
-        expect(find(class: 'answer-raiting')).to have_content('0')
+        expect(find(class: 'rating')).to have_content('0')
 
         find_link(class: 'vote-down').click
-        expect(find(class: 'answer-raiting')).to have_content('-1')
+        expect(find(class: 'rating')).to have_content('-1')
       end
     end
 
     scenario 'try to vote another time', js: true do
       within '.answers>.card:first-child' do
-        expect(find(class: 'answer-raiting')).to have_content('0')
+        expect(find(class: 'rating')).to have_content('0')
 
         find_link(class: 'vote-up').click
-        expect(find(class: 'answer-raiting')).to have_content('1')
+        expect(find(class: 'rating')).to have_content('1')
 
         find_link(class: 'vote-up').click
-        expect(find(class: 'answer-raiting')).to have_content('1')
+        expect(find(class: 'rating')).to have_content('1')
 
         find_link(class: 'vote-down').click
-        expect(find(class: 'answer-raiting')).to have_content('1')
+        expect(find(class: 'rating')).to have_content('1')
       end
     end
   end

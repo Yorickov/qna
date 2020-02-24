@@ -1,13 +1,13 @@
-.card.border-0
+.card.border-0(data-question-node-id="#{question.id}")
   .card-body.pb-0.py-0
     .row.no-gutters
       .col-md-1.d-flex.flex-column.align-items-center.justify-content-center
-        .question-raiting
-          span.text-center 0
+        .rating
+          span.text-center= question.rating
         - if user_signed_in? && !current_user&.author_of?(question)
-          .question-voting
-            = link_to octicon('triangle-up', width: 17), '#', title: t('.vote_up'), class: 'vote-up', remote: true
-            = link_to octicon('triangle-down', width: 17), '#', title: t('.vote_down'), class: 'vote-down', remote: true
+          .voting
+            = link_to octicon('triangle-up', width: 17), vote_up_question_path(question), method: :patch, data: { type: :json }, title: t('.vote_up'), class: 'vote-up', remote: true
+            = link_to octicon('triangle-down', width: 17), vote_down_question_path(question), method: :patch, data: { type: :json }, title: t('.vote_down'), class: 'vote-down', remote: true
 
       .col-md-10.pl-2
         h2.card-title.question-title = question.title

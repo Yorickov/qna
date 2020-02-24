@@ -5,8 +5,16 @@ ru:
     destroy:
       success: Вопрос успешно удален
       wrong_author: Вы не можете удалить чужой вопрос
+    vote_up:
+      message: Ошибка
+    vote_down:
+      message: Ошибка
 
   answers:
     destroy:
       success: Ответ успешно удален
       wrong_author: Вы не можете удалить чужой ответ
+    vote_up:
+      message: Ошибка
+    vote_down:
+      message: Ошибка

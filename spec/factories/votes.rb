@@ -1,7 +1,7 @@
 FactoryBot.define do
   factory :vote do
     value { 0 }
-    user { nil }
+    user
     votable { nil }
 
     trait :pro do

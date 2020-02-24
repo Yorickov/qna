@@ -7,18 +7,16 @@ feature 'User can vote for question' do
   given(:user2_question) { user2.questions.first }
 
   describe 'Authenticated user' do
-    background do
-      sign_in(user1)
-    end
+    background { sign_in(user1) }
 
     scenario "votes pro another's question", js: true do
       visit question_path(user2_question)
 
       within '.question-node' do
-        expect(find(class: 'question-raiting')).to have_content('0')
+        expect(find(class: 'rating')).to have_content('0')
 
         find_link(class: 'vote-up').click
-        expect(find(class: 'question-raiting')).to have_content('1')
+        expect(find(class: 'rating')).to have_content('1')
       end
     end
 
@@ -26,10 +24,10 @@ feature 'User can vote for question' do
       visit question_path(user2_question)
 
       within '.question-node' do
-        expect(find(class: 'question-raiting')).to have_content('0')
+        expect(find(class: 'rating')).to have_content('0')
 
         find_link(class: 'vote-down').click
-        expect(find(class: 'question-raiting')).to have_content('-1')
+        expect(find(class: 'rating')).to have_content('-1')
       end
     end
 
@@ -37,16 +35,16 @@ feature 'User can vote for question' do
       visit question_path(user2_question)
 
       within '.question-node' do
-        expect(find(class: 'question-raiting')).to have_content('0')
+        expect(find(class: 'rating')).to have_content('0')
 
         find_link(class: 'vote-up').click
-        expect(find(class: 'question-raiting')).to have_content('1')
+        expect(find(class: 'rating')).to have_content('1')
 
         find_link(class: 'vote-up').click
-        expect(find(class: 'question-raiting')).to have_content('1')
+        expect(find(class: 'rating')).to have_content('1')
 
         find_link(class: 'vote-down').click
-        expect(find(class: 'question-raiting')).to have_content('1')
+        expect(find(class: 'rating')).to have_content('1')
       end
     end
 

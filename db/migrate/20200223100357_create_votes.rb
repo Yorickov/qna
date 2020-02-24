@@ -8,8 +8,8 @@ class CreateVotes < ActiveRecord::Migration[6.0]
       t.timestamps
     end
 
-    add_column :questions, :votes_count, :integer
+    add_column :questions, :rating, :integer, default: 0
 
-    add_column :answers, :votes_count, :integer
+    add_column :answers, :rating, :integer,  default: 0
   end
 end
