@@ -40,5 +40,23 @@ shared_examples 'votable' do
       votable.update_vote_up(user2)
       expect(votable.rating).to eq 0
     end
+
+    it 'update_vote_reset' do
+      votable.update_vote_up(user1)
+      expect(votable.rating).to eq 1
+      expect(Vote.count).to eq 1
+
+      votable.update_vote_reset(user1)
+      expect(votable.rating).to eq 0
+      expect(Vote.count).to eq 0
+
+      votable.update_vote_down(user1)
+      expect(votable.rating).to eq(-1)
+      expect(Vote.count).to eq 1
+
+      votable.update_vote_reset(user1)
+      expect(votable.rating).to eq 0
+      expect(Vote.count).to eq 0
+    end
   end
 end

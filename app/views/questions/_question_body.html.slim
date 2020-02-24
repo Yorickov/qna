@@ -2,12 +2,13 @@
   .card-body.pb-0.py-0
     .row.no-gutters
       .col-md-1.d-flex.flex-column.align-items-center.justify-content-center
-        .rating
-          span.text-center= question.rating
         - if user_signed_in? && !current_user&.author_of?(question)
-          .voting
-            = link_to octicon('triangle-up', width: 17), vote_up_question_path(question), method: :patch, data: { type: :json }, title: t('.vote_up'), class: 'vote-up', remote: true
-            = link_to octicon('triangle-down', width: 17), vote_down_question_path(question), method: :patch, data: { type: :json }, title: t('.vote_down'), class: 'vote-down', remote: true
+          .voting.d-flex.flex-column.align-items-center.justify-content-center
+            = link_to octicon('triangle-up', width: 25), vote_up_question_path(question), method: :patch, data: { type: :json }, title: t('.vote_up'), class: 'vote-up', remote: true
+            .rating
+              span.text-center= question.rating
+            = link_to octicon('triangle-down', width: 25), vote_down_question_path(question), method: :patch, data: { type: :json }, title: t('.vote_down'), class: 'vote-down', remote: true
+            = link_to octicon('sync', width: 15), vote_reset_question_path(question), method: :delete, data: { type: :json }, title: t('.vote_reset'), class: 'vote-reset', remote: true
 
       .col-md-10.pl-2
         h2.card-title.question-title = question.title
@@ -28,7 +29,7 @@
         section.question-form-node
           = render 'form_edit'
 
-      .col-md-1.d-flex.align-items-center.justify-content-center
+      .col-md-1.d-flex.flex-column.align-items-center.justify-content-center
         - if question.award.present?
           .question-image
             = image_tag url_for(question.award.image), title: question.award.title, height: '20', width: '20'

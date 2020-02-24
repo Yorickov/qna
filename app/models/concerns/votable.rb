@@ -25,6 +25,17 @@ module Votable
     end
   end
 
+  def update_vote_reset(vote_author)
+    vote = votes.find_by(user: vote_author)
+    return unless vote
+
+    transaction do
+      vote.destroy
+      self.rating -= vote.value
+      save!
+    end
+  end
+
   private
 
   def already_voted?(vote_author)

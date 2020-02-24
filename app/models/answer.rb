@@ -13,7 +13,7 @@ class Answer < ApplicationRecord
   def update_to_best!
     best_answer = question.answers.find_by(best: true)
 
-    Answer.transaction do
+    transaction do
       best_answer&.update!(best: false)
       update!(best: true)
       question.award&.update!(user: user)

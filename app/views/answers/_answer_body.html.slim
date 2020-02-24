@@ -4,17 +4,16 @@
       - if answer.best?
         .mb-2.best-answer
           = octicon('verified', width: 30)
-      .rating
-        span.text-center= answer.rating
+
       - if user_signed_in? && !current_user&.author_of?(answer)
-        .voting
-          = link_to octicon('triangle-up', width: 17), vote_up_answer_path(answer), method: :patch, data: { type: :json }, title: t('.vote_up'), class: 'vote-up', remote: true
-          = link_to octicon('triangle-down', width: 17), vote_down_answer_path(answer), method: :patch, data: { type: :json }, title: t('.vote_down'), class: 'vote-down', remote: true
+        .voting.d-flex.flex-column.align-items-center.justify-content-center
+          = link_to octicon('triangle-up', width: 25), vote_up_answer_path(answer), method: :patch, data: { type: :json }, title: t('.vote_up'), class: 'vote-up', remote: true
+          .rating
+            span.text-center= answer.rating
+          = link_to octicon('triangle-down', width: 25), vote_down_answer_path(answer), method: :patch, data: { type: :json }, title: t('.vote_down'), class: 'vote-down', remote: true
+          = link_to octicon('sync', width: 17), vote_reset_answer_path(answer), method: :delete, data: { type: :json }, title: t('.vote_reset'), class: 'vote-reset', remote: true
 
-      - if !answer.best? && current_user&.author_of?(answer.question)
-        = link_to octicon('thumbsup', width: 18), choose_best_answer_path(answer), title: t('.choose_best'), class: 'best-answer-link', method: :patch, data: { confirm: 'Are you sure?' }, remote: true
-
-    .col-md-11.pl-2
+    .col-md-10.pl-2
       p.card-text = answer.body
 
       - if answer.files.attached?
@@ -32,4 +31,7 @@
         .answer-form-node
           = render 'answers/form_edit', answer: answer
 
+    .col-md-1.d-flex.flex-column.align-items-center.justify-content-center
+      - if !answer.best? && current_user&.author_of?(answer.question)
+        = link_to octicon('thumbsup', width: 18), choose_best_answer_path(answer), title: t('.choose_best'), class: 'best-answer-link', method: :patch, data: { confirm: 'Are you sure?' }, remote: true
 hr
