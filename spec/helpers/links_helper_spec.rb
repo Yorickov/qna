@@ -1,10 +1,15 @@
 require 'rails_helper'
 
 describe LinksHelper, type: :helper do
-  let!(:raw_gist) { 'file1.txt---Ruby on Rails***file2.txt---Best framework' }
-  let!(:parsed_gist) { '<p>file1.txt<br>Ruby on Rails</p><p>file2.txt<br>Best framework</p>' }
+  let(:user) { create(:user_with_questions, questions_count: 1) }
+  let(:question) { user.questions.first }
+  let(:valid_gist_url) { 'https://gist.github.com/Yorickov/d1264faeca158fdeb77e4238f59854ec' }
 
-  it 'link_gist should parse string into html' do
-    expect(link_gist(raw_gist)).to match parsed_gist
+  it 'link_gist should return html' do
+    expected_content = '<p>hi!!!</p>'
+    gist_stub_request(valid_gist_url, 200, expected_content)
+    gist_link = create(:link, url: valid_gist_url, linkable: question)
+
+    expect(show_body(gist_link)).to match expected_content
   end
 end

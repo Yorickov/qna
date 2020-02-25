@@ -13,34 +13,57 @@ describe Link, type: :model do
   end
 
   describe 'Methods' do
-    let(:user) { create(:user_with_questions, questions_count: 1) }
-    let!(:question) { user.questions.first }
-    let!(:link) { create(:link, linkable: question) }
+    describe 'update_gist: add gist body after url validation' do
+      let(:user) { create(:user_with_questions, questions_count: 1) }
+      let(:question) { user.questions.first }
+      let!(:link) { create(:link, linkable: question) }
 
-    describe 'update_gits: add gist body after url validation' do
+      let!(:valid_gist_url) { 'https://gist.github.com/Yorickov/d1264faeca158fdeb77e4238f59854ec' }
+      let!(:gist_url_not_exist) { 'https://gist.github.com/238f59854ec' }
+
       context 'url is gist-url' do
-        let!(:gist_link) { create(:link, :gist, linkable: question) }
-        let!(:gist_link_not_exist) { create(:link, :gist_empty, linkable: question) }
-
         it 'gist url exist' do
-          expect(gist_link.body).to match 'test test test'
+          expected_content = '<p>hi!!!</p>'
+          gist_stub_request(valid_gist_url, 200, expected_content)
+
+          gist_link = create(:link, url: valid_gist_url, linkable: question)
+
+          expect(gist_link).to be_gist
+          expect(gist_link.body).to match expected_content
         end
 
         it 'gist url does not exist' do
-          expect(gist_link_not_exist.body).to match 'No such a gist'
+          expected_content = 'No such a gist'
+          gist_stub_request(gist_url_not_exist, 404)
+
+          gist_link_not_exist = create(:link, url: gist_url_not_exist, linkable: question)
+
+          expect(gist_link_not_exist).to be_gist
+          expect(gist_link_not_exist.body).to match expected_content
         end
       end
 
       context 'url is not gist-url' do
         it 'method does not work' do
+          expect(link).not_to be_gist
           expect(link.body).not_to be_present
         end
       end
-    end
 
-    it 'to_s' do
-      link = create(:link, name: 'good', linkable: question)
-      expect("#{link}").to match 'good'
+      it 'load_gist: if' do
+        saved_content = '<p>hi!!!</p>'
+        actual_content = '<p>what???</p>'
+
+        gist_stub_request(valid_gist_url, 200, saved_content)
+        gist_link = create(:link, url: valid_gist_url, linkable: question)
+
+        gist_stub_request(valid_gist_url, 200, actual_content)
+        expect(gist_link.body).to match saved_content
+        expect(gist_link.load_body).to match actual_content
+
+        gist_stub_request(valid_gist_url, 404)
+        expect(gist_link.load_body).to match saved_content
+      end
     end
   end
 end

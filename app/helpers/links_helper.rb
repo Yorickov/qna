@@ -1,15 +1,12 @@
 module LinksHelper
-  def link_gist(gist_string)
-    parse_content(gist_string)
+  def show_body(link)
+    content = link.load_body
+    to_html(content)
   end
 
   private
 
-  def parse_content(gist_string)
-    gist_string
-      .split('***')
-      .map { |f| f.split('---') }
-      .map { |header, content| "<p>#{header}<br>#{content}</p>" }
-      .join('').html_safe
+  def to_html(content)
+    content.html_safe
   end
 end

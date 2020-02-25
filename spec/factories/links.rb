@@ -13,7 +13,7 @@ FactoryBot.define do
     end
 
     trait :gist do
-      url { 'https://gist.github.com/Yorickov/7ba1dcccfb691b5d5e6b1779bcc81e3e' }
+      url { 'https://gist.github.com/Yorickov/d1264faeca158fdeb77e4238f59854ec' }
     end
 
     trait :gist_empty do

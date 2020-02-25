@@ -4,8 +4,8 @@ feature 'Author can add links to his question' do
   given(:user) { create(:user) }
   given(:url) { Faker::Internet.url }
   given(:url_alt) { Faker::Internet.url }
-  given(:gist_url) { 'https://gist.github.com/Yorickov/7ba1dcccfb691b5d5e6b1779bcc81e3e' }
-  given(:gist_link_not_exist) { 'https://gist.github.com/Yorickov/123' }
+  given!(:valid_gist_url) { 'https://gist.github.com/Yorickov/d1264faeca158fdeb77e4238f59854ec' }
+  given!(:gist_url_not_exist) { 'https://gist.github.com/238f59854ec' }
 
   background do
     sign_in(user)
@@ -45,13 +45,16 @@ feature 'Author can add links to his question' do
     end
 
     scenario 'adds git-links when asks question' do
+      expected_content = '<p>hi!!!</p>'
+      gist_stub_request(valid_gist_url, 200, expected_content)
+
       fill_in t('activerecord.attributes.link.name'), with: 'My gist'
-      fill_in t('activerecord.attributes.link.url'), with: gist_url
+      fill_in t('activerecord.attributes.link.url'), with: valid_gist_url
 
       click_on t('forms.submit_question')
 
-      expect(page).to have_content 'test test test'
-      expect(page).not_to have_link 'My gist', href: gist_url
+      expect(page).to have_content 'hi!!!'
+      expect(page).not_to have_link 'My gist', href: valid_gist_url
     end
   end
 
@@ -66,13 +69,15 @@ feature 'Author can add links to his question' do
     end
 
     scenario 'adds git-link when asks question but they are no content' do
+      gist_stub_request(gist_url_not_exist, 404)
+
       fill_in t('activerecord.attributes.link.name'), with: 'My gist'
-      fill_in t('activerecord.attributes.link.url'), with: gist_link_not_exist
+      fill_in t('activerecord.attributes.link.url'), with: gist_url_not_exist
 
       click_on t('forms.submit_question')
 
       expect(page).to have_content 'No such a gist'
-      expect(page).not_to have_link 'My gist', href: gist_link_not_exist
+      expect(page).not_to have_link 'My gist', href: gist_url_not_exist
     end
   end
 end

@@ -1,29 +1,30 @@
 class GistService
-  GIST_ID_FORMAT = /\w*$/.freeze
-  GIST_NO_EXIST = 'No such a gist'.freeze
+  ACCESS_TOKEN = ENV['GITHUB_TOKEN']
+  GIST_CONTENT_NODE = 'div'.freeze
 
   attr_reader :url
   attr_accessor :response
 
-  def initialize(url, client = Octokit::Client.new(access_token: ENV['GITHUB_TOKEN']))
+  def initialize(url, client = Faraday.new)
     @url = url
     @client = client
   end
 
   def call
-    self.response = @client.gist(gist_id)
-    parsed_body
-  rescue Octokit::NotFound
-    GIST_NO_EXIST
+    self.response = gist_request
+    response.status == 200 ? parse_content : false
   end
 
   private
 
-  def parsed_body
-    response.files.to_h.values.map { |f| [f[:filename], f[:content]].join('---') }.join('***')
+  def gist_request
+    @client.get("#{url}.json") do |request|
+      request.headers['Authorization'] = "token #{ACCESS_TOKEN}"
+      request.headers['Accept'] = 'application/json'
+    end
   end
 
-  def gist_id
-    GIST_ID_FORMAT.match(url)[0]
+  def parse_content
+    ActiveSupport::JSON.decode(response.body)[GIST_CONTENT_NODE]
   end
 end
