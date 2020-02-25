@@ -4,4 +4,5 @@ class Vote < ApplicationRecord
 
   validates :value, presence: true
   validates :user, uniqueness: { scope: %i[votable_type votable_id] }
+  validates :value, inclusion: { in: [-1, 1] }
 end

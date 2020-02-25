@@ -26,5 +26,10 @@ describe User, type: :model do
         expect(user1).not_to be_author_of(user2.questions.first)
       end
     end
+
+    it 'to_s' do
+      user = create(:user, email: 'smth@ram.com')
+      expect("#{user}").to match 'smth@ram.com'
+    end
   end
 end

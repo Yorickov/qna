@@ -5,3 +5,6 @@ Layout/LineLength:
 
 Metrics/BlockLength:
   Enabled: false
+
+Style/RedundantInterpolation:
+  Enabled: false

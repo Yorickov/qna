@@ -7,21 +7,21 @@ module Voted
 
   def vote_up
     render_errors(t('.error_authority')) and return if current_user.author_of?(@votable)
-    render_errors(t('.twice_or_author')) and return unless @votable.update_vote_up(current_user)
+    render_errors(t('.twice_or_author')) and return unless @votable.vote_up!(current_user)
 
     render_json
   end
 
   def vote_down
     render_errors(t('.error_authority')) and return if current_user.author_of?(@votable)
-    render_errors(t('.twice_or_author')) and return unless @votable.update_vote_down(current_user)
+    render_errors(t('.twice_or_author')) and return unless @votable.vote_down!(current_user)
 
     render_json
   end
 
   def vote_reset
     render_errors(t('.error_authority')) and return if current_user.author_of?(@votable)
-    render_errors(t('.no_vote')) and return unless @votable.update_vote_reset(current_user)
+    render_errors(t('.no_vote')) and return unless @votable.vote_reset!(current_user)
 
     render_json
   end

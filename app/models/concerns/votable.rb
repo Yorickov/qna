@@ -5,8 +5,8 @@ module Votable
     has_many :votes, as: :votable, dependent: :destroy
   end
 
-  def update_vote_up(vote_author)
-    return false if already_voted?(vote_author) || votable_author?(vote_author)
+  def vote_up!(vote_author)
+    return false if voted?(vote_author) || votable_author?(vote_author)
 
     transaction do
       votes.create!(user: vote_author, value: 1)
@@ -15,8 +15,8 @@ module Votable
     end
   end
 
-  def update_vote_down(vote_author)
-    return false if already_voted?(vote_author) || votable_author?(vote_author)
+  def vote_down!(vote_author)
+    return false if voted?(vote_author) || votable_author?(vote_author)
 
     transaction do
       votes.create!(user: vote_author, value: -1)
@@ -25,7 +25,7 @@ module Votable
     end
   end
 
-  def update_vote_reset(vote_author)
+  def vote_reset!(vote_author)
     vote = votes.find_by(user: vote_author)
     return false unless vote
 
@@ -36,7 +36,7 @@ module Votable
     end
   end
 
-  def already_voted?(vote_author)
+  def voted?(vote_author)
     votes.exists?(user: vote_author)
   end
 

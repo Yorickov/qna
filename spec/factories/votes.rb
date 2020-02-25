@@ -1,11 +1,15 @@
 FactoryBot.define do
   factory :vote do
-    value { 0 }
+    value { 1 }
     user
     votable { nil }
 
-    trait :pro do
-      value { 1 }
+    trait :question do
+      votable { create(:question) }
+    end
+
+    trait :answer do
+      votable { create(:answer) }
     end
 
     trait :contra do

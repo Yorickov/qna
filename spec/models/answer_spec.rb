@@ -53,6 +53,11 @@ describe Answer, type: :model do
     let(:user2) { create(:user) }
     let(:question) { user1.questions.first }
 
+    it 'to_s' do
+      answer = create(:answer, body: 'something')
+      expect("#{answer}").to match 'something'
+    end
+
     describe 'Scopes: answers of the question are sorted by best and created_at by default' do
       let!(:answer1) { create(:answer, question: question, user: user1) }
       let!(:answer2) { create(:answer, question: question, user: user2, best: true) }

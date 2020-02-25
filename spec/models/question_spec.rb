@@ -19,4 +19,11 @@ describe Question, type: :model do
       expect(Question.new.files).to be_an_instance_of(ActiveStorage::Attached::Many)
     end
   end
+
+  describe 'Methods' do
+    it 'to_s' do
+      question = create(:question, title: 'something', body: 'strange')
+      expect("#{question}").to match 'something strange'
+    end
+  end
 end

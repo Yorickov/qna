@@ -10,24 +10,11 @@ RSpec.describe Vote, type: :model do
     it { should validate_presence_of(:value) }
 
     describe "The vote can't have more than one vote for the question" do
-      let(:user1) { create(:user_with_questions, questions_count: 1) }
-      let(:user2) { create(:user) }
-      let(:question) { user1.questions.first }
-      let(:answer) { create(:answer, question: question, user: user2) }
+      subject { create(:vote, :question) }
+      subject { create(:vote, :contra, :answer) }
 
-      it 'Should not create vote if there is vote with the same user and question' do
-        create(:vote, :pro, votable: question, user: user2)
-
-        new_vote = build(:vote, :pro, votable: question, user: user2)
-        expect(new_vote).not_to be_valid
-      end
-
-      it 'Should not create vote if there is vote with the same user and answer' do
-        create(:vote, :pro, votable: answer, user: user1)
-
-        new_vote = build(:vote, :contra, votable: answer, user: user1)
-        expect(new_vote).not_to be_valid
-      end
+      it { should validate_uniqueness_of(:user).scoped_to(%i[votable_type votable_id]) }
+      it { should validate_inclusion_of(:value).in_array([1, -1]) }
     end
   end
 end

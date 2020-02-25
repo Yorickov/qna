@@ -13,6 +13,6 @@ class Question < ApplicationRecord
   validates :title, :body, presence: true
 
   def to_s
-    "#{title}#{body}"
+    "#{title} #{body}"
   end
 end

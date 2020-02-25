@@ -13,11 +13,11 @@ describe Link, type: :model do
   end
 
   describe 'Methods' do
-    describe 'update_gits: add gist body after url validation' do
-      let(:user) { create(:user_with_questions, questions_count: 1) }
-      let!(:question) { user.questions.first }
-      let!(:link) { create(:link, linkable: question) }
+    let(:user) { create(:user_with_questions, questions_count: 1) }
+    let!(:question) { user.questions.first }
+    let!(:link) { create(:link, linkable: question) }
 
+    describe 'update_gits: add gist body after url validation' do
       context 'url is gist-url' do
         let!(:gist_link) { create(:link, :gist, linkable: question) }
         let!(:gist_link_not_exist) { create(:link, :gist_empty, linkable: question) }
@@ -36,6 +36,11 @@ describe Link, type: :model do
           expect(link.body).not_to be_present
         end
       end
+    end
+
+    it 'to_s' do
+      link = create(:link, name: 'good', linkable: question)
+      expect("#{link}").to match 'good'
     end
   end
 end

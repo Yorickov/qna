@@ -173,7 +173,7 @@ shared_examples 'voted' do
   end
 
   describe 'DELETE #vote_reset' do
-    let!(:vote) { create(:vote, :pro, votable: votable, user: user1) }
+    let!(:vote) { create(:vote, votable: votable, user: user1) }
 
     before { votable.update(rating: 1) }
 
