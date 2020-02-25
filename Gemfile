@@ -87,3 +87,5 @@ gem 'octicons_helper'
 gem 'cocoon', '~> 1.2'
 gem "octokit", '~> 4.0'
 gem 'faraday'
+
+gem 'webmock', '~> 3.8'
