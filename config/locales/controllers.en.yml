@@ -6,15 +6,24 @@ en:
       success: Question was successfully deleted
       wrong_author: Your can't delete another's question
     vote_up:
-      message: Error
+      error_authority: No rights for such action
+      twice_or_author: Already voted or should not vote for own question
     vote_down:
-      message: Error
-
+      error_authority: No rights for such action
+      twice_or_author: Already voted or should not vote for own question
+    vote_reset:
+      error_authority: No rights for such action
+      no_vote: You have not voted for this question
   answers:
     destroy:
       success: Answer was successfully deleted
       wrong_author: Your can't delete another's answer
     vote_up:
-      message: Error
+      error_authority: No rights for such action
+      twice_or_author: Already voted or should not vote for own answer
     vote_down:
-      message: Error
+      error_authority: No rights for such action
+      twice_or_author: Already voted or should not vote for own answer
+    vote_reset:
+      error_authority: No rights for such action
+      no_vote: You have not voted for this answer

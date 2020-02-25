@@ -6,23 +6,23 @@ module Voted
   end
 
   def vote_up
-    render_errors and return if current_user.author_of?(@votable)
+    render_errors(t('.error_authority')) and return if current_user.author_of?(@votable)
+    render_errors(t('.twice_or_author')) and return unless @votable.update_vote_up(current_user)
 
-    @votable.update_vote_up(current_user)
     render_json
   end
 
   def vote_down
-    render_errors and return if current_user.author_of?(@votable)
+    render_errors(t('.error_authority')) and return if current_user.author_of?(@votable)
+    render_errors(t('.twice_or_author')) and return unless @votable.update_vote_down(current_user)
 
-    @votable.update_vote_down(current_user)
     render_json
   end
 
   def vote_reset
-    render_errors and return if current_user.author_of?(@votable)
+    render_errors(t('.error_authority')) and return if current_user.author_of?(@votable)
+    render_errors(t('.no_vote')) and return unless @votable.update_vote_reset(current_user)
 
-    @votable.update_vote_reset(current_user)
     render_json
   end
 
@@ -36,8 +36,8 @@ module Voted
     render json: { id: @votable.id, name: param_name(@votable), rating: @votable.rating }
   end
 
-  def render_errors
-    render json: { message: t('.message') }, status: :forbidden
+  def render_errors(msg)
+    render json: { message: msg }, status: :forbidden
   end
 
   def param_name(item)

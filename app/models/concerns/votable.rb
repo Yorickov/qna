@@ -6,7 +6,7 @@ module Votable
   end
 
   def update_vote_up(vote_author)
-    return if already_voted?(vote_author) || votable_author?(vote_author)
+    return false if already_voted?(vote_author) || votable_author?(vote_author)
 
     transaction do
       votes.create!(user: vote_author, value: 1)
@@ -16,7 +16,7 @@ module Votable
   end
 
   def update_vote_down(vote_author)
-    return if already_voted?(vote_author) || votable_author?(vote_author)
+    return false if already_voted?(vote_author) || votable_author?(vote_author)
 
     transaction do
       votes.create!(user: vote_author, value: -1)
@@ -27,7 +27,7 @@ module Votable
 
   def update_vote_reset(vote_author)
     vote = votes.find_by(user: vote_author)
-    return unless vote
+    return false unless vote
 
     transaction do
       vote.destroy
@@ -36,11 +36,11 @@ module Votable
     end
   end
 
-  private
-
   def already_voted?(vote_author)
     votes.exists?(user: vote_author)
   end
+
+  private
 
   def votable_author?(vote_author)
     user == vote_author

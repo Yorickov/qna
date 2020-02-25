@@ -34,6 +34,13 @@ feature 'User can withdraw vote for answer' do
       end
     end
 
+    scenario 'try recall his vote which does not exist', js: true do
+      within '.answers>.card:first-child' do
+        find_link(class: 'vote-reset').click
+      end
+      expect(page).to have_content(t('answers.vote_reset.no_vote'))
+    end
+
     scenario 'try to recall vote for his answer', js: true do
       within '.answers>.card:last-child' do
         expect(page).not_to have_css('.vote-reset')

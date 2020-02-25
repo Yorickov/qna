@@ -42,10 +42,14 @@ feature 'User can vote for question' do
 
         find_link(class: 'vote-up').click
         expect(find(class: 'rating')).to have_content('1')
+      end
+      expect(page).to have_content(t('questions.vote_up.twice_or_author'))
 
+      within '.question-node' do
         find_link(class: 'vote-down').click
         expect(find(class: 'rating')).to have_content('1')
       end
+      expect(page).to have_content(t('questions.vote_down.twice_or_author'))
     end
 
     scenario 'try to vote for his question', js: true do

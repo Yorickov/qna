@@ -29,6 +29,15 @@ feature 'User can withdraw vote for question' do
       end
     end
 
+    scenario 'try recall his vote which does not exist', js: true do
+      visit question_path(user2_question)
+
+      within '.question-node' do
+        find_link(class: 'vote-reset').click
+      end
+      expect(page).to have_content(t('questions.vote_reset.no_vote'))
+    end
+
     scenario 'try to recall vote for his question', js: true do
       visit question_path(user1_question)
 
