@@ -12,6 +12,14 @@ FactoryBot.define do
       url { 'wrong_url' }
     end
 
+    trait :question do
+      linkable { create(:question) }
+    end
+
+    trait :answer do
+      linkable { create(:answer) }
+    end
+
     trait :gist do
       url { 'https://gist.github.com/Yorickov/d1264faeca158fdeb77e4238f59854ec' }
     end

@@ -13,6 +13,8 @@ feature 'User can add links to answer' do
     visit question_path(question)
 
     fill_in t('activerecord.attributes.answer.body'), with: 'answer text'
+
+    click_on t('forms.add_link')
   end
 
   scenario 'User adds link while adding answer', js: true do
@@ -34,7 +36,7 @@ feature 'User can add links to answer' do
 
     click_on t('forms.add_link')
 
-    within '.links>.nested-fields' do
+    within all('.links>.nested-fields').last do
       fill_in t('activerecord.attributes.link.name'), with: 'My gist2'
       fill_in t('activerecord.attributes.link.url'), with: url_alt
     end

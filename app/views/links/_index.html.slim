@@ -5,8 +5,6 @@ div
       .mr-1
         - if link.gist?
           = show_body(link)
-        / - if link.body.present?
-        /   = link_gist(link.body)
         - else
           = link_to link.name, link.url
 

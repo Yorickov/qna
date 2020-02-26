@@ -12,7 +12,7 @@ module ModelHelpers
         headers: {
           'Accept' => 'application/json',
           'Accept-Encoding' => 'gzip;q=1.0,deflate;q=0.6,identity;q=0.3',
-          'Authorization' => 'token a5ebb75a623ec6c51f5627b0ce9edc6e9ccffcd9',
+          'Authorization' => "token #{ENV['GITHUB_TOKEN']}",
           'User-Agent' => 'Faraday v1.0.0'
         }
       )

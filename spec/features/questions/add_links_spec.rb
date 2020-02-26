@@ -16,9 +16,13 @@ feature 'Author can add links to his question' do
   end
 
   describe 'User successfully' do
-    scenario 'adds link when asks question' do
-      fill_in t('activerecord.attributes.link.name'), with: 'My link'
-      fill_in t('activerecord.attributes.link.url'), with: url
+    background { click_on t('forms.add_link') }
+
+    scenario 'adds link when asks question', js: true do
+      within('.nested-fields') do
+        fill_in t('activerecord.attributes.link.name'), with: 'My link'
+        fill_in t('activerecord.attributes.link.url'), with: url
+      end
 
       click_on t('forms.submit_question')
 
@@ -26,14 +30,14 @@ feature 'Author can add links to his question' do
     end
 
     scenario 'adds many links when asks question', js: true do
-      within('.nested-fields') do
+      within '.links>.nested-fields' do
         fill_in t('activerecord.attributes.link.name'), with: 'My gist1'
         fill_in t('activerecord.attributes.link.url'), with: url
       end
 
       click_on t('forms.add_link')
 
-      within('.links>.nested-fields') do
+      within all('.links>.nested-fields').last do
         fill_in t('activerecord.attributes.link.name'), with: 'My gist2'
         fill_in t('activerecord.attributes.link.url'), with: url_alt
       end
@@ -44,7 +48,7 @@ feature 'Author can add links to his question' do
       expect(page).to have_link 'My gist2', href: url_alt
     end
 
-    scenario 'adds git-links when asks question' do
+    scenario 'adds git-links when asks question', js: true do
       expected_content = '<p>hi!!!</p>'
       gist_stub_request(valid_gist_url, 200, expected_content)
 
@@ -59,7 +63,9 @@ feature 'Author can add links to his question' do
   end
 
   describe 'User' do
-    scenario 'adds links when asks question with errors' do
+    background { click_on t('forms.add_link') }
+
+    scenario 'adds links when asks question with errors', js: true do
       fill_in t('activerecord.attributes.link.name'), with: ''
       fill_in t('activerecord.attributes.link.url'), with: url
 
@@ -68,7 +74,7 @@ feature 'Author can add links to his question' do
       expect(page).to have_content t('activerecord.errors.messages.blank')
     end
 
-    scenario 'adds git-link when asks question but they are no content' do
+    scenario 'adds git-link when asks question but they are no content', js: true do
       gist_stub_request(gist_url_not_exist, 404)
 
       fill_in t('activerecord.attributes.link.name'), with: 'My gist'

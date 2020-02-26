@@ -14,10 +14,6 @@ describe Link, type: :model do
 
   describe 'Methods' do
     describe 'update_gist: add gist body after url validation' do
-      let(:user) { create(:user_with_questions, questions_count: 1) }
-      let(:question) { user.questions.first }
-      let!(:link) { create(:link, linkable: question) }
-
       let!(:valid_gist_url) { 'https://gist.github.com/Yorickov/d1264faeca158fdeb77e4238f59854ec' }
       let!(:gist_url_not_exist) { 'https://gist.github.com/238f59854ec' }
 
@@ -26,7 +22,7 @@ describe Link, type: :model do
           expected_content = '<p>hi!!!</p>'
           gist_stub_request(valid_gist_url, 200, expected_content)
 
-          gist_link = create(:link, url: valid_gist_url, linkable: question)
+          gist_link = create(:link, :question, url: valid_gist_url)
 
           expect(gist_link).to be_gist
           expect(gist_link.body).to match expected_content
@@ -36,7 +32,7 @@ describe Link, type: :model do
           expected_content = 'No such a gist'
           gist_stub_request(gist_url_not_exist, 404)
 
-          gist_link_not_exist = create(:link, url: gist_url_not_exist, linkable: question)
+          gist_link_not_exist = create(:link, :question, url: gist_url_not_exist)
 
           expect(gist_link_not_exist).to be_gist
           expect(gist_link_not_exist.body).to match expected_content
@@ -45,17 +41,19 @@ describe Link, type: :model do
 
       context 'url is not gist-url' do
         it 'method does not work' do
+          link = create(:link, :question)
+
           expect(link).not_to be_gist
           expect(link.body).not_to be_present
         end
       end
 
-      it 'load_gist: if' do
+      it 'load_gist: if there is no actual gist the saved one is downloaded' do
         saved_content = '<p>hi!!!</p>'
         actual_content = '<p>what???</p>'
 
         gist_stub_request(valid_gist_url, 200, saved_content)
-        gist_link = create(:link, url: valid_gist_url, linkable: question)
+        gist_link = create(:link, :question, url: valid_gist_url)
 
         gist_stub_request(valid_gist_url, 200, actual_content)
         expect(gist_link.body).to match saved_content

@@ -10,13 +10,11 @@ class QuestionsController < ApplicationController
 
   def new
     @question = current_user.questions.new
-    @question.links.new
     @question.build_award
   end
 
   def show
     @answer = Answer.new
-    @answer.links.new
   end
 
   def create
