@@ -11,6 +11,8 @@ en:
     submit_answer: Send answer
     add_link: Add link
     remove_link: Remove link
+    add_award: Add image
+    remove_award: Remove image
 
   errors:
     answers_count: No more then one best answer in the question

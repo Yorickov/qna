@@ -1,0 +1,4 @@
+.nested-fields
+  = f.input :title, required: false
+  = f.input :image, as: :file, required: false, input_html: { direct_upload: true }
+  = link_to_remove_association t('forms.remove_award'), f

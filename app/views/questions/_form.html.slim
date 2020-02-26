@@ -3,9 +3,10 @@
   = f.input :body
   = f.input :files, as: :file, required: false, input_html: { multiple: true, direct_upload: true }
 
-  = f.simple_fields_for :award do |a|
-    = a.input :title, required: false
-    = a.input :image, as: :file, required: false, input_html: { direct_upload: true }
+  = f.simple_fields_for :award do |award|
+    = render 'awards/fields', f: award
+  .awards
+    .mb-2= link_to_add_association t('forms.add_award'), f, :award, partial: 'awards/fields'
 
   = f.simple_fields_for :links do |link|
     = render 'links/fields', f: link

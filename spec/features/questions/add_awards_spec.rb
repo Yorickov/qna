@@ -9,9 +9,11 @@ feature 'Author can add award to his question' do
 
     fill_in t('activerecord.attributes.question.title'), with: 'Test question'
     fill_in t('activerecord.attributes.question.body'),  with: 'question text'
+
+    click_on t('forms.add_award')
   end
 
-  scenario 'User adds award while adding question' do
+  scenario 'User adds award while adding question', js: true do
     fill_in t('activerecord.attributes.award.title'), with: 'My award1'
     attach_file t('activerecord.attributes.award.image'),
                 "#{Rails.root}/spec/support/assets/test-image1.png"
@@ -23,7 +25,7 @@ feature 'Author can add award to his question' do
     end
   end
 
-  scenario 'User award while adding question without title' do
+  scenario 'User award while adding question without title', js: true do
     fill_in t('activerecord.attributes.award.title'), with: ''
     attach_file t('activerecord.attributes.award.image'),
                 "#{Rails.root}/spec/support/assets/test-image1.png"
@@ -33,7 +35,7 @@ feature 'Author can add award to his question' do
     expect(page).to have_content t('activerecord.errors.messages.blank')
   end
 
-  scenario 'User award while adding question without image' do
+  scenario 'User award while adding question without image', js: true do
     fill_in t('activerecord.attributes.award.title'), with: 'Test'
 
     click_on t('forms.submit_question')
