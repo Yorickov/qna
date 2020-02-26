@@ -27,9 +27,12 @@ describe User, type: :model do
       end
     end
 
-    it 'to_s' do
-      user = create(:user, email: 'smth@ram.com')
-      expect("#{user}").to match 'smth@ram.com'
+    describe 'Methods: string representation of an object' do
+      let(:user) { create(:user, email: 'smth@ram.com') }
+
+      it 'should be email' do
+        expect(user.to_s).to match 'smth@ram.com'
+      end
     end
   end
 end

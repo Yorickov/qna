@@ -53,9 +53,12 @@ describe Answer, type: :model do
     let(:user2) { create(:user) }
     let(:question) { user1.questions.first }
 
-    it 'to_s' do
-      answer = create(:answer, body: 'something')
-      expect("#{answer}").to match 'something'
+    describe 'String representation of an object' do
+      let(:answer) { create(:answer, body: 'something') }
+
+      it 'should be body' do
+        expect(answer.to_s).to match 'something'
+      end
     end
 
     describe 'Scopes: answers of the question are sorted by best and created_at by default' do

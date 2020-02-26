@@ -63,5 +63,13 @@ describe Link, type: :model do
         expect(gist_link.load_body).to match saved_content
       end
     end
+
+    describe 'Methods: string representation of an object' do
+      let(:link) { create(:link, :question, name: 'something') }
+
+      it 'should be name' do
+        expect(link.to_s).to match 'something'
+      end
+    end
   end
 end

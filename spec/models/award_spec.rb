@@ -26,10 +26,11 @@ RSpec.describe Award, type: :model do
     end
   end
 
-  describe 'Methods' do
-    it 'to_s' do
-      award = create(:award, :with_image, title: 'strong')
-      expect("#{award}").to match 'strong'
+  describe 'Methods: string representation of an object' do
+    let(:award) { create(:award, :with_image, title: 'strong') }
+
+    it 'should be title' do
+      expect(award.to_s).to match 'strong'
     end
   end
 end

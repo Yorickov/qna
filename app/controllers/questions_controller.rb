@@ -10,7 +10,6 @@ class QuestionsController < ApplicationController
 
   def new
     @question = current_user.questions.new
-    # @question.build_award
   end
 
   def show

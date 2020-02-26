@@ -19,6 +19,7 @@ shared_examples 'voted' do
       it 'changes votable attribute' do
         patch :vote_up, params: { id: votable, format: :json }
         expect(votable.rating).to eq 0
+
         votable.reload
         expect(votable.rating).to eq 1
       end
@@ -27,8 +28,8 @@ shared_examples 'voted' do
         patch :vote_up, params: { id: votable, format: :json }
         original_rating = votable.rating
         patch :vote_up, params: { id: votable }, format: :json
-
         votable.reload
+
         expect(votable.rating).not_to eq original_rating
       end
 
@@ -39,18 +40,17 @@ shared_examples 'voted' do
 
       it 'renders json' do
         patch :vote_up, params: { id: votable, format: :json }
+
         expect(response.status).to eq 200
         expect(response.content_type).to eq 'application/json; charset=utf-8'
       end
     end
 
     context 'as authorized votable Author' do
-      before do
-        login(user2)
-        patch :vote_up, params: { id: votable, format: :json }
-      end
+      before { login(user2) }
 
       it 'does not update the votable' do
+        patch :vote_up, params: { id: votable, format: :json }
         original_rating = votable.rating
         votable.reload
 
@@ -63,6 +63,8 @@ shared_examples 'voted' do
       end
 
       it 'renders json errors' do
+        patch :vote_up, params: { id: votable, format: :json }
+
         expect(response.status).to eq 403
         expect(response.content_type).to eq 'application/json; charset=utf-8'
       end
@@ -102,6 +104,7 @@ shared_examples 'voted' do
       it 'changes votable attribute' do
         patch :vote_down, params: { id: votable, format: :json }
         votable.reload
+
         expect(votable.rating).to eq(-1)
       end
 
@@ -109,8 +112,8 @@ shared_examples 'voted' do
         patch :vote_down, params: { id: votable, format: :json }
         original_rating = votable.rating
         patch :vote_down, params: { id: votable }, format: :json
-
         votable.reload
+
         expect(votable.rating).not_to eq original_rating
       end
 
@@ -121,6 +124,7 @@ shared_examples 'voted' do
 
       it 'renders json' do
         patch :vote_down, params: { id: votable, format: :json }
+
         expect(response.status).to eq 200
         expect(response.content_type).to eq 'application/json; charset=utf-8'
       end
@@ -174,7 +178,6 @@ shared_examples 'voted' do
 
   describe 'DELETE #vote_reset' do
     let!(:vote) { create(:vote, votable: votable, user: user1) }
-
     before { votable.update(rating: 1) }
 
     context 'as authorized no votable Author' do

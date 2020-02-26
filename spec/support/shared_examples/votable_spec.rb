@@ -11,14 +11,14 @@ shared_examples 'votable' do
     let(:user2) { create(:user) }
     let(:votable) { create(model.to_s.underscore.to_sym, user: user2) }
 
-    it 'vote_up!' do
+    it 'vote up' do
       votable.vote_up!(user1)
 
       expect(votable.rating).to eq 1
       expect(votable.votes.first.value).to eq 1
     end
 
-    it 'vote_down!' do
+    it 'vote down' do
       votable.vote_down!(user1)
 
       expect(votable.rating).to eq(-1)
@@ -26,22 +26,18 @@ shared_examples 'votable' do
     end
 
     it 'voted?' do
-      votable.vote_up!(user1)
-      expect(votable.rating).to eq 1
+      expect(votable.voted?(user1)).to be_falsey
 
       votable.vote_up!(user1)
-      expect(votable.rating).to eq 1
-
-      votable.vote_down!(user1)
-      expect(votable.rating).to eq 1
+      expect(votable.voted?(user1)).to be_truthy
     end
 
-    it 'votable_author' do
+    it 'author try to vote' do
       votable.vote_up!(user2)
       expect(votable.rating).to eq 0
     end
 
-    it 'vote_reset!' do
+    it 'reset vote' do
       votable.vote_up!(user1)
       expect(votable.rating).to eq 1
       expect(Vote.count).to eq 1
