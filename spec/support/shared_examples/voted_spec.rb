@@ -116,7 +116,7 @@ shared_examples 'voted' do
         patch :vote_down, params: { id: votable }, format: :json
         votable.reload
 
-        expect(votable.rating).not_to eq eq(original_rating - 1)
+        expect(votable.rating).to eq(original_rating - 1)
       end
 
       it 'changes votes count' do
