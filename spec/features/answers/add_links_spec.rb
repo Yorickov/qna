@@ -56,7 +56,7 @@ feature 'User can add links to answer' do
     expect(page).to have_content t('activerecord.errors.messages.blank')
   end
 
-  scenario 'User adds git-links when add answer', js: true do
+  scenario 'User adds gist-links when add answer', js: true do
     expected_content = '<p>hi!!!</p>'
     gist_stub_request(valid_gist_url, 200, expected_content)
 
@@ -69,7 +69,7 @@ feature 'User can add links to answer' do
     expect(page).not_to have_link 'My gist', href: valid_gist_url
   end
 
-  scenario 'User adds git-links when add answer but they are no content', js: true do
+  scenario 'User adds gist-links when add answer but they are no content', js: true do
     gist_stub_request(gist_url_not_exist, 404)
 
     fill_in t('activerecord.attributes.link.name'), with: 'My gist'

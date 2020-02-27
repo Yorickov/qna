@@ -4,7 +4,7 @@ div
     .d-flex(data-link-id="#{link.id}")
       .mr-1
         - if link.gist?
-          = link.load_body
+          = show_body(link)
         - else
           = link_to link.name, link.url
 

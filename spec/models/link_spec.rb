@@ -40,23 +40,6 @@ describe Link, type: :model do
 
         it { expect(link.body).not_to be_present }
       end
-
-      describe '#load_body' do
-        it do
-          saved_content = '<p>hi!!!</p>'
-          actual_content = '<p>what???</p>'
-
-          gist_stub_request(valid_gist_url, 200, saved_content)
-          gist_link = create(:link, :question, url: valid_gist_url)
-
-          gist_stub_request(valid_gist_url, 200, actual_content)
-          expect(gist_link.body).to eq saved_content
-          expect(gist_link.load_body).to eq actual_content
-
-          gist_stub_request(valid_gist_url, 404)
-          expect(gist_link.load_body).to eq saved_content
-        end
-      end
     end
 
     describe '#to_s' do

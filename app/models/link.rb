@@ -23,10 +23,6 @@ class Link < ApplicationRecord
     url =~ GIST_URL_FORMAT
   end
 
-  def load_body
-    gist_body || body
-  end
-
   private
 
   def gist_body
