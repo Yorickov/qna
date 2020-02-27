@@ -14,25 +14,23 @@ describe User, type: :model do
   end
 
   describe 'Methods' do
-    describe "Is user an resource's author" do
+    describe '#author_of?' do
       let(:user1) { create(:user_with_questions, questions_count: 1) }
       let(:user2) { create(:user_with_questions, questions_count: 1) }
 
-      it 'Is author of question' do
-        expect(user1).to be_author_of(user1.questions.first)
+      context 'when author' do
+        it { expect(user1).to be_author_of(user1.questions.first) }
       end
 
-      it 'Is no author of question' do
-        expect(user1).not_to be_author_of(user2.questions.first)
+      context 'when no author' do
+        it { expect(user1).not_to be_author_of(user2.questions.first) }
       end
     end
 
-    describe 'Methods: string representation of an object' do
-      let(:user) { create(:user, email: 'smth@ram.com') }
+    describe '#to_s' do
+      let(:user) { build(:user, email: 'smth@ram.com') }
 
-      it 'should be email' do
-        expect(user.to_s).to match 'smth@ram.com'
-      end
+      it { expect(user.to_s).to eq 'smth@ram.com' }
     end
   end
 end

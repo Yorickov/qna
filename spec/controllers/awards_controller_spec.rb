@@ -21,7 +21,7 @@ describe AwardsController, type: :controller do
       end
     end
 
-    context 'As a Guest' do
+    context 'as a Guest' do
       it 'redirect to new session' do
         get :index
 

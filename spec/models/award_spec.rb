@@ -16,21 +16,19 @@ RSpec.describe Award, type: :model do
       let(:award_with_image) { build(:award, :with_image) }
       let(:award_without_image) { build(:award) }
 
-      it 'Should create award with image' do
+      it 'Creates award with image' do
         expect(award_with_image).to be_valid
       end
 
-      it 'Should not create award without image' do
+      it 'Does not create award without image' do
         expect(award_without_image).not_to be_valid
       end
     end
   end
 
-  describe 'Methods: string representation of an object' do
-    let(:award) { create(:award, :with_image, title: 'strong') }
+  describe '#to_s' do
+    let(:award) { build(:award, :with_image, title: 'strong') }
 
-    it 'should be title' do
-      expect(award.to_s).to match 'strong'
-    end
+    it { expect(award.to_s).to eq 'strong' }
   end
 end

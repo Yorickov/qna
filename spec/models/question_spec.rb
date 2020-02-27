@@ -20,11 +20,9 @@ describe Question, type: :model do
     end
   end
 
-  describe 'Methods: string representation of an object' do
-    let(:question) { create(:question, title: 'something', body: 'strange') }
+  describe '#to_s' do
+    let(:question) { build(:question, title: 'something', body: 'strange') }
 
-    it 'should be title and body' do
-      expect(question.to_s).to match 'something strange'
-    end
+    it { expect(question.to_s).to eq 'something strange' }
   end
 end

@@ -17,20 +17,20 @@ shared_examples 'voted' do
       end
 
       it 'changes votable attribute' do
+        original_rating = votable.rating
         patch :vote_up, params: { id: votable, format: :json }
-        expect(votable.rating).to eq 0
-
         votable.reload
-        expect(votable.rating).to eq 1
+
+        expect(votable.rating).to eq(original_rating + 1)
       end
 
       it 'try to vote twice' do
-        patch :vote_up, params: { id: votable, format: :json }
         original_rating = votable.rating
+        patch :vote_up, params: { id: votable, format: :json }
         patch :vote_up, params: { id: votable }, format: :json
         votable.reload
 
-        expect(votable.rating).not_to eq original_rating
+        expect(votable.rating).to eq(original_rating + 1)
       end
 
       it 'changes votes count' do
@@ -50,8 +50,8 @@ shared_examples 'voted' do
       before { login(user2) }
 
       it 'does not update the votable' do
-        patch :vote_up, params: { id: votable, format: :json }
         original_rating = votable.rating
+        patch :vote_up, params: { id: votable, format: :json }
         votable.reload
 
         expect(votable.rating).to eq original_rating
@@ -62,7 +62,7 @@ shared_examples 'voted' do
           .not_to change(Vote, :count)
       end
 
-      it 'renders json errors' do
+      it 'gets forbidden response and renders json' do
         patch :vote_up, params: { id: votable, format: :json }
 
         expect(response.status).to eq 403
@@ -71,10 +71,9 @@ shared_examples 'voted' do
     end
 
     context 'as Guest' do
-      before { patch :vote_up, params: { id: votable, format: :json } }
-
       it 'does not update the votable' do
         original_rating = votable.rating
+        patch :vote_up, params: { id: votable, format: :json }
         votable.reload
 
         expect(votable.rating).to eq original_rating
@@ -85,7 +84,9 @@ shared_examples 'voted' do
           .not_to change(Vote, :count)
       end
 
-      it 'no-authenticate response' do
+      it 'gets no-authenticate response and renders json' do
+        patch :vote_up, params: { id: votable, format: :json }
+
         expect(response.status).to eq 401
         expect(response.content_type).to eq 'application/json; charset=utf-8'
       end
@@ -102,19 +103,20 @@ shared_examples 'voted' do
       end
 
       it 'changes votable attribute' do
+        original_rating = votable.rating
         patch :vote_down, params: { id: votable, format: :json }
         votable.reload
 
-        expect(votable.rating).to eq(-1)
+        expect(votable.rating).to eq(original_rating - 1)
       end
 
       it 'try to vote twice' do
-        patch :vote_down, params: { id: votable, format: :json }
         original_rating = votable.rating
+        patch :vote_down, params: { id: votable, format: :json }
         patch :vote_down, params: { id: votable }, format: :json
         votable.reload
 
-        expect(votable.rating).not_to eq original_rating
+        expect(votable.rating).not_to eq eq(original_rating - 1)
       end
 
       it 'changes votes count' do
@@ -131,13 +133,11 @@ shared_examples 'voted' do
     end
 
     context 'as authorized votable Author' do
-      before do
-        login(user2)
-        patch :vote_down, params: { id: votable, format: :json }
-      end
+      before { login(user2) }
 
       it 'does not update the votable' do
         original_rating = votable.rating
+        patch :vote_down, params: { id: votable, format: :json }
         votable.reload
 
         expect(votable.rating).to eq original_rating
@@ -148,17 +148,18 @@ shared_examples 'voted' do
           .not_to change(Vote, :count)
       end
 
-      it 'renders json errors' do
+      it 'gets forbidden response and renders json' do
+        patch :vote_down, params: { id: votable, format: :json }
+
         expect(response.status).to eq 403
         expect(response.content_type).to eq 'application/json; charset=utf-8'
       end
     end
 
     context 'as Guest' do
-      before { patch :vote_down, params: { id: votable, format: :json } }
-
       it 'does not update the votable' do
         original_rating = votable.rating
+        patch :vote_down, params: { id: votable, format: :json }
         votable.reload
 
         expect(votable.rating).to eq original_rating
@@ -169,7 +170,9 @@ shared_examples 'voted' do
           .not_to change(Vote, :count)
       end
 
-      it 'no-authenticate response' do
+      it 'gets no-authenticate response and renders json' do
+        patch :vote_down, params: { id: votable, format: :json }
+
         expect(response.status).to eq 401
         expect(response.content_type).to eq 'application/json; charset=utf-8'
       end
@@ -184,18 +187,19 @@ shared_examples 'voted' do
       before { login(user1) }
 
       it 'updates the votable' do
+        original_rating = votable.rating
         delete :vote_reset, params: { id: votable, format: :json }
         votable.reload
 
-        expect(votable.rating).to eq 0
+        expect(votable.rating).to eq(original_rating - 1)
       end
 
-      it 'delete the vote' do
+      it 'deletes the vote' do
         expect { delete :vote_reset, params: { id: votable, format: :json } }
           .to change(Vote, :count).by(-1)
       end
 
-      it 'render json' do
+      it 'renders json' do
         delete :vote_reset, params: { id: votable, format: :json }
 
         expect(response.status).to eq 200
@@ -206,11 +210,12 @@ shared_examples 'voted' do
     context 'as authorized votable Author' do
       before { login(user2) }
 
-      it 'updates the votable' do
+      it 'does not update the votable' do
+        original_rating = votable.rating
         delete :vote_reset, params: { id: votable, format: :json }
         votable.reload
 
-        expect(votable.rating).to eq 1
+        expect(votable.rating).to eq original_rating
       end
 
       it 'does not delete the vote' do
@@ -218,7 +223,7 @@ shared_examples 'voted' do
           .not_to change(Vote, :count)
       end
 
-      it 'renders json errors' do
+      it 'gets forbidden response and renders json' do
         delete :vote_reset, params: { id: votable, format: :json }
 
         expect(response.status).to eq 403
@@ -227,11 +232,9 @@ shared_examples 'voted' do
     end
 
     context 'as Guest' do
-      before { delete :vote_reset, params: { id: votable }, format: :json }
-
       it 'does not update the votable' do
         original_rating = votable.rating
-        delete :vote_reset, params: { id: votable }, format: :json
+        delete :vote_reset, params: { id: votable, format: :json }
         votable.reload
 
         expect(votable.rating).to eq original_rating
@@ -242,7 +245,9 @@ shared_examples 'voted' do
           .not_to change(Vote, :count)
       end
 
-      it 'no-authenticate response' do
+      it 'gets no-authenticate response and renders json' do
+        delete :vote_reset, params: { id: votable, format: :json }
+
         expect(response.status).to eq 401
         expect(response.content_type).to eq 'application/json; charset=utf-8'
       end

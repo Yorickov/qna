@@ -20,29 +20,26 @@ describe Answer, type: :model do
       let(:user) { create(:user_with_questions, questions_count: 1) }
       let(:question) { user.questions.first }
 
-      it 'Should not create best answer if the one is already exists' do
+      it 'Does not create best answer if the one is already exists' do
         create(:answer, question: question, user: user, best: true)
 
         answer = build(:answer, question: question, user: user, best: true)
-
         expect(answer).not_to be_valid
       end
 
-      it 'Should not update answer to the best answer if the one is already exists' do
+      it 'Does not update answer to the best answer if the one is already exists' do
         create(:answer, question: question, user: user, best: true)
 
         answer = create(:answer, question: question, user: user)
         answer.update(body: 'new body', best: true)
-
         expect(answer).not_to be_valid
       end
 
-      it 'Should update best answer if there no more the ones' do
+      it 'Updates best answer if there no more the ones' do
         create(:answer, question: question, user: user)
 
         answer = create(:answer, question: question, user: user, best: true)
         answer.update(body: 'new body')
-
         expect(answer).to be_valid
       end
     end
@@ -53,55 +50,42 @@ describe Answer, type: :model do
     let(:user2) { create(:user) }
     let(:question) { user1.questions.first }
 
-    describe 'String representation of an object' do
-      let(:answer) { create(:answer, body: 'something') }
-
-      it 'should be body' do
-        expect(answer.to_s).to match 'something'
-      end
-    end
+    let!(:answer1) { create(:answer, question: question, user: user1) }
+    let!(:answer2_best) { create(:answer, question: question, user: user2, best: true) }
+    let!(:answer3) { create(:answer, question: question, user: user2) }
 
     describe 'Scopes: answers of the question are sorted by best and created_at by default' do
-      let!(:answer1) { create(:answer, question: question, user: user1) }
-      let!(:answer2) { create(:answer, question: question, user: user2, best: true) }
-      let!(:answer3) { create(:answer, question: question, user: user2) }
-
-      it 'Best answer should be first and others are sorted' do
-        expect(question.answers).to eq [answer2, answer1, answer3]
-      end
+      it { expect(question.answers).to eq [answer2_best, answer1, answer3] }
     end
 
-    describe 'Author can pick one answer to his question as the best' do
-      let!(:answer1) { create(:answer, question: question, user: user2) }
-      let!(:answer2) { create(:answer, question: question, user: user1, best: true) }
-
-      before { answer1.update_to_best! }
-
-      it 'Should swap answers as the best' do
-        [answer1, answer2].each(&:reload)
-
-        expect(answer1).to be_best
-        expect(answer2).not_to be_best
-      end
-    end
-
-    describe 'Author can pick one answer to his question as the best' do
-      let(:question_without_award) { user1.questions.last }
+    describe '#set_best!' do
       let!(:answer_with_award) { create(:answer, question: question, user: user2) }
-      let!(:answer_without_award) { create(:answer, question: question_without_award, user: user2) }
+      let!(:answer_without_award) { create(:answer, question: user1.questions.last, user: user2) }
       let!(:award) { create(:award, :with_image, question: question) }
 
-      it "Best answer's author get award, attached to question" do
-        expect(user2.awards).to be_empty
+      it 'swaps answers as the best' do
+        answer1.set_best!
+        [answer1, answer2_best].each(&:reload)
 
-        answer_with_award.update_to_best!
+        expect(answer1).to be_best
+        expect(answer2_best).not_to be_best
+      end
+
+      it "Best answer's author get award, attached to question" do
+        answer_with_award.set_best!
         expect(user2.awards.first).to eq award
       end
 
       it "Best answer's author don't get award, because question hasn't got it" do
-        answer_without_award.update_to_best!
+        answer_without_award.set_best!
         expect(user2.awards).to be_empty
       end
+    end
+
+    describe '#to_s' do
+      let(:answer) { build(:answer, body: 'something') }
+
+      it { expect(answer.to_s).to eq 'something' }
     end
   end
 end

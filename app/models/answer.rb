@@ -10,7 +10,7 @@ class Answer < ApplicationRecord
   validates :body, presence: true
   validates :best, uniqueness: { scope: :question }, if: :best?
 
-  def update_to_best!
+  def set_best!
     best_answer = question.answers.find_by(best: true)
 
     transaction do
