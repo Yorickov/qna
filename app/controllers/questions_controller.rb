@@ -4,6 +4,8 @@ class QuestionsController < ApplicationController
   before_action :authenticate_user!, except: %i[index show]
   before_action :ensure_current_user_is_question_author!, only: %i[update destroy]
 
+  after_action :publish_question, only: [:create]
+
   def index
     @questions = Question.all
   end
@@ -55,5 +57,17 @@ class QuestionsController < ApplicationController
     return if current_user.author_of?(question)
 
     redirect_to root_path, notice: t('.wrong_author')
+  end
+
+  def publish_question
+    return if question.errors.any?
+
+    ActionCable.server.broadcast(
+      'questions',
+      ApplicationController.render(
+        partial: 'questions/question',
+        locals: { question: question }
+      )
+    )
   end
 end

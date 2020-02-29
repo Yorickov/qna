@@ -17,16 +17,16 @@ s:
 	RUBYOPT='-W:no-deprecated -W:no-experimental' rails server
 
 test:
-	RUBYOPT='-W:no-deprecated -W:no-experimental' rspec
+	RUBYOPT='-W:no-deprecated -W:no-experimental' bundle exec rspec
 
 test-m:
-	RUBYOPT='-W:no-deprecated -W:no-experimental' rspec spec/models
+	RUBYOPT='-W:no-deprecated -W:no-experimental' bundle exec rspec spec/models
 
 test-c:
-	RUBYOPT='-W:no-deprecated -W:no-experimental' rspec spec/controllers
+	RUBYOPT='-W:no-deprecated -W:no-experimental' bundle exec rspec spec/controllers
 
 test-f:
-	RUBYOPT='-W:no-deprecated -W:no-experimental' rspec spec/features
+	RUBYOPT='-W:no-deprecated -W:no-experimental' bundle exec rspec spec/features
 
 push:
 	git push -u origin $(B)
