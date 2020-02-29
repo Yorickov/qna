@@ -89,3 +89,5 @@ gem "octokit", '~> 4.0'
 gem 'faraday'
 
 gem 'webmock', '~> 3.8'
+
+gem "gon", "~> 6.3"

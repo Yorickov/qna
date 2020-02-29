@@ -4,7 +4,7 @@ consumer.subscriptions.create('QuestionsChannel', {
   connected() {
     // Called when the subscription is ready for use on the server
     console.log('connected!');
-    this.perform('follow');
+    console.log(gon.question_id);
   },
 
   disconnected() {
