@@ -4,7 +4,7 @@ class QuestionsController < ApplicationController
   before_action :authenticate_user!, except: %i[index show]
   before_action :ensure_current_user_is_question_author!, only: %i[update destroy]
 
-  after_action :publish_question, only: [:create]
+  after_action :publish_question, only: :create
 
   def index
     @questions = Question.all
@@ -17,6 +17,7 @@ class QuestionsController < ApplicationController
   def show
     @answer = Answer.new
     gon.question_id = question.id
+    gon.question_author_id = question.user_id
   end
 
   def create

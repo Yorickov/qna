@@ -40,9 +40,37 @@ feature 'Authenticated user can create answer' do
     end
   end
 
-  scenario 'Unauthenticated user tries to create a answer', js: true do
-    visit question_path(question)
+  describe 'mulitple sessions', js: true do
+    scenario "answer appears on another user's page" do
+      Capybara.using_session('user') do
+        sign_in(user)
+        visit question_path(question)
+      end
 
-    expect(page).not_to have_content t('forms.submit_answer')
+      Capybara.using_session('guest') do
+        visit question_path(question)
+      end
+
+      Capybara.using_session('user') do
+        fill_in t('activerecord.attributes.answer.body'), with: 'answer text'
+        click_on t('forms.submit_answer')
+
+        within '.answers' do
+          expect(page).to have_content 'answer text'
+        end
+      end
+
+      Capybara.using_session('guest') do
+        expect(page).to have_content 'answer text'
+      end
+    end
+  end
+
+  describe 'Unauthenticated user' do
+    scenario 'tries to create a answer', js: true do
+      visit question_path(question)
+
+      expect(page).not_to have_content t('forms.submit_answer')
+    end
   end
 end

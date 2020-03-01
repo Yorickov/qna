@@ -3,7 +3,7 @@
     .col-md-1.d-flex.flex-column.align-items-center.justify-content-center
       - if answer.best?
         .mb-2.best-answer
-          = octicon('verified', width: 30)
+          = octicon('check', width: 30)
 
       - if user_signed_in? && !current_user&.author_of?(answer)
         .voting.d-flex.flex-column.align-items-center.justify-content-center

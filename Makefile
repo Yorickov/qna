@@ -34,4 +34,7 @@ push:
 c:
 	RUBYOPT='-W:no-deprecated -W:no-experimental' rails console
 
+clean:
+	rake assets:clobber
+
 .PHONY:	test

@@ -5,6 +5,8 @@ class AnswersController < ApplicationController
   before_action :ensure_current_user_is_answer_author!, only: %i[update destroy]
   before_action :ensure_current_user_is_question_author!, only: %i[choose_best]
 
+  after_action :publish_answer, only: :create
+
   def create
     @answer = current_user.answers.new(answer_params)
     @answer.question = question
@@ -53,5 +55,19 @@ class AnswersController < ApplicationController
     return if current_user.author_of?(answer.question)
 
     redirect_to root_path, notice: t('.wrong_author')
+  end
+
+  def publish_answer
+    return if answer.errors.any?
+
+    ActionCable.server.broadcast(
+      "question_#{question.id}",
+      answer: answer,
+      links: answer.links,
+      form: ApplicationController.render(
+        partial: 'answers/form',
+        locals: { resource: [question, Answer.new] }
+      )
+    )
   end
 end
