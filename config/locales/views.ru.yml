@@ -13,6 +13,7 @@ ru:
     remove_link: Удалить ссылку
     add_award: Добавить изображение
     remove_award: Удалить изображение
+    submit_comment: Добавить комментарий
 
   errors:
     answers_count: Не более одного лучшего ответа в вопросе

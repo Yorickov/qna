@@ -13,6 +13,7 @@ en:
     remove_link: Remove link
     add_award: Add image
     remove_award: Remove image
+    submit_comment: Add comment
 
   errors:
     answers_count: No more then one best answer in the question

@@ -21,6 +21,8 @@
           section.question-links
             = render 'links/index', resourse: question
 
+        section.question-comments
+
         - if current_user&.author_of?(question)
           section.d-flex.justify-content-end
             = link_to t('.delete_question'), question_path(question), method: :delete, class: 'card-link', data: { confirm: 'Are you sure?' }
