@@ -61,7 +61,7 @@ class AnswersController < ApplicationController
     return if answer.errors.any?
 
     ActionCable.server.broadcast(
-      "question_#{question.id}",
+      "question_#{question.id}_answers",
       answer: answer,
       links: answer.links,
       form: ApplicationController.render(

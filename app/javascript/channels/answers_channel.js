@@ -1,6 +1,6 @@
 import consumer from "./consumer"
 
-consumer.subscriptions.create({ channel: 'QuestionChannel', question_id: gon.question_id }, {
+consumer.subscriptions.create({ channel: 'AnswersChannel', question_id: gon.question_id }, {
   connected() {
     console.log('connected!');
   },
@@ -19,12 +19,9 @@ consumer.subscriptions.create({ channel: 'QuestionChannel', question_id: gon.que
     const template = require('../views/answer.hbs');
 
     const answersNode = document.querySelector('.answers');
-
     data.author_check = gon.user_id == gon.question_user_id;
-    console.log('received', data);
-    answersNode.insertAdjacentHTML('beforeEnd', template(data));
 
-    // const answerFormNode = document.querySelector('.answer-form');
+    answersNode.insertAdjacentHTML('beforeEnd', template(data));
     answersNode.insertAdjacentHTML('afterEnd', data.form);
   }
 });
