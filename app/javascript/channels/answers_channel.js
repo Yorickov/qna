@@ -6,7 +6,7 @@ consumer.subscriptions.create({ channel: 'AnswersChannel', question_id: gon.ques
   },
 
   disconnected() {
-    // Called when the subscription has been terminated by the server
+    console.log('disconnected!');
   },
 
   received(data) {
@@ -19,9 +19,8 @@ consumer.subscriptions.create({ channel: 'AnswersChannel', question_id: gon.ques
     const template = require('../views/answer.hbs');
 
     const answersNode = document.querySelector('.answers');
-    data.author_check = gon.user_id == gon.question_user_id;
+    data.is_question_author = gon.user_id == gon.question_author_id;
 
     answersNode.insertAdjacentHTML('beforeEnd', template(data));
-    answersNode.insertAdjacentHTML('afterEnd', data.form);
   }
 });

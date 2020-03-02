@@ -5,7 +5,7 @@
         .mb-2.best-answer
           = octicon('check', width: 30)
 
-      - if user_signed_in? && !current_user&.author_of?(answer)
+      - if user_signed_in? && !current_user.author_of?(answer)
         .voting.d-flex.flex-column.align-items-center.justify-content-center
           = link_to octicon('triangle-up', width: 25), vote_up_answer_path(answer), method: :patch, data: { type: :json }, title: t('.vote_up'), class: 'vote-up', remote: true
           .rating

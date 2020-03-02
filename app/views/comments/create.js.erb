@@ -13,10 +13,10 @@
 <% end %>
 
 <% if @comment.commentable_type == 'Answer' %>
-  var commentsAnswerFormNode = document.querySelector('.answer-comment-form');
+  var answerNode = document.querySelector('[data-answer-node-id="<%= @comment.commentable_id %>"]');
+  var commentsAnswerFormNode = answerNode.querySelector('.answer-comment-form');
 
   <% if @comment.persisted? %>
-    var answerNode = document.querySelector('[data-answer-node-id="<%= @comment.commentable_id %>"]');
     var commentsNode = answerNode.querySelector('.answer-comments');
     commentsNode.insertAdjacentHTML('beforeEnd', '<%= j render @comment %>');
 

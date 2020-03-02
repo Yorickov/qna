@@ -63,11 +63,7 @@ class AnswersController < ApplicationController
     ActionCable.server.broadcast(
       "question_#{question.id}_answers",
       answer: answer,
-      links: answer.links,
-      form: ApplicationController.render(
-        partial: 'answers/form',
-        locals: { resource: [question, Answer.new] }
-      )
+      links: answer.links
     )
   end
 end
