@@ -4,7 +4,6 @@ consumer.subscriptions.create({ channel: 'QuestionsChannel' }, {
   connected() {
     // Called when the subscription is ready for use on the server
     console.log('connected!');
-    // console.log(gon.question_id);
   },
 
   disconnected() {
@@ -13,7 +12,6 @@ consumer.subscriptions.create({ channel: 'QuestionsChannel' }, {
   },
 
   received(data) {
-    console.log('received', data);
     // Called when there's incoming data on the websocket for this channel
     this.addQuestion(data);
   },
