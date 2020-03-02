@@ -1,24 +1,14 @@
 import consumer from "./consumer"
 
 consumer.subscriptions.create({ channel: 'CommentsChannel', question_id: gon.question_id }, {
-  connected() {
-    console.log('connected!');
-  },
-
-  disconnected() {
-    console.log('disconnected!');
-  },
-
   received(data) {
     this.addComment(data);
   },
 
   addComment(data) {
-    console.log(data);
     if (gon.user_id == data.comment.user_id) return;
 
     const template = require('../views/comment.hbs');
-
     const htmlComment = template(data);
 
     const resourceType = data.comment.commentable_type;
