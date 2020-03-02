@@ -31,6 +31,15 @@
         .answer-form-node
           = render 'answers/form_edit', answer: answer
 
+      section.answer-comments
+        - if answer.comments.any?
+          p= t('.comments')
+          = render answer.comments
+
+      - if user_signed_in?
+        .answer-comment-form
+          = render 'comments/form', resource: Comment.new, url: answer_comments_path(answer)
+
     .col-md-1.d-flex.flex-column.align-items-center.justify-content-center
       - if !answer.best? && current_user&.author_of?(answer.question)
         = link_to octicon('thumbsup', width: 18), choose_best_answer_path(answer), title: t('.choose_best'), class: 'best-answer-link', method: :patch, data: { confirm: 'Are you sure?' }, remote: true

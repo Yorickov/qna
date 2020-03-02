@@ -42,6 +42,7 @@ en:
       vote_up: Like it
       vote_down: Don't like it
       vote_reset: Recall vote
+      comments: Comments
     question:
       answers_count:
         one: Got %{count} anwer

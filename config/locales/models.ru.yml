@@ -5,6 +5,7 @@ ru:
       answer: Ответ
       link: Ссылка
       award: Награда
+      comment: Комментарий
 
     attributes:
       question:
@@ -26,6 +27,8 @@ ru:
         user_id: Пользователь
         user: Пользователь
         image: Изображение
+      comment:
+        body: Комментарий
 
     errors:
       messages:

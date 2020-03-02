@@ -23,7 +23,6 @@ feature 'Autenticated user can edit his answer' do
 
         expect(page).to_not have_content user1_answer.body
         expect(page).to have_content 'edited answer'
-        expect(page).to_not have_selector 'textarea'
       end
     end
 

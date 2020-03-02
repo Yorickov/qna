@@ -23,7 +23,6 @@ feature 'Only author can edit his question' do
         expect(page).to_not have_content user1_question.body
         expect(page).to have_content 'edited title'
         expect(page).to have_content 'edited body'
-        expect(page).to_not have_selector 'textarea'
       end
     end
 

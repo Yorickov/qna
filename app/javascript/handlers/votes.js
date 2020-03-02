@@ -10,6 +10,9 @@ const voteHandler = (event) => {
 };
 
 const errorsHandler = (event) => {
+  const { target } = event;
+  if (!target.parentNode.classList.contains('voting')) return;
+
   const { message } = event.detail[0];
 
   const errorsNode = document.querySelector('.flash');

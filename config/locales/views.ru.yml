@@ -44,6 +44,7 @@ ru:
       vote_up: Нравится
       vote_down: Не нравится
       vote_reset: Отозвать голос
+      comments: Комментарии
     question:
       answers_count:
         one: ответ

@@ -5,6 +5,7 @@ en:
       answer: Answer
       link: Link
       award: Award
+      comment: Comment
 
     attributes:
       question:
@@ -26,6 +27,8 @@ en:
         user_id: User
         user: User
         image: Image
+      comment:
+        body: Comment
 
     errors:
       messages:

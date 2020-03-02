@@ -21,8 +21,6 @@
           section.question-links
             = render 'links/index', resourse: question
 
-        section.question-comments
-
         - if current_user&.author_of?(question)
           section.d-flex.justify-content-end
             = link_to t('.delete_question'), question_path(question), method: :delete, class: 'card-link', data: { confirm: 'Are you sure?' }
@@ -30,6 +28,15 @@
 
         section.question-form-node
           = render 'form_edit'
+
+        section.question-comments
+          - if question.comments.any?
+            p= t('.comments')
+            = render question.comments
+
+        - if user_signed_in?
+          .question-comment-form
+            = render 'comments/form', resource: Comment.new, url: question_comments_path(question)
 
       .col-md-1.d-flex.flex-column.align-items-center.justify-content-center
         - if question.award.present?

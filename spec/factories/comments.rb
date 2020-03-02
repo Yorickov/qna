@@ -11,5 +11,9 @@ FactoryBot.define do
     trait :answer do
       commentable { create(:answer) }
     end
+
+    trait :invalid do
+      body { nil }
+    end
   end
 end
