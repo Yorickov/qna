@@ -8,4 +8,18 @@ module FeatureHelpers
       click_on t('devise.shared.links.sign_in')
     end
   end
+
+  def mock_auth_hash
+    OmniAuth.config.mock_auth[:github] = OmniAuth::AuthHash.new(
+      'provider' => 'github',
+      'uid' => '123456',
+      'info' => {
+        'email' => 'some@email.com'
+      }
+    )
+  end
+
+  def clean_mock_auth
+    OmniAuth.config.mock_auth[:github] = nil
+  end
 end
