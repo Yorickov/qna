@@ -3,12 +3,13 @@ require 'rails_helper'
 describe OauthCallbacksController, type: :controller do
   before { @request.env['devise.mapping'] = Devise.mappings[:user] }
 
-  describe 'Github' do
-    let(:oauth_data) { { 'provider' => 'github', 'uid' => 123 } }
+  describe 'Provider' do
+    let(:oauth_data) { auth_hash('github', Faker::Internet.email) }
 
     it 'finds user from oauth data' do
       allow(request.env).to receive(:[]).and_call_original
       allow(request.env).to receive(:[]).with('omniauth.auth').and_return(oauth_data)
+
       expect(User).to receive(:find_for_oauth).with(oauth_data)
       get :github
     end
@@ -32,16 +33,29 @@ describe OauthCallbacksController, type: :controller do
 
     context 'user does not exist' do
       before do
-        allow(User).to receive(:find_for_oauth)
-        get :github
+        allow(request.env).to receive(:[]).and_call_original
+        allow(request.env).to receive(:[]).with('omniauth.auth').and_return(oauth_data)
       end
 
-      it 'redirects to root path' do
-        expect(response).to redirect_to root_path
+      it 'creates a new user' do
+        expect { get :github }.to change(User, :count).by 1
       end
 
       it 'does not login user' do
         expect(subject.current_user).to_not be
+      end
+    end
+
+    context 'user does not exist and provider without email' do
+      let(:oauth_data_without_email) { auth_hash('vkontakte') }
+
+      before do
+        allow(request.env).to receive(:[]).and_call_original
+        allow(request.env).to receive(:[]).with('omniauth.auth').and_return(oauth_data_without_email)
+      end
+
+      it 'creates a new user' do
+        expect { get :github }.not_to change(User, :count)
       end
     end
   end

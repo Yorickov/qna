@@ -24,16 +24,9 @@ feature 'Guest can sign up' do
 
       open_email(email)
       expect(current_email.subject).to eq t('devise.mailer.confirmation_instructions.subject')
-
       current_email.click_link t('devise.mailer.confirmation_instructions.action')
       expect(page).to have_content t('devise.confirmations.confirmed')
-
-      within('#new_user') do
-        fill_in t('activerecord.attributes.user.email'), with: email
-        fill_in t('activerecord.attributes.user.password'), with: password
-        click_on t('devise.shared.links.sign_in')
-      end
-      expect(page).to have_content t('devise.sessions.signed_in')
+      expect(page).to have_content email
     end
 
     scenario 'Without registration confirmation' do

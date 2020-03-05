@@ -28,6 +28,9 @@ test-c:
 test-f:
 	RUBYOPT='-W:no-deprecated -W:no-experimental' bundle exec rspec spec/features
 
+t:
+	bundle exec rspec $(T)
+
 push:
 	git push -u origin $(B)
 

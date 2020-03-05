@@ -14,6 +14,7 @@ en:
     add_award: Add image
     remove_award: Remove image
     submit_comment: Add comment
+    send_email: Send email
 
   errors:
     answers_count: No more then one best answer in the question
@@ -66,3 +67,6 @@ en:
     index:
       delete_link: Delete link
       refs: "Refs:"
+  add_email:
+    new:
+      add_email: 'Enter email'

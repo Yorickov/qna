@@ -1,6 +1,5 @@
 class User < ApplicationRecord
-  # Include default devise modules. Others available are:
-  # :lockable, :timeoutable
+  # Available are: :lockable, :timeoutable
   devise :database_authenticatable,
          :registerable,
          :rememberable,
@@ -8,7 +7,7 @@ class User < ApplicationRecord
          :trackable,
          :confirmable,
          :recoverable,
-         :omniauthable, omniauth_providers: [:github]
+         :omniauthable, omniauth_providers: %i[github vkontakte]
 
   has_many :questions
   has_many :answers

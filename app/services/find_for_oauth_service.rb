@@ -10,21 +10,17 @@ class FindForOauthService
     return authorization.user if authorization
 
     email = auth.info[:email]
-    user = User.find_by(email: email)
-    user ||= create_user(email)
+    return unless email
+
+    user = User.find_or_create_by(email: email) do |u|
+      password = Devise.friendly_token[0, 20]
+      u.password = password
+      u.password_confirmation = password
+      u.confirmed_at = Time.now
+    end
 
     user.authorizations.create(provider: auth.provider, uid: auth.uid)
 
-    user
-  end
-
-  private
-
-  def create_user(email)
-    password = Devise.friendly_token[0, 20]
-    user = User.new(email: email, password: password, password_confirmation: password)
-    user.skip_confirmation!
-    user.save!
     user
   end
 end

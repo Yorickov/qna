@@ -1,7 +1,17 @@
-module ModelHelpers
+module GeneralHelpers
   def gist_stub_request(url, status, expected_content = nil)
     stubbed_response_body = expected_content ? { div: expected_content }.to_json : ''
     gist_request("#{url}.json", status, stubbed_response_body)
+  end
+
+  def auth_hash(provider, email = nil)
+    OmniAuth::AuthHash.new(
+      'provider' => provider,
+      'uid' => '123456',
+      'info' => {
+        'email' => email
+      }
+    )
   end
 
   private

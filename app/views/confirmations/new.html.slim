@@ -1,0 +1,6 @@
+.row.justify-content-center
+  .col-6
+    h2.text-center
+      = simple_form_for User.new, url: user_confirmation_path, method: :post, local: true do |f|
+        = f.input :email
+        = f.button :submit, t('forms.send_email'), class: 'btn btn-secondary'

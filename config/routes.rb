@@ -1,7 +1,10 @@
 Rails.application.routes.draw do
   root 'questions#index'
 
-  devise_for :users, controllers: { omniauth_callbacks: 'oauth_callbacks' }
+  devise_for :users, controllers: {
+    omniauth_callbacks: 'oauth_callbacks',
+    confirmations: 'confirmations'
+  }
 
   concern :votable do
     member do

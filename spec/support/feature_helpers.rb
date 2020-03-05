@@ -9,12 +9,12 @@ module FeatureHelpers
     end
   end
 
-  def mock_auth_hash
-    OmniAuth.config.mock_auth[:github] = OmniAuth::AuthHash.new(
-      'provider' => 'github',
+  def mock_auth_hash(provider, email = nil)
+    OmniAuth.config.mock_auth[provider.to_sym] = OmniAuth::AuthHash.new(
+      'provider' => provider,
       'uid' => '123456',
       'info' => {
-        'email' => 'some@email.com'
+        'email' => email
       }
     )
   end
