@@ -48,9 +48,14 @@ describe ConfirmationsController, type: :controller do
       end
 
       context 'when user is not registered' do
-        it 'save user' do
+        it 'saves user' do
           expect { post :create, params: { user: { email: valid_email } } }
             .to change(User, :count).by 1
+        end
+
+        it 'does render new view' do
+          post :create, params: { user: { email: valid_email } }
+          expect(response).to render_template 'devise/mailer/confirmation_instructions'
         end
       end
     end
