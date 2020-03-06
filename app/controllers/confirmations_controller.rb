@@ -9,7 +9,7 @@ class ConfirmationsController < Devise::ConfirmationsController
     end
 
     if user.persisted?
-      user.authorizations.create(
+      user.authorizations.create!(
         provider: session['devise.provider'],
         uid: session['devise.uid']
       )
@@ -30,7 +30,7 @@ class ConfirmationsController < Devise::ConfirmationsController
 
   def after_confirmation_path_for(_resource_name, user)
     if session.key?('devise.provider') && session.key?('devise.uid')
-      user.authorizations.create(
+      user.authorizations.create!(
         provider: session['devise.provider'],
         uid: session['devise.uid']
       )

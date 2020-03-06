@@ -13,18 +13,37 @@ describe ConfirmationsController, type: :controller do
   describe 'POST #create' do
     let!(:valid_email) { Faker::Internet.email }
     let!(:invalid_email) { 'wrong_email' }
+    let!(:provider) { auth_hash('vkontakte').provider }
+    let!(:uid) { auth_hash('vkontakte').uid }
+
+    before do
+      session['devise.provider'] = provider
+      session['devise.uid'] = uid
+    end
 
     context 'with valid attributes' do
       context 'when user is registered' do
         let!(:user) { create(:user, email: valid_email) }
 
-        it 'login user' do
-          allow(user.authorizations)
-            .to receive(:create)
-            .with('provider' => 'vkontakte', 'uid' => '123456')
+        it 'creates user authorization' do
+          expect { post :create, params: { user: { email: valid_email } } }.to change(user.authorizations, :count).by 1
+        end
 
+        it 'creates authorization with proper data' do
+          post :create, params: { user: { email: valid_email } }
+
+          expect(user.authorizations.first.provider).to eq provider
+          expect(user.authorizations.first.uid).to eq uid
+        end
+
+        it 'login user' do
           post :create, params: { user: { email: valid_email } }
           expect(subject.current_user).to eq user
+        end
+
+        it 'redirects to root' do
+          post :create, params: { user: { email: valid_email } }
+          expect(response).to redirect_to root_path
         end
       end
 

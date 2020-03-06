@@ -6,7 +6,7 @@ class FindForOauthService
   end
 
   def call
-    authorization = Authorization.find_by(provider: auth.provider, uid: auth.uid.to_s)
+    authorization = Authorization.find_by(provider: auth.provider, uid: auth.uid)
     return authorization.user if authorization
 
     email = auth.info[:email]
@@ -19,7 +19,7 @@ class FindForOauthService
       u.confirmed_at = Time.now
     end
 
-    user.authorizations.create(provider: auth.provider, uid: auth.uid)
+    user.authorizations.create!(provider: auth.provider, uid: auth.uid)
 
     user
   end

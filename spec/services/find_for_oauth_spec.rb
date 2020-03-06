@@ -7,9 +7,18 @@ describe FindForOauthService do
   subject { FindForOauthService.new(auth) }
 
   context 'user already has authorization' do
+    before { user.authorizations.create(provider: 'github', uid: '123456') }
+
     it 'returns the user' do
-      user.authorizations.create(provider: 'github', uid: '123456')
       expect(subject.call).to eq user
+    end
+
+    it 'does not create new user' do
+      expect { subject.call }.to_not change(User, :count)
+    end
+
+    it 'does not create new authorization' do
+      expect { subject.call }.to_not change(user.authorizations, :count)
     end
   end
 
