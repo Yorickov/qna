@@ -32,11 +32,6 @@ shared_examples 'votable' do
       expect(votable).to be_voted(user1)
     end
 
-    it 'author try to vote' do
-      votable.vote_up!(user2)
-      expect(votable.rating).to eq 0
-    end
-
     it '#reset_vote' do
       votable.vote_up!(user1)
       expect(votable.rating).to eq 1

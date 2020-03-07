@@ -40,13 +40,13 @@ feature 'User can vote for answer' do
         find_link(class: 'vote-up').click
         expect(find(class: 'rating')).to have_content('1')
       end
-      expect(page).to have_content(t('answers.vote_up.twice_or_author'))
+      expect(page).to have_content(t('answers.vote_up.twice_vote'))
 
       within '.answers>.card:first-child' do
         find_link(class: 'vote-down').click
         expect(find(class: 'rating')).to have_content('1')
       end
-      expect(page).to have_content(t('answers.vote_down.twice_or_author'))
+      expect(page).to have_content(t('answers.vote_down.twice_vote'))
     end
   end
 

@@ -3,30 +3,32 @@ module Voted
 
   included do
     before_action :load_votable, only: %i[vote_up vote_down vote_reset]
+    before_action :authorize_votable, only: %i[vote_up vote_down vote_reset]
   end
 
   def vote_up
-    render_errors(t('.error_authority')) and return if current_user.author_of?(@votable)
-    render_errors(t('.twice_or_author')) and return unless @votable.vote_up!(current_user)
+    render_errors(t('.twice_vote')) and return unless @votable.vote_up!(current_user)
 
     render_json
   end
 
   def vote_down
-    render_errors(t('.error_authority')) and return if current_user.author_of?(@votable)
-    render_errors(t('.twice_or_author')) and return unless @votable.vote_down!(current_user)
+    render_errors(t('.twice_vote')) and return unless @votable.vote_down!(current_user)
 
     render_json
   end
 
   def vote_reset
-    render_errors(t('.error_authority')) and return if current_user.author_of?(@votable)
     render_errors(t('.no_vote')) and return unless @votable.vote_reset!(current_user)
 
     render_json
   end
 
   private
+
+  def authorize_votable
+    authorize! action_name.to_sym, @votable
+  end
 
   def load_votable
     @votable = model_klass.find(params[:id])

@@ -5,8 +5,6 @@ class AnswersController < ApplicationController
 
   before_action :load_answer, only: %i[update destroy choose_best]
   before_action :load_question, only: :create
-  # before_action :ensure_current_user_is_answer_author!, only: %i[update destroy]
-  # before_action :ensure_current_user_is_question_author!, only: %i[choose_best]
 
   after_action :publish_answer, only: :create
 
@@ -42,33 +40,11 @@ class AnswersController < ApplicationController
     @question = Question.with_attached_files.find(params[:question_id])
   end
 
-  # def answer
-  #   @answer ||= params[:id] ? Answer.with_attached_files.find(params[:id]) : Answer.new
-  # end
-
-  # def question
-  #   @question ||= Question.with_attached_files.find(params[:question_id])
-  # end
-
-  # helper_method :answer, :question
-
   def answer_params
     params.require(:answer).permit(
       :body, files: [], links_attributes: %i[id name url _destroy]
     )
   end
-
-  # def ensure_current_user_is_answer_author!
-  #   return if current_user.author_of?(@answer)
-
-  #   redirect_to root_path, notice: t('.wrong_author')
-  # end
-
-  # def ensure_current_user_is_question_author!
-  #   return if current_user.author_of?(@answer.question)
-
-  #   redirect_to root_path, notice: t('.wrong_author')
-  # end
 
   def publish_answer
     return if @answer.errors.any?

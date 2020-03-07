@@ -39,6 +39,7 @@ describe Ability do
     it { should_not be_able_to :destroy, create(:answer, user: other_user) }
 
     it { should be_able_to :create, Comment }
+    it { should be_able_to :index, Award }
 
     it { should be_able_to :vote_up, create(:question, user: other_user) }
     it { should_not be_able_to :vote_up, create(:question, user: user) }

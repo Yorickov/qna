@@ -2,7 +2,6 @@ class QuestionsController < ApplicationController
   include Voted
 
   before_action :authenticate_user!, except: %i[index show]
-  # before_action :ensure_current_user_is_question_author!, only: %i[update destroy]
   before_action :load_question, only: %i[show destroy update]
 
   after_action :publish_question, only: :create
@@ -44,12 +43,6 @@ class QuestionsController < ApplicationController
 
   private
 
-  # def question
-  #   @question ||= params[:id] ? Question.with_attached_files.find(params[:id]) : Question.new
-  # end
-
-  # helper_method :question
-
   def load_question
     @question = Question.with_attached_files.find(params[:id])
   end
@@ -61,12 +54,6 @@ class QuestionsController < ApplicationController
                      award_attributes: %i[id title image _destroy]
     )
   end
-
-  # def ensure_current_user_is_question_author!
-  #   return if current_user.author_of?(@question)
-
-  #   redirect_to root_path, notice: t('.wrong_author')
-  # end
 
   def publish_question
     return if @question.errors.any?

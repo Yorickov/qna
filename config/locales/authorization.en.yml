@@ -1,0 +1,13 @@
+en:
+  unauthorized:
+    vote_up:
+      question: Not authorized to vote for the question.
+      answer: Not authorized to vote for the answer.
+    vote_down:
+      question: Not authorized to vote against the question.
+      answer: Not authorized to vote against the answer.
+    vote_reset:
+      question: Not authorized to cancel the vote for the question.
+      answer: Not authorized to cancel the vote against the answer.
+    choose_best:
+      answer: You can't choose as the best not your answer

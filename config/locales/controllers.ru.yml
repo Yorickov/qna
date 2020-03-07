@@ -6,13 +6,10 @@ ru:
       success: Вопрос успешно удален
       wrong_author: Вы не можете удалить чужой вопрос
     vote_up:
-      error_authority: Нет прав автора
       twice_or_author: Уже голосовали или нельзя голосовать за свой вопрос
     vote_down:
-      error_authority: Нет прав автора
       twice_or_author: Уже голосовали или нельзя голосовать за свой вопрос
     vote_reset:
-      error_authority: Нет прав автора
       no_vote: Вы не голосовали за этот вопрос
 
   answers:
@@ -20,11 +17,8 @@ ru:
       success: Ответ успешно удален
       wrong_author: Вы не можете удалить чужой ответ
     vote_up:
-      error_authority: Нет прав автора
       twice_or_author: Уже голосовали или нельзя голосовать за свой ответ
     vote_down:
-      error_authority: Нет прав автора
       twice_or_author: Уже голосовали или нельзя голосовать за свой ответ
     vote_reset:
-      error_authority: Нет прав автора
       no_vote: Вы не голосовали за этот ответ
