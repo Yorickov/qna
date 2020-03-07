@@ -1,10 +1,10 @@
-<% if question.errors.any? %>
+<% if @question.errors.any? %>
   var questionFormNode = document.querySelector('.question-form-node');
-  questionFormNode.innerHTML = '<%= j render 'form_edit', question: question %>';
+  questionFormNode.innerHTML = '<%= j render 'form_edit', question: @question %>';
 
   var editQuestionForm = document.querySelector('.edit-question-form');
   editQuestionForm.classList.remove('hidden');
 <% else %>
   var questionNode = document.querySelector('.question-node');
-  questionNode.innerHTML = '<%= j render 'question_body', question: question %>';
+  questionNode.innerHTML = '<%= j render 'question_body', question: @question %>';
 <% end %>

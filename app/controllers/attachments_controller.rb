@@ -2,6 +2,8 @@ class AttachmentsController < ApplicationController
   before_action :authenticate_user!
   before_action :ensure_current_user_is_attachment_author!
 
+  # authorize_resource
+
   def destroy
     attachment.purge
   end

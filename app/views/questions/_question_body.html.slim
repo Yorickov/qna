@@ -27,7 +27,7 @@
             = link_to t('.edit_question'), '#', class: 'card-link edit-question-link'
 
         section.question-form-node
-          = render 'form_edit'
+          = render 'form_edit', question: question
 
         section.question-comments
           - if question.comments.any?

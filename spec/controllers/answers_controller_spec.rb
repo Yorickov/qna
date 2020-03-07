@@ -170,8 +170,8 @@ describe AnswersController, type: :controller do
         expect(answer.body).to eq original_body
       end
 
-      it 'redirects to root' do
-        expect(response).to redirect_to root_path
+      it 'returns 403 error' do
+        expect(response).to have_http_status(:forbidden)
       end
     end
 
@@ -224,10 +224,9 @@ describe AnswersController, type: :controller do
           .to_not change(Answer, :count)
       end
 
-      it 'redirects to root' do
+      it 'returns 403 error' do
         delete :destroy, params: { id: answer, format: :js }
-
-        expect(response).to redirect_to root_path
+        expect(response).to have_http_status(:forbidden)
       end
     end
 
@@ -298,8 +297,8 @@ describe AnswersController, type: :controller do
         expect(answer2.body).to eq original_body
       end
 
-      it 'redirects to root' do
-        expect(response).to redirect_to root_path
+      it 'returns 403 error' do
+        expect(response).to have_http_status(:forbidden)
       end
     end
 

@@ -1,10 +1,10 @@
 var answerErrorsNode = document.querySelector('.answer-form-errors');
-answerErrorsNode.innerHTML = '<%= j render 'shared/errors', resource: answer %>';
+answerErrorsNode.innerHTML = '<%= j render 'shared/errors', resource: @answer %>';
 
-<% if answer.persisted? %>
+<% if @answer.persisted? %>
   var answersNode = document.querySelector('.answers');
-  answersNode.insertAdjacentHTML('beforeEnd', '<%= j render answer %>');
+  answersNode.insertAdjacentHTML('beforeEnd', '<%= j render @answer %>');
 <% end %>
 
 var answerFormNode = document.querySelector('.answer-form');
-answerFormNode.innerHTML = '<%= j render 'answers/form', resource: [question, Answer.new] %>';
+answerFormNode.innerHTML = '<%= j render 'answers/form', resource: [@question, Answer.new] %>';

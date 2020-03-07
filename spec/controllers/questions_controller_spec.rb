@@ -171,8 +171,8 @@ describe QuestionsController, type: :controller do
         expect(user1_question.body).to eq original_body
       end
 
-      it 'redirects to root' do
-        expect(response).to redirect_to root_path
+      it 'returns 403 error' do
+        expect(response).to have_http_status(:forbidden)
       end
     end
 

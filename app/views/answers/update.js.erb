@@ -1,10 +1,10 @@
-<% if answer.errors.any? %>
-  var questionFormNode = document.querySelector('[data-answer-node-id="<%= answer.id %>"] .answer-form-node');
-  questionFormNode.innerHTML = '<%= j render 'answers/form_edit', answer: answer %>';
+<% if @answer.errors.any? %>
+  var questionFormNode = document.querySelector('[data-answer-node-id="<%= @answer.id %>"] .answer-form-node');
+  questionFormNode.innerHTML = '<%= j render 'answers/form_edit', answer: @answer %>';
 
-  var editAnswerForm = document.querySelector('#edit-answer-<%= answer.id %>');
+  var editAnswerForm = document.querySelector('#edit-answer-<%= @answer.id %>');
   editAnswerForm.classList.remove('hidden');
 <% else %>
-  var answerNode = document.querySelector('[data-answer-node-id="<%= answer.id %>"]');
-  answerNode.innerHTML = '<%= j render 'answer_body', answer: answer %>';
+  var answerNode = document.querySelector('[data-answer-node-id="<%= @answer.id %>"]');
+  answerNode.innerHTML = '<%= j render 'answer_body', answer: @answer %>';
 <% end %>

@@ -2,42 +2,55 @@ class AnswersController < ApplicationController
   include Voted
 
   before_action :authenticate_user!
-  before_action :ensure_current_user_is_answer_author!, only: %i[update destroy]
-  before_action :ensure_current_user_is_question_author!, only: %i[choose_best]
+
+  before_action :load_answer, only: %i[update destroy choose_best]
+  before_action :load_question, only: :create
+  # before_action :ensure_current_user_is_answer_author!, only: %i[update destroy]
+  # before_action :ensure_current_user_is_question_author!, only: %i[choose_best]
 
   after_action :publish_answer, only: :create
 
+  authorize_resource
+
   def create
     @answer = current_user.answers.new(answer_params)
-    @answer.question = question
+    @answer.question = @question
     @answer.save
   end
 
   def update
-    answer.update(answer_params)
-    @question = answer.question
+    @answer.update(answer_params)
+    @question = @answer.question
   end
 
   def destroy
-    answer.destroy
+    @answer.destroy
   end
 
   def choose_best
-    answer.set_best!
-    @question = answer.question
+    @answer.set_best!
+    @question = @answer.question
   end
 
   private
 
-  def answer
-    @answer ||= params[:id] ? Answer.with_attached_files.find(params[:id]) : Answer.new
+  def load_answer
+    @answer = Answer.with_attached_files.find(params[:id])
   end
 
-  def question
-    @question ||= Question.with_attached_files.find(params[:question_id])
+  def load_question
+    @question = Question.with_attached_files.find(params[:question_id])
   end
 
-  helper_method :answer, :question
+  # def answer
+  #   @answer ||= params[:id] ? Answer.with_attached_files.find(params[:id]) : Answer.new
+  # end
+
+  # def question
+  #   @question ||= Question.with_attached_files.find(params[:question_id])
+  # end
+
+  # helper_method :answer, :question
 
   def answer_params
     params.require(:answer).permit(
@@ -45,25 +58,25 @@ class AnswersController < ApplicationController
     )
   end
 
-  def ensure_current_user_is_answer_author!
-    return if current_user.author_of?(answer)
+  # def ensure_current_user_is_answer_author!
+  #   return if current_user.author_of?(@answer)
 
-    redirect_to root_path, notice: t('.wrong_author')
-  end
+  #   redirect_to root_path, notice: t('.wrong_author')
+  # end
 
-  def ensure_current_user_is_question_author!
-    return if current_user.author_of?(answer.question)
+  # def ensure_current_user_is_question_author!
+  #   return if current_user.author_of?(@answer.question)
 
-    redirect_to root_path, notice: t('.wrong_author')
-  end
+  #   redirect_to root_path, notice: t('.wrong_author')
+  # end
 
   def publish_answer
-    return if answer.errors.any?
+    return if @answer.errors.any?
 
     ActionCable.server.broadcast(
-      "question_#{question.id}_answers",
-      answer: answer,
-      links: answer.links
+      "question_#{@question.id}_answers",
+      answer: @answer,
+      links: @answer.links
     )
   end
 end
