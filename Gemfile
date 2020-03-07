@@ -22,14 +22,23 @@ gem 'jbuilder', '~> 2.7'
 # Use Active Model has_secure_password
 # gem 'bcrypt', '~> 3.1.7'
 
+gem 'gon', '~> 6.3'
 # Use Active Storage variant
 # gem 'image_processing', '~> 1.2'
 
 # Reduces boot times through caching; required in config/boot.rb
 gem 'bootsnap', '>= 1.4.2', require: false
 
-# Authorization
+# Authentication
 gem 'devise'
+
+# OAuth
+gem "omniauth", "~> 1.9"
+gem "omniauth-github", "~> 1.4"
+gem 'omniauth-vkontakte'
+
+# Authorization
+gem 'cancancan'
 
 # Localization
 gem 'rails-i18n', '~> 6.0.0'
@@ -38,6 +47,9 @@ gem 'devise-i18n'
 # Templates
 gem 'slim-rails'
 gem 'simple_form'
+
+# Icon helpers
+gem 'octicons_helper'
 
 # State machine
 gem 'aasm'
@@ -73,6 +85,9 @@ group :test do
   gem 'capybara-email'
   gem 'faker', git: 'https://github.com/faker-ruby/faker.git', branch: 'master'
   gem 'i18n-debug', '~> 1.2'
+
+  # mock-tests
+  gem 'webmock', '~> 3.8'
 end
 
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem
@@ -81,18 +96,9 @@ gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
 # Amazon S3 storage support
 gem 'aws-sdk-s3', require: false
 
-# Icon helpers
-gem 'octicons_helper'
-
+# Nested forms
 gem 'cocoon', '~> 1.2'
-gem "octokit", '~> 4.0'
+
+# http-client
+gem 'octokit', '~> 4.0'
 gem 'faraday'
-
-gem 'webmock', '~> 3.8'
-
-gem "gon", "~> 6.3"
-
-gem "omniauth", "~> 1.9"
-
-gem "omniauth-github", "~> 1.4"
-gem 'omniauth-vkontakte'
