@@ -66,7 +66,7 @@ shared_examples 'voted' do
         patch :vote_up, params: { id: votable, format: :json }
 
         expect(response.status).to eq 403
-        expect(response.content_type).to eq 'application/json'
+        expect(response.content_type).to eq 'application/json; charset=utf-8'
       end
     end
 
@@ -88,7 +88,7 @@ shared_examples 'voted' do
         patch :vote_up, params: { id: votable, format: :json }
 
         expect(response.status).to eq 403
-        expect(response.content_type).to eq 'application/json'
+        expect(response.content_type).to eq 'application/json; charset=utf-8'
       end
     end
   end
@@ -152,7 +152,7 @@ shared_examples 'voted' do
         patch :vote_down, params: { id: votable, format: :json }
 
         expect(response.status).to eq 403
-        expect(response.content_type).to eq 'application/json'
+        expect(response.content_type).to eq 'application/json; charset=utf-8'
       end
     end
 
@@ -174,7 +174,7 @@ shared_examples 'voted' do
         patch :vote_down, params: { id: votable, format: :json }
 
         expect(response.status).to eq 403
-        expect(response.content_type).to eq 'application/json'
+        expect(response.content_type).to eq 'application/json; charset=utf-8'
       end
     end
   end
@@ -227,7 +227,7 @@ shared_examples 'voted' do
         delete :vote_reset, params: { id: votable, format: :json }
 
         expect(response.status).to eq 403
-        expect(response.content_type).to eq 'application/json'
+        expect(response.content_type).to eq 'application/json; charset=utf-8'
       end
     end
 
@@ -249,7 +249,7 @@ shared_examples 'voted' do
         delete :vote_reset, params: { id: votable, format: :json }
 
         expect(response.status).to eq 403
-        expect(response.content_type).to eq 'application/json'
+        expect(response.content_type).to eq 'application/json; charset=utf-8'
       end
     end
   end

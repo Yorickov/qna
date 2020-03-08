@@ -25,32 +25,15 @@ class Ability
     guest_abilities
 
     can :create, [Question, Answer, Comment]
-    can :update, [Question, Answer, Comment], user_id: user.id
-    can :destroy, [Question, Answer, Comment], user_id: user.id
-    can :index, Award, user_id: user.id
+    can %i[update destroy], [Question, Answer, Comment], user_id: user.id
 
-    can :vote_up, [Question, Answer] do |item|
+    can %i[vote_up vote_down vote_reset], [Question, Answer] do |item|
       !user.author_of?(item)
     end
 
-    can :vote_down, [Question, Answer] do |item|
-      !user.author_of?(item)
-    end
+    can :choose_best, Answer, question: { user_id: user.id }
 
-    can :vote_reset, [Question, Answer] do |item|
-      !user.author_of?(item)
-    end
-
-    can :choose_best, Answer do |answer|
-      user.author_of?(answer.question)
-    end
-
-    can :destroy, ActiveStorage::Attachment do |attachment|
-      user.author_of?(attachment.record)
-    end
-
-    can :destroy, Link do |link|
-      user.author_of?(link.linkable)
-    end
+    can :destroy, ActiveStorage::Attachment, record: { user_id: user.id }
+    can :destroy, Link, linkable: { user_id: user.id }
   end
 end
