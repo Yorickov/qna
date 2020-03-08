@@ -44,5 +44,13 @@ class Ability
     can :choose_best, Answer do |answer|
       user.author_of?(answer.question)
     end
+
+    can :destroy, ActiveStorage::Attachment do |attachment|
+      user.author_of?(attachment.record)
+    end
+
+    can :destroy, Link do |link|
+      user.author_of?(link.linkable)
+    end
   end
 end

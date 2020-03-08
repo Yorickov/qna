@@ -1,16 +1,16 @@
 class LinksController < ApplicationController
   before_action :authenticate_user!
+  before_action :load_link, only: :destroy
 
-  # authorize_resource
+  authorize_resource
 
   def destroy
-    @link = Link.find(params[:id])
+    @link.destroy
+  end
 
-    resource = @link.linkable
-    if current_user.author_of?(resource)
-      @link.destroy
-    else
-      redirect_to root_path, notice: t('.wrong_author')
-    end
+  private
+
+  def load_link
+    @link = Link.find(params[:id])
   end
 end

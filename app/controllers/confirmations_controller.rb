@@ -1,6 +1,4 @@
 class ConfirmationsController < Devise::ConfirmationsController
-  # authorize_resource
-
   def new; end
 
   def create

@@ -1,6 +1,4 @@
 class OauthCallbacksController < Devise::OmniauthCallbacksController
-  # authorize_resource
-
   def github
     authorize('Github')
   end

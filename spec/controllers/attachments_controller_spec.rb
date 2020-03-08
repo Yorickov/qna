@@ -30,10 +30,10 @@ describe AttachmentsController, type: :controller do
           .to_not change(ActiveStorage::Attachment, :count)
       end
 
-      it 'redirects to root' do
+      it 'returns 403 error' do
         delete :destroy, params: { id: attachment, format: :js }
 
-        expect(response).to redirect_to root_path
+        expect(response).to have_http_status(:forbidden)
       end
     end
 
