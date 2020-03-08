@@ -4,5 +4,5 @@
     p.mx-1(data-attachment-id="#{file.id}")
       = link_to file.filename.to_s, url_for(file)
       '
-      - if current_user&.author_of?(resource)
+      - if can?(:destroy, resource)
         = link_to octicon('x', width: 14), attachment_path(file), title: t('.delete_attachment'), method: :delete, data: { confirm: 'Are you sure?' }, remote: true

@@ -2,7 +2,7 @@
   .card-body.pb-0.py-0
     .row.no-gutters
       .col-md-1.d-flex.flex-column.align-items-center.justify-content-center
-        - if user_signed_in? && !current_user&.author_of?(question)
+        - if can?(:vote_up, question) && can?(:vote_up, question) && can?(:vote_reset, question)
           .voting.d-flex.flex-column.align-items-center.justify-content-center
             = link_to octicon('triangle-up', width: 25), vote_up_question_path(question), method: :patch, data: { type: :json }, title: t('.vote_up'), class: 'vote-up', remote: true
             .rating
@@ -21,7 +21,7 @@
           section.question-links
             = render 'links/index', resourse: question
 
-        - if current_user&.author_of?(question)
+        - if can?(:destroy, question) && can?(:update, question)
           section.d-flex.justify-content-end
             = link_to t('.delete_question'), question_path(question), method: :delete, class: 'card-link', data: { confirm: 'Are you sure?' }
             = link_to t('.edit_question'), '#', class: 'card-link edit-question-link'
@@ -34,7 +34,7 @@
             p= t('.comments')
             = render question.comments
 
-        - if user_signed_in?
+        - if can?(:create, Comment)
           .question-comment-form
             = render 'comments/form', resource: Comment.new, url: question_comments_path(question)
 
