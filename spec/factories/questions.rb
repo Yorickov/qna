@@ -14,8 +14,8 @@ FactoryBot.define do
 
     trait :with_files do
       after :create do |question|
-        file_path1 = Rails.root.join('spec/support/assets/test-image1.png')
-        file_path2 = Rails.root.join('spec/support/assets/test-image2.png')
+        file_path1 = Rails.root.join('spec', 'support', 'assets', 'test-image1.png')
+        file_path2 = Rails.root.join('spec', 'support', 'assets', 'test-image2.png')
         file1 = fixture_file_upload(file_path1, 'image/png')
         file2 = fixture_file_upload(file_path2, 'image/png')
         question.files.attach(file1, file2)
@@ -24,7 +24,7 @@ FactoryBot.define do
 
     trait :with_file do
       after :create do |question|
-        file_path = Rails.root.join('spec/support/assets/test-image1.png')
+        file_path = Rails.root.join('spec', 'support', 'assets', 'test-image1.png')
         file = fixture_file_upload(file_path, 'image/png')
         question.files.attach(file)
       end

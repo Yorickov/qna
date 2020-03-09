@@ -14,7 +14,7 @@ describe Ability do
   end
 
   describe 'for Admin' do
-    let(:user) { create :user, admin: true }
+    let(:user) { build_stubbed :user, admin: true }
 
     it { should be_able_to :manage, :all }
   end
@@ -32,32 +32,32 @@ describe Ability do
     it { should be_able_to :read, :all }
 
     it { should be_able_to :create, Question }
-    it { should be_able_to %i[update destroy], create(:question, user: user) }
-    it { should_not be_able_to %i[update destroy], create(:question, user: other_user) }
+    it { should be_able_to %i[update destroy], build(:question, user: user) }
+    it { should_not be_able_to %i[update destroy], build(:question, user: other_user) }
 
     it { should be_able_to :create, Answer }
-    it { should be_able_to %i[update destroy], create(:answer, user: user) }
-    it { should_not be_able_to %i[update destroy], create(:answer, user: other_user) }
+    it { should be_able_to %i[update destroy], build(:answer, user: user) }
+    it { should_not be_able_to %i[update destroy], build(:answer, user: other_user) }
 
     it { should be_able_to :create, Comment }
 
-    it { should be_able_to %i[vote_up vote_down vote_reset], create(:question, user: other_user) }
-    it { should_not be_able_to %i[vote_up vote_down vote_reset], create(:question, user: user) }
+    it { should be_able_to %i[vote_up vote_down vote_reset], build(:question, user: other_user) }
+    it { should_not be_able_to %i[vote_up vote_down vote_reset], build(:question, user: user) }
 
-    it { should be_able_to %i[vote_up vote_down vote_reset], create(:answer, user: other_user) }
-    it { should_not be_able_to %i[vote_up vote_down vote_reset], create(:answer, user: user) }
+    it { should be_able_to %i[vote_up vote_down vote_reset], build(:answer, user: other_user) }
+    it { should_not be_able_to %i[vote_up vote_down vote_reset], build(:answer, user: user) }
 
-    it { should be_able_to :choose_best, create(:answer, question: user.questions.first) }
-    it { should_not be_able_to :choose_best, create(:answer, question: other_user.questions.first) }
+    it { should be_able_to :choose_best, build(:answer, question: user.questions.first) }
+    it { should_not be_able_to :choose_best, build(:answer, question: other_user.questions.first) }
 
     it { should be_able_to :destroy, question1.files.first }
     it { should_not be_able_to :destroy, question2.files.first }
     it { should be_able_to :destroy, answer1.files.first }
     it { should_not be_able_to :destroy, answer2.files.first }
 
-    it { should be_able_to :destroy, create(:link, linkable: user.questions.first) }
-    it { should_not be_able_to :destroy, create(:link, linkable: other_user.questions.first) }
-    it { should be_able_to :destroy, create(:link, linkable: create(:answer, user: user)) }
-    it { should_not be_able_to :destroy, create(:link, linkable: create(:answer, user: other_user)) }
+    it { should be_able_to :destroy, build(:link, linkable: user.questions.first) }
+    it { should_not be_able_to :destroy, build(:link, linkable: other_user.questions.first) }
+    it { should be_able_to :destroy, build(:link, linkable: build(:answer, user: user)) }
+    it { should_not be_able_to :destroy, build(:link, linkable: build(:answer, user: other_user)) }
   end
 end
