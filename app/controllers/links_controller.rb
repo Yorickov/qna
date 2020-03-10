@@ -2,9 +2,9 @@ class LinksController < ApplicationController
   before_action :authenticate_user!
   before_action :load_link, only: :destroy
 
-  authorize_resource
-
   def destroy
+    authorize @link
+
     @link.destroy
   end
 

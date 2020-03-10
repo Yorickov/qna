@@ -2,9 +2,9 @@ class AttachmentsController < ApplicationController
   before_action :authenticate_user!
   before_action :load_attachment, only: :destroy
 
-  authorize_resource
-
   def destroy
+    authorize @attachment
+
     @attachment.purge
   end
 

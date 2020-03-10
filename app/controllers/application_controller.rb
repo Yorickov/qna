@@ -1,5 +1,6 @@
 class ApplicationController < ActionController::Base
   protect_from_forgery with: :exception
+  include Pundit
 
   before_action :switch_locale
   before_action :gon_user, unless: :devise_controller?
@@ -8,15 +9,7 @@ class ApplicationController < ActionController::Base
     I18n.locale == I18n.default_locale ? {} : { lang: I18n.locale }
   end
 
-  rescue_from CanCan::AccessDenied do |exception|
-    respond_to do |format|
-      format.json { render json: exception.message, status: :forbidden }
-      format.html { redirect_to root_url, alert: exception.message }
-      format.js   { head :forbidden }
-    end
-  end
-
-  check_authorization unless: :devise_controller?
+  rescue_from Pundit::NotAuthorizedError, with: :user_not_authorized
 
   private
 
@@ -27,5 +20,12 @@ class ApplicationController < ActionController::Base
 
   def gon_user
     gon.user_id = current_user&.id
+  end
+
+  def user_not_authorized
+    respond_to do |format|
+      format.html { redirect_to root_path, alert: 'You are not authorized to perform this action' }
+      format.any { render status: :forbidden, plain: 'Access denied' }
+    end
   end
 end

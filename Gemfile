@@ -38,7 +38,7 @@ gem "omniauth-github", "~> 1.4"
 gem 'omniauth-vkontakte'
 
 # Authorization
-gem 'cancancan'
+gem 'pundit'
 
 # Localization
 gem 'rails-i18n', '~> 6.0.0'
@@ -85,6 +85,7 @@ group :test do
   gem 'capybara-email'
   gem 'faker', git: 'https://github.com/faker-ruby/faker.git', branch: 'master'
   gem 'i18n-debug', '~> 1.2'
+  gem 'pundit-matchers', '~> 1.6.0'
 
   # mock-tests
   gem 'webmock', '~> 3.8'

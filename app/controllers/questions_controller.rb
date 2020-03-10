@@ -6,13 +6,12 @@ class QuestionsController < ApplicationController
 
   after_action :publish_question, only: :create
 
-  authorize_resource
-
   def index
     @questions = Question.all
   end
 
   def new
+    authorize Question
     @question = current_user.questions.new
   end
 
@@ -23,6 +22,8 @@ class QuestionsController < ApplicationController
   end
 
   def create
+    authorize Question
+
     @question = current_user.questions.new(question_params)
 
     if @question.save
@@ -33,10 +34,14 @@ class QuestionsController < ApplicationController
   end
 
   def update
+    authorize @question
+
     @question.update(question_params)
   end
 
   def destroy
+    authorize @question
+
     @question.destroy
     redirect_to questions_path, notice: t('.success')
   end

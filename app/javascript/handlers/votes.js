@@ -6,7 +6,9 @@ const voteHandler = (event) => {
 
   const query = `[data-${name}-node-id="${id}"] .rating span`
   const elem = document.querySelector(query);
-  elem.innerHTML = `${rating}`;
+  if (elem) {
+    elem.innerHTML = `${rating}`;
+  }
 };
 
 const errorsHandler = (event) => {
@@ -15,10 +17,12 @@ const errorsHandler = (event) => {
 
   const { message } = event.detail[0];
 
-  const errorsNode = document.querySelector('.flash');
-  const errorsHtml = `<p>${message}</p>`
+  if (message) {
+    const errorsNode = document.querySelector('.flash');
+    const errorsHtml = `<p>${message}</p>`
 
-  errorsNode.innerHTML = errorsHtml;
+    errorsNode.innerHTML = errorsHtml;
+  }
 };
 
 export default () => {

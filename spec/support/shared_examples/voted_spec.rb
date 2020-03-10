@@ -87,7 +87,7 @@ shared_examples 'voted' do
       it 'gets forbidden response and renders json' do
         patch :vote_up, params: { id: votable, format: :json }
 
-        expect(response.status).to eq 403
+        expect(response.status).to eq 401
         expect(response.content_type).to eq 'application/json; charset=utf-8'
       end
     end
@@ -173,7 +173,7 @@ shared_examples 'voted' do
       it 'gets forbidden response and renders json' do
         patch :vote_down, params: { id: votable, format: :json }
 
-        expect(response.status).to eq 403
+        expect(response.status).to eq 401
         expect(response.content_type).to eq 'application/json; charset=utf-8'
       end
     end
@@ -248,7 +248,7 @@ shared_examples 'voted' do
       it 'gets forbidden response and renders json' do
         delete :vote_reset, params: { id: votable, format: :json }
 
-        expect(response.status).to eq 403
+        expect(response.status).to eq 401
         expect(response.content_type).to eq 'application/json; charset=utf-8'
       end
     end

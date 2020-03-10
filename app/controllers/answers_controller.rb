@@ -8,24 +8,30 @@ class AnswersController < ApplicationController
 
   after_action :publish_answer, only: :create
 
-  authorize_resource
-
   def create
+    authorize Answer
+
     @answer = current_user.answers.new(answer_params)
     @answer.question = @question
     @answer.save
   end
 
   def update
+    authorize @answer
+
     @answer.update(answer_params)
     @question = @answer.question
   end
 
   def destroy
+    authorize @answer
+
     @answer.destroy
   end
 
   def choose_best
+    authorize @answer
+
     @answer.set_best!
     @question = @answer.question
   end

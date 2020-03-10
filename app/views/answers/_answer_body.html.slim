@@ -5,7 +5,7 @@
         .mb-2.best-answer
           = octicon('check', width: 30)
 
-      - if can?(:vote_up, answer) && can?(:vote_up, answer) && can?(:vote_reset, answer)
+      - if policy(answer).vote_up? && policy(answer).vote_down? && policy(answer).vote_reset?
         .voting.d-flex.flex-column.align-items-center.justify-content-center
           = link_to octicon('triangle-up', width: 25), vote_up_answer_path(answer), method: :patch, data: { type: :json }, title: t('.vote_up'), class: 'vote-up', remote: true
           .rating
@@ -22,9 +22,9 @@
 
       - if answer.links.any?
         section.answer-links
-          = render 'links/index', resourse: answer
+          = render 'links/index', resource: answer
 
-      - if answer.persisted? && can?(:destroy, answer) && can?(:update, answer)
+      - if answer.persisted? && policy(answer).destroy? && policy(answer).update?
         section.d-flex.justify-content-end
           = link_to t('.delete_answer'), answer_path(answer), method: :delete, class: 'card-link', data: { confirm: 'Are you sure?' }, remote: true
           = link_to t('.edit_answer'), '#', class: 'card-link edit-answer-link', data: { answer_id: answer.id }
@@ -36,11 +36,11 @@
           p= t('.comments')
           = render answer.comments
 
-      - if can?(:create, Comment)
+      - if policy(Comment).create?
         .answer-comment-form
           = render 'comments/form', resource: Comment.new, url: answer_comments_path(answer)
 
     .col-md-1.d-flex.flex-column.align-items-center.justify-content-center
-      - if !answer.best? && can?(:choose_best, answer)
+      - if !answer.best? && policy(answer).choose_best?
         = link_to octicon('thumbsup', width: 18), choose_best_answer_path(answer), title: t('.choose_best'), class: 'best-answer-link', method: :patch, data: { confirm: 'Are you sure?' }, remote: true
 hr

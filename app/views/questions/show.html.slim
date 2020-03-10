@@ -7,7 +7,7 @@
     .answers
       = render @question.answers
 
-- if can?(:create, Answer)
+- if policy(Answer).create?
   .row.justify-content-center
     .col-12
       .answer-form-errors
