@@ -5,13 +5,7 @@
         .mb-2.best-answer
           = octicon('check', width: 30)
 
-      - if policy(answer).vote_up? && policy(answer).vote_down? && policy(answer).vote_reset?
-        .voting.d-flex.flex-column.align-items-center.justify-content-center
-          = link_to octicon('triangle-up', width: 25), vote_up_answer_path(answer), method: :patch, data: { type: :json }, title: t('.vote_up'), class: 'vote-up', remote: true
-          .rating
-            span.text-center= answer.rating
-          = link_to octicon('triangle-down', width: 25), vote_down_answer_path(answer), method: :patch, data: { type: :json }, title: t('.vote_down'), class: 'vote-down', remote: true
-          = link_to octicon('sync', width: 17), vote_reset_answer_path(answer), method: :delete, data: { type: :json }, title: t('.vote_reset'), class: 'vote-reset', remote: true
+      = render 'shared/voting', resource: answer
 
     .col-md-10.pl-2
       p.card-text = answer.body
@@ -24,7 +18,7 @@
         section.answer-links
           = render 'links/index', resource: answer
 
-      - if answer.persisted? && policy(answer).destroy? && policy(answer).update?
+      - if answer.persisted? && policy(answer).update?
         section.d-flex.justify-content-end
           = link_to t('.delete_answer'), answer_path(answer), method: :delete, class: 'card-link', data: { confirm: 'Are you sure?' }, remote: true
           = link_to t('.edit_answer'), '#', class: 'card-link edit-answer-link', data: { answer_id: answer.id }

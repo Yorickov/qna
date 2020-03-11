@@ -2,13 +2,7 @@
   .card-body.pb-0.py-0
     .row.no-gutters
       .col-md-1.d-flex.flex-column.align-items-center.justify-content-center
-        - if policy(question).vote_up? && policy(question).vote_down? && policy(question).vote_reset?
-          .voting.d-flex.flex-column.align-items-center.justify-content-center
-            = link_to octicon('triangle-up', width: 25), vote_up_question_path(question), method: :patch, data: { type: :json }, title: t('.vote_up'), class: 'vote-up', remote: true
-            .rating
-              span.text-center= question.rating
-            = link_to octicon('triangle-down', width: 25), vote_down_question_path(question), method: :patch, data: { type: :json }, title: t('.vote_down'), class: 'vote-down', remote: true
-            = link_to octicon('sync', width: 15), vote_reset_question_path(question), method: :delete, data: { type: :json }, title: t('.vote_reset'), class: 'vote-reset', remote: true
+        = render 'shared/voting', resource: question
 
       .col-md-10.pl-2
         h2.card-title.question-title = question.title
@@ -21,7 +15,7 @@
           section.question-links
             = render 'links/index', resource: question
 
-        - if policy(question).destroy? && policy(question).update?
+        - if policy(question).update?
           section.d-flex.justify-content-end
             = link_to t('.delete_question'), question_path(question), method: :delete, class: 'card-link', data: { confirm: 'Are you sure?' }
             = link_to t('.edit_question'), '#', class: 'card-link edit-question-link'
