@@ -103,3 +103,5 @@ gem 'cocoon', '~> 1.2'
 # http-client
 gem 'octokit', '~> 4.0'
 gem 'faraday'
+
+gem "doorkeeper", "~> 5.3"
