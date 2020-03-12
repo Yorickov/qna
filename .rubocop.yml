@@ -45,3 +45,6 @@ Style/ClassAndModuleChildren:
 
 Style/AndOr:
   Enabled: false
+
+Metrics/BlockLength:
+  Max: 35
