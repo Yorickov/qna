@@ -36,6 +36,7 @@ gem 'devise'
 gem "omniauth", "~> 1.9"
 gem "omniauth-github", "~> 1.4"
 gem 'omniauth-vkontakte'
+gem 'doorkeeper', '~> 5.3'
 
 # Authorization
 gem 'pundit'
@@ -104,4 +105,6 @@ gem 'cocoon', '~> 1.2'
 gem 'octokit', '~> 4.0'
 gem 'faraday'
 
-gem "doorkeeper", "~> 5.3"
+# serializers
+gem 'active_model_serializers', '~> 0.10.0'
+gem 'oj'
