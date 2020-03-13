@@ -5,18 +5,6 @@ Rails.application.routes.draw do
     confirmations: 'confirmations'
   }
 
-  namespace :api do
-    namespace :v1 do
-      resources :profiles, only: :index do
-        get :me, on: :collection
-      end
-
-      resources :questions, only: :index do
-        resources :answers, only: :index, shallow: true
-      end
-    end
-  end
-
   root 'questions#index'
 
   concern :votable do
@@ -40,6 +28,18 @@ Rails.application.routes.draw do
   resources :attachments, only: :destroy
   resources :links, only: :destroy
   resources :awards, only: :index
+
+  namespace :api do
+    namespace :v1 do
+      resources :profiles, only: :index do
+        get :me, on: :collection
+      end
+
+      resources :questions do
+        resources :answers, shallow: true
+      end
+    end
+  end
 
   mount ActionCable.server => '/cable'
 end
