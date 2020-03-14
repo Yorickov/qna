@@ -1,6 +1,6 @@
 class Api::V1::AnswersController < Api::V1::BaseController
-  before_action :load_question, only: %i[index]
-  before_action :load_answer, only: %i[show]
+  before_action :load_question, only: %i[index create]
+  before_action :load_answer, only: %i[show update destroy]
 
   def index
     render json: @question.answers
@@ -8,6 +8,36 @@ class Api::V1::AnswersController < Api::V1::BaseController
 
   def show
     render json: @answer
+  end
+
+  def create
+    authorize Answer
+
+    @answer = current_resource_owner.answers.new(
+      answer_params.merge(question: @question)
+    )
+
+    if @answer.save
+      render json: @answer, status: :created
+    else
+      render json: @answer.errors, status: :unprocessable_entity
+    end
+  end
+
+  def update
+    authorize @answer
+
+    if @answer.update(answer_params)
+      render json: @answer, status: :ok
+    else
+      render json: @answer.errors, status: :unprocessable_entity
+    end
+  end
+
+  def destroy
+    authorize @answer
+
+    @answer.destroy
   end
 
   private
@@ -18,5 +48,9 @@ class Api::V1::AnswersController < Api::V1::BaseController
 
   def load_answer
     @answer = Answer.find(params[:id])
+  end
+
+  def answer_params
+    params.require(:answer).permit(:body)
   end
 end

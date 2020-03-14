@@ -5,9 +5,10 @@ describe 'Questions API', type: :request do
 
   describe 'GET /api/v1/questions' do
     let(:api_path) { '/api/v1/questions' }
+    let(:method) { :get }
 
-    it_behaves_like 'API Authorizable' do
-      let(:method) { :get }
+    context 'unauthorized' do
+      it_behaves_like 'API Authorizable'
     end
 
     context 'authorized' do
@@ -16,7 +17,13 @@ describe 'Questions API', type: :request do
       let!(:questions) { create_list(:question, 2) }
       let(:question) { questions.first }
 
-      before { get api_path, params: { access_token: access_token.token }, headers: headers }
+      before do
+        do_request(
+          method, api_path,
+          params: { access_token: access_token.token },
+          headers: headers
+        )
+      end
 
       it 'returns 200 status' do
         expect(response).to be_successful
@@ -46,8 +53,10 @@ describe 'Questions API', type: :request do
     let(:question) { create(:question, :with_files) }
     let(:api_path) { "/api/v1/questions/#{question.id}" }
 
-    it_behaves_like 'API Authorizable' do
-      let(:method) { :get }
+    let(:method) { :get }
+
+    context 'unauthorized' do
+      it_behaves_like 'API Authorizable'
     end
 
     context 'authorized' do
@@ -62,7 +71,13 @@ describe 'Questions API', type: :request do
 
       let(:file) { question.files.first }
 
-      before { get api_path, params: { access_token: access_token.token }, headers: headers }
+      before do
+        do_request(
+          method, api_path,
+          params: { access_token: access_token.token },
+          headers: headers
+        )
+      end
 
       it 'returns 200 status' do
         expect(response).to be_successful
@@ -84,6 +99,66 @@ describe 'Questions API', type: :request do
 
       it_behaves_like 'API Fileable' do
         let(:resource_response_with_files) { question_response['files'] }
+      end
+    end
+  end
+
+  describe 'POST /api/v1/questions' do
+    let(:api_path) { '/api/v1/questions' }
+
+    let(:method) { :post }
+    let(:headers) { { 'ACCEPT' => 'application/json' } }
+
+    context 'unauthorized' do
+      it_behaves_like 'API Authorizable'
+    end
+
+    context 'authorized' do
+      it_behaves_like 'API Create resource' do
+        let(:klass) { Question }
+        let(:attrs) { { title: 'Title', body: 'Body' } }
+        let(:resource_response) { json['question'] }
+      end
+    end
+  end
+
+  describe 'PATCH /api/v1/questions/:id' do
+    let(:user) { create(:user) }
+    let!(:question) { create(:question, user: user) }
+    let(:api_path) { "/api/v1/questions/#{question.id}" }
+
+    let(:method) { :patch }
+    let(:headers) { { 'ACCEPT' => 'application/json' } }
+
+    context 'unauthorized' do
+      it_behaves_like 'API Authorizable'
+    end
+
+    context 'authorized' do
+      let(:attrs) { { title: 'NewHeader', body: 'NewContent' } }
+
+      it_behaves_like 'API Update resource' do
+        let(:klass) { Question }
+        let(:resource_response) { json['question'] }
+      end
+    end
+  end
+
+  describe 'DELETE /api/v1/questions/:id' do
+    let(:user) { create(:user) }
+    let!(:question) { create(:question, user: user) }
+    let(:api_path) { "/api/v1/questions/#{question.id}" }
+
+    let(:method) { :delete }
+    let(:headers) { { 'ACCEPT' => 'application/json' } }
+
+    context 'unauthorized' do
+      it_behaves_like 'API Authorizable'
+    end
+
+    context 'authorized' do
+      it_behaves_like 'API Delete resource' do
+        let(:klass) { Question }
       end
     end
   end
