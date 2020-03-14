@@ -14,6 +14,7 @@ describe 'Profiles API', type: :request do
     context 'authorized' do
       let(:me) { create(:user) }
       let(:access_token) { create(:access_token, resource_owner_id: me.id) }
+      let(:user_response) { json['user'] }
 
       before do
         do_request(
@@ -29,13 +30,13 @@ describe 'Profiles API', type: :request do
 
       it 'returns all public fields' do
         %w[id email admin created_at updated_at].each do |attr|
-          expect(json['user'][attr]).to eq me.send(attr).as_json
+          expect(user_response[attr]).to eq me.send(attr).as_json
         end
       end
 
       it 'does not return private fields' do
         %w[password encrypted_password].each do |attr|
-          expect(json['user']).to_not have_key(attr)
+          expect(user_response).to_not have_key(attr)
         end
       end
     end
@@ -50,11 +51,11 @@ describe 'Profiles API', type: :request do
     end
 
     context 'authorized' do
+      let(:admin) { create(:user, admin: true) }
       let!(:users) { create_list(:user, 2) }
-      let(:me) { users.first }
-      let(:other) { users.last }
-      let(:other_response) { json['users'].last }
-      let(:access_token) { create(:access_token, resource_owner_id: me.id) }
+      let(:users_response) { json['users'] }
+      let(:last_response) { json['users'].last }
+      let(:access_token) { create(:access_token, resource_owner_id: admin.id) }
 
       before do
         do_request(
@@ -69,19 +70,19 @@ describe 'Profiles API', type: :request do
       end
 
       it 'returns list of users without me' do
-        expect(json['users'].size).to eq 1
-        expect(json['users'].first['id']).not_to eq me.id
+        expect(users_response.size).to eq 2
+        expect(users_response.any? { |user| user['id'] == admin.id }).to be_falsey
       end
 
       it 'returns all public fields' do
         %w[id email admin created_at updated_at].each do |attr|
-          expect(other_response[attr]).to eq other.send(attr).as_json
+          expect(last_response[attr]).to eq users.last.send(attr).as_json
         end
       end
 
       it 'does not return private fields' do
         %w[password encrypted_password].each do |attr|
-          expect(other_response).to_not have_key(attr)
+          expect(last_response).to_not have_key(attr)
         end
       end
     end

@@ -6,7 +6,6 @@ class LinkPolicy < ApplicationPolicy
   end
 
   def destroy?
-    # user = user
     user.present? && (admin? || record.linkable.user == user)
   end
 end
