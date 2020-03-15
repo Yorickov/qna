@@ -2,7 +2,7 @@ class Api::V1::QuestionsController < Api::V1::BaseController
   before_action :load_question, only: %i[show update destroy]
 
   def index
-    @questions = Question.all
+    @questions = Question.with_attached_files.all
 
     render json: @questions
   end
@@ -42,7 +42,7 @@ class Api::V1::QuestionsController < Api::V1::BaseController
   private
 
   def load_question
-    @question = Question.find(params[:id])
+    @question = Question.with_attached_files.find(params[:id])
   end
 
   def question_params
