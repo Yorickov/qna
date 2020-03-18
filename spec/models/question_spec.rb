@@ -11,6 +11,15 @@ describe Question, type: :model do
     it { should have_one(:award).dependent(:destroy) }
   end
 
+  describe 'Scopes' do
+    let!(:question) { create(:question, created_at: 2.days.before) }
+    let!(:questions) { create_list(:question, 2) }
+
+    it '.last_day_created' do
+      expect(Question.last_day_created.ids).to eq questions.map(&:id)
+    end
+  end
+
   describe 'Validation' do
     it { should validate_presence_of(:title) }
     it { should validate_presence_of(:body) }

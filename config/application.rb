@@ -11,6 +11,8 @@ module Qna
     # Initialize configuration defaults for originally generated Rails version.
     config.load_defaults 6.0
 
+    config.active_job.queue_adapter = :sidekiq
+
     # use zeitwerk
     config.add_autoload_paths_to_load_path = false
 

@@ -74,3 +74,7 @@ ru:
   add_email:
     new:
       add_email: 'Введите email'
+
+  daily_digest_mailer:
+    digest:
+      subject: Ежедневная рассылка

@@ -40,4 +40,13 @@ c:
 clean:
 	rake assets:clobber
 
+sq:
+	bundle exec sidekiq
+
+when:
+	bundle exec whenever
+
+redis:
+	redis-server
+
 .PHONY:	test

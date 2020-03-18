@@ -70,3 +70,7 @@ en:
   add_email:
     new:
       add_email: 'Enter email'
+
+  daily_digest_mailer:
+    digest:
+      subject: Daily Digest
