@@ -78,3 +78,6 @@ ru:
   daily_digest_mailer:
     digest:
       subject: Ежедневная рассылка
+  notification_mailer:
+    notify:
+      subject: Ответ на вопрос

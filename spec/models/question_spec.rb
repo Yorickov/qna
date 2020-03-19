@@ -9,11 +9,13 @@ describe Question, type: :model do
     it { should have_many(:answers).dependent(:destroy) }
     it { should belong_to(:user) }
     it { should have_one(:award).dependent(:destroy) }
+    it { should have_many(:subscriptions).dependent(:destroy) }
+    it { should have_many(:subscribed_users).through(:subscriptions).source(:user) }
   end
 
   describe 'Scopes' do
-    let!(:question) { create(:question, created_at: 2.days.before) }
-    let!(:questions) { create_list(:question, 2) }
+    let!(:question) { create(:question) }
+    let!(:questions) { create_list(:question, 2, created_at: Date.today - 1) }
 
     it '.last_day_created' do
       expect(Question.last_day_created.ids).to eq questions.map(&:id)

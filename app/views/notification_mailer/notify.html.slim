@@ -1,0 +1,9 @@
+h1 Question update notification
+p = @greeting + ", You question got a new answer"
+
+h3= link_to('question', question_url(@question))
+div= @question.title
+div= @question.body.truncate(200)
+
+h4= link_to('answer', answer_url(@answer))
+div= @answer.body.truncate(500)

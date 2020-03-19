@@ -41,7 +41,7 @@ clean:
 	rake assets:clobber
 
 sq:
-	bundle exec sidekiq
+	bundle exec sidekiq -q default -q mailers
 
 when:
 	bundle exec whenever

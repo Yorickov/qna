@@ -11,6 +11,8 @@ class Answer < ApplicationRecord
   validates :body, presence: true
   validates :best, uniqueness: { scope: :question }, if: :best?
 
+  after_create_commit :notify
+
   def set_best!
     best_answer = question.answers.find_by(best: true)
 
@@ -23,5 +25,11 @@ class Answer < ApplicationRecord
 
   def to_s
     body
+  end
+
+  private
+
+  def notify
+    NotificationJob.perform_later(self)
   end
 end

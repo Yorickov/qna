@@ -1,0 +1,14 @@
+class NotificationMailer < ApplicationMailer
+  # Subject can be set in your I18n file at config/locales/en.yml
+  # with the following lookup:
+  #
+  #   en.notification_mailer.notify.subject
+  #
+  def notify(user, answer)
+    @greeting = 'Hi'
+    @answer = answer
+    @question = answer.question
+
+    mail to: user.email
+  end
+end

@@ -1,7 +1,9 @@
 require 'rails_helper'
 
 describe DailyDigestMailer, type: :mailer do
-  let!(:user) { create(:user_with_questions) }
+  let!(:user) { create(:user) }
+  let!(:yesterday_questions) { create_list(:question, 2, created_at: Date.today - 1) }
+  let!(:today_question) { create(:question) }
 
   describe 'digest' do
     let(:mail) { DailyDigestMailer.digest(user) }
@@ -12,10 +14,14 @@ describe DailyDigestMailer, type: :mailer do
       expect(mail.from).to eq(['from@example.com'])
     end
 
-    it 'renders the body' do
-      user.questions.each do |question|
+    it 'renders the body of the actual questiona' do
+      yesterday_questions.each do |question|
         expect(mail.body.encoded).to match(question.title)
       end
+    end
+
+    it 'do not render the body of the late question' do
+      expect(mail.body.encoded).not_to match(today_question.title)
     end
   end
 end

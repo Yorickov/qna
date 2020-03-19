@@ -74,3 +74,6 @@ en:
   daily_digest_mailer:
     digest:
       subject: Daily Digest
+  notification_mailer:
+    notify:
+      subject: Answer to question

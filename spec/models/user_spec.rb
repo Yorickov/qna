@@ -7,6 +7,8 @@ describe User, type: :model do
     it { should have_many(:awards) }
     it { should have_many(:votes) }
     it { should have_many(:authorizations).dependent(:destroy) }
+    it { should have_many(:subscriptions).dependent(:destroy) }
+    it { should have_many(:subscribed_questions).through(:subscriptions).source(:question) }
   end
 
   describe 'Validation' do
