@@ -1,0 +1,4 @@
+- if policy(resource).unsubscribe?
+  = link_to t('.unsubscribe'), subscription_path(@subscription), method: :delete, remote: true, class: 'card-link'
+- if policy(resource).subscribe?
+  = link_to t('.subscribe'), question_subscriptions_path(resource), method: :post, remote: true, class: 'card-link'

@@ -33,4 +33,28 @@ describe QuestionPolicy, type: :policy do
       it { should forbid_actions(%i[update destroy]) }
     end
   end
+
+  describe 'Subscriptions' do
+    context 'when guest' do
+      let(:user) { nil }
+
+      it { should forbid_actions(%i[subscribe unsubscribe]) }
+    end
+
+    context 'when not subscriber' do
+      let(:question) { create(:question, user: create(:user)) }
+      let(:user) { create(:user) }
+
+      it { should permit_action(:subscribe) }
+      it { should forbid_action(:unsubscribe) }
+    end
+
+    context 'when subscriber' do
+      let(:user) { create(:user) }
+      let!(:subscription) { create(:subscription, question: question, user: user) }
+
+      it { should permit_action(:unsubscribe) }
+      it { should forbid_action(:subscribe) }
+    end
+  end
 end

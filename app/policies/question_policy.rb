@@ -22,4 +22,18 @@ class QuestionPolicy < ApplicationPolicy
   def destroy?
     update?
   end
+
+  def subscribe?
+    user.present? && !subscriber?
+  end
+
+  def unsubscribe?
+    user.present? && subscriber?
+  end
+
+  private
+
+  def subscriber?
+    user.subscribed_questions.exists?(record.id)
+  end
 end

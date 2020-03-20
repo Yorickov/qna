@@ -37,4 +37,11 @@ describe Question, type: :model do
 
     it { expect(question.to_s).to eq 'something strange' }
   end
+
+  describe '#subscribe_author' do
+    let(:user) { create(:user) }
+    let!(:question) { create(:question, user: user) }
+
+    it { expect(user.subscribed_questions.last).to eq question }
+  end
 end

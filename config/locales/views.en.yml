@@ -44,6 +44,7 @@ en:
       vote_down: Don't like it
       vote_reset: Recall vote
       comments: Comments
+
     question:
       answers_count:
         one: Got %{count} anwer
@@ -77,3 +78,7 @@ en:
   notification_mailer:
     notify:
       subject: Answer to question
+  subscriptions:
+    subscription:
+      subscribe: Subscribe
+      unsubscribe: Unsubscribe
