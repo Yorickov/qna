@@ -1,9 +1,9 @@
-h1 Question update notification
-p = @greeting + ", You question got a new answer"
+h1 New answer notification
+p Hi! The subscribed question got a new answer
 
-h3= link_to('question', question_url(@question))
+h3= link_to('Question', question_url(@question))
 div= @question.title
 div= @question.body.truncate(200)
 
-h4= link_to('answer', answer_url(@answer))
-div= @answer.body.truncate(500)
+h4= 'Answer'
+p= @answer.body.truncate(500)

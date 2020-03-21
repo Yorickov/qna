@@ -37,7 +37,6 @@
           .question-image
             = image_tag url_for(question.award.image), title: question.award.title, height: '20', width: '20'
 
-  - if policy(Question).create?
-    section.ml-auto.question-subscription
-      = render 'subscriptions/subscription', resource: question
+  section.ml-auto.question-subscription
+    = render 'subscriptions/subscription', resource: question
   hr

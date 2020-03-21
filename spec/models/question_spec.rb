@@ -17,8 +17,8 @@ describe Question, type: :model do
     let!(:question) { create(:question) }
     let!(:questions) { create_list(:question, 2, created_at: Date.today - 1) }
 
-    it '.last_day_created' do
-      expect(Question.last_day_created.ids).to eq questions.map(&:id)
+    it '.created_the_day_before' do
+      expect(Question.created_the_day_before).to eq questions
     end
   end
 

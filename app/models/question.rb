@@ -16,7 +16,7 @@ class Question < ApplicationRecord
 
   validates :title, :body, presence: true
 
-  scope :last_day_created, -> { where(created_at: Time.zone.yesterday.all_day) }
+  scope :created_the_day_before, -> { where(created_at: Time.zone.yesterday.all_day) }
 
   after_create :subscribe_author!
 

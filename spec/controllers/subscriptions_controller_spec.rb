@@ -5,20 +5,23 @@ describe SubscriptionsController, type: :controller do
   let(:user2) { create(:user) }
   let(:user1_question) { user1.questions.first }
 
+  before { Subscription.destroy_by(user: user1, question: user1_question) }
+
   describe 'POST #create' do
     context 'as authorized not Subscriber' do
       before { login(user2) }
 
       it 'saves a new subscription for user in the database' do
         expect { post :create, params: { question_id: user1_question, format: :js } }
-          .to change(user2.subscriptions, :count).by(1)
+          .to change(Subscription, :count).by(1)
       end
 
-      it 'saves as the subscription of correct question' do
+      it 'saves as the subscription of correct question and user' do
         post :create, params: { question_id: user1_question, format: :js }
 
         created_subscription = Subscription.order(:created_at).last
         expect(created_subscription.question).to eq(user1_question)
+        expect(created_subscription.user).to eq(user2)
       end
 
       it 'redirects to show view' do
@@ -35,7 +38,7 @@ describe SubscriptionsController, type: :controller do
 
       it 'does not save the subscription for user' do
         expect { post :create, params: { question_id: user1_question, format: :js } }
-          .not_to change(user2.subscriptions, :count)
+          .not_to change(Subscription, :count)
       end
 
       it 'returns 403 error' do
@@ -46,8 +49,8 @@ describe SubscriptionsController, type: :controller do
 
     context 'as Guest' do
       it 'does not save the subscription for user' do
-        post :create, params: { question_id: user1_question, format: :js }
-        expect(Subscription.count).to eq 1
+        expect { post :create, params: { question_id: user1_question, format: :js } }
+          .not_to change(Subscription, :count)
       end
 
       it 'returns no-authenticate response' do
@@ -68,7 +71,7 @@ describe SubscriptionsController, type: :controller do
 
       it 'deletes the subscription' do
         expect { delete :destroy, params: { id: subscription, format: :js } }
-          .to change(user1_question.subscriptions, :count).by(-1)
+          .to change(Subscription, :count).by(-1)
       end
 
       it 'render destroy view' do
@@ -83,7 +86,7 @@ describe SubscriptionsController, type: :controller do
 
       it 'does not delete the subscription' do
         expect { delete :destroy, params: { id: subscription, format: :js } }
-          .not_to change(user1_question.subscriptions, :count)
+          .not_to change(Subscription, :count)
       end
 
       it 'returns 403 error' do
@@ -95,7 +98,7 @@ describe SubscriptionsController, type: :controller do
     context 'as Guest' do
       it 'does not delete the subscription' do
         expect { delete :destroy, params: { id: subscription, format: :js } }
-          .not_to change(user1_question.subscriptions, :count)
+          .not_to change(Subscription, :count)
       end
 
       it 'no-authenticate response' do
