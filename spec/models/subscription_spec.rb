@@ -7,25 +7,25 @@ describe Subscription, type: :model do
   end
 
   describe 'Validation: uniqueness combination user-question' do
-    let!(:subscriber_as_author) { create(:user) }
-    let!(:question) { create(:question, user: subscriber_as_author) }
+    let(:subscriber_as_author) { create(:user) }
+    let(:question) { create(:question, user: subscriber_as_author) }
 
-    context 'does not valid if combination user-question is not unique' do
-      let(:subscription) { build(:subscription, user: subscriber_as_author, question: question) }
+    context 'when not valid: combination user-question is not unique' do
+      subject { build(:subscription, user: subscriber_as_author, question: question) }
 
-      it { expect(subscription.valid?).to be_falsey }
+      it { expect(subject.valid?).to be_falsey }
     end
 
-    context 'valid if same question another user' do
-      let(:subscription) { build(:subscription, user: create(:user), question: question) }
+    context 'when valid: combination user-question is unique' do
+      let(:subscr1) { build(:subscription, user: create(:user), question: question) }
+      let(:subscr2) { build(:subscription, user: subscriber_as_author, question: create(:question)) }
+      let(:subscr3) { build(:subscription, user: create(:user), question: create(:question)) }
 
-      it { expect(subscription.valid?).to be_truthy }
-    end
-
-    context 'valid if same user - another question' do
-      let(:subscription) { build(:subscription, user: subscriber_as_author, question: create(:question)) }
-
-      it { expect(subscription.valid?).to be_truthy }
+      it { [subscr1, subscr2, subscr3].each { |subscr| expect(subscr.valid?).to be_truthy } }
     end
   end
+
+  # with: validates :user, uniqueness: { scope: :question_id }
+  # subject { create :subscription }
+  # it { should validate_uniqueness_of(:user).scoped_to(:question_id) }
 end
