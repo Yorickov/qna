@@ -15,7 +15,7 @@ describe Question, type: :model do
 
   describe 'Scopes' do
     let!(:question) { create(:question) }
-    let!(:questions) { create_list(:question, 2, created_at: Date.today - 1) }
+    let!(:questions) { create_list(:question, 2, created_at: Date.yesterday) }
 
     it '.created_the_day_before' do
       expect(Question.created_the_day_before).to eq questions

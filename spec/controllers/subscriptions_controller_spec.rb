@@ -1,11 +1,9 @@
 require 'rails_helper'
 
 describe SubscriptionsController, type: :controller do
-  let(:user1) { create(:user_with_questions, questions_count: 1) }
+  let!(:user1) { create(:user_with_questions, questions_count: 1) }
   let(:user2) { create(:user) }
   let(:user1_question) { user1.questions.first }
-
-  before { Subscription.destroy_by(user: user1, question: user1_question) }
 
   describe 'POST #create' do
     context 'as authorized not Subscriber' do
