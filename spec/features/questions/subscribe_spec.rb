@@ -31,8 +31,10 @@ feature 'User can subscribe and unsubscribe to the question' do
     end
   end
 
-  describe 'As a Guest', js: true do
+  describe 'As a Guest' do
     scenario 'tries to subscribes or unsubscribe' do
+      visit question_path(question)
+
       expect(page).not_to have_content t('subscriptions.subscription.unsubscribe')
       expect(page).not_to have_content t('subscriptions.subscription.subscribe')
     end

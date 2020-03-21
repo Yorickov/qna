@@ -26,9 +26,9 @@ describe Notification do
   context 'without subscribers' do
     let!(:answer) { create(:answer, question: question, user: author) }
 
-    before { Subscription.last.destroy }
+    before { Subscription.destroy_all }
 
-    it 'sends notification about question update only to author and subscriber' do
+    it 'does not send notifications about question' do
       expect(NotificationMailer).not_to receive(:notify).with(author, answer).and_call_original
 
       Notification.notify(answer)
