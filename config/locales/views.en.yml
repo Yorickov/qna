@@ -32,6 +32,10 @@ en:
       header:
         one: Found %{count} mistake founded
         other: Found %{count} mistakes founded
+    voting:
+      vote_up: Like it
+      vote_down: Don't like it
+      vote_reset: Recall vote
 
   questions:
     new:
@@ -40,9 +44,6 @@ en:
       delete_question: Delete
       edit_question: Edit
       refs: "Refs:"
-      vote_up: Like it
-      vote_down: Don't like it
-      vote_reset: Recall vote
       comments: Comments
 
     question:
@@ -55,9 +56,6 @@ en:
       delete_answer: Delete answer
       edit_answer: Edit answer
       choose_best: Best answer
-      vote_up: Like
-      vote_down: Do not like
-      vote_reset: Recall vote
 
   attachments:
     attachment:

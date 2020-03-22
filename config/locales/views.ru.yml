@@ -34,6 +34,10 @@ ru:
         few: Найдены %{count} ошибки
         many: Найдено %{count} ошибок
         other: Найдено %{count} ошибки
+    voting:
+      vote_up: Нравится
+      vote_down: Не нравится
+      vote_reset: Отозвать голос
 
   questions:
     new:
@@ -42,9 +46,6 @@ ru:
       delete_question: Удалить
       edit_question: Редактировать
       refs: "Ссылки:"
-      vote_up: Нравится
-      vote_down: Не нравится
-      vote_reset: Отозвать голос
       comments: Комментарии
 
     question:
@@ -59,9 +60,6 @@ ru:
       delete_answer: Удалить ответ
       edit_answer: Редактировать ответ
       choose_best: Лучший ответ
-      vote_up: Нравится
-      vote_down: Не нравится
-      vote_reset: Отозвать голос
 
   attachments:
     attachment:
