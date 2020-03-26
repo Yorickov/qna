@@ -1,7 +1,11 @@
 .row.pt-2.justify-content-center
-  .col-12
-    - if @search_result.empty?
-      p Nothing has been found
+  h5.text-center= t('.search_result', query: @query)
+  .col-12.pt-2
+    - if @query.strip.empty?
+      p= t('.empty_query')
+    - elsif @search_result.empty?
+      p= t('.empty_result')
     - else
       - @search_result.each do |resource|
+        - next if resource.is_a?(User) && !policy(resource).me?
         = render resource.class.to_s.underscore, resource: resource

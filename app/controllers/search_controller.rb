@@ -1,5 +1,6 @@
 class SearchController < ApplicationController
   def index
+    @query = search_params[:q]
     @search_result = SearchService.call(search_params)
   end
 

@@ -16,58 +16,43 @@ feature 'Guest can use search on the site' do
   describe 'Resource search completes successfully', sphinx: true do
     background { visit questions_path }
 
-    scenario 'in questions' do
-      ThinkingSphinx::Test.run do
-        search_in('correct', 'question')
+    scenario 'in separate resources' do
+      mapping = {
+        t('helpers.question') => [[question1, question2], question3],
+        t('helpers.answer') => [[answer1, answer2], answer3],
+        t('helpers.comment') => [[comment1, comment2], comment3]
+      }
 
-        [question1, question2]
-          .each { |question| expect(page).to have_content(question.body) }
-        expect(page).not_to have_content(question3.body)
-      end
-    end
+      mapping.each do |resource_name, resources|
+        ThinkingSphinx::Test.run do
+          search_in('correct', resource_name)
 
-    scenario 'in answers' do
-      ThinkingSphinx::Test.run do
-        search_in('correct', 'answer')
-
-        [answer1, answer2]
-          .each { |answer| expect(page).to have_content(answer.body) }
-        expect(page).not_to have_content(answer3.body)
-      end
-    end
-
-    scenario 'in comments' do
-      ThinkingSphinx::Test.run do
-        search_in('correct', 'comment')
-
-        [comment1, comment2]
-          .each { |comment| expect(page).to have_content(comment.body) }
-        expect(page).not_to have_content(comment3.body)
+          resources.first.each { |resource| expect(page).to have_content(resource.body) }
+          expect(page).not_to have_content(resources.last.body)
+        end
       end
     end
   end
 
-  describe 'Resource search full - empty', sphinx: true do
+  describe 'Resource search failed', sphinx: true do
     background { visit questions_path }
 
-    scenario 'Resource search has found nothing' do
-      %w[question answer comment].each do |resource|
+    scenario 'when finding nothing' do
+      [t('helpers.question'), t('helpers.answer'), t('helpers.comment')].each do |resource|
         ThinkingSphinx::Test.run do
           search_in('yoda', resource)
 
-          expect(page).not_to have_content('yoda')
-          expect(page).to have_content('Nothing has been found')
+          expect(page).to have_content(t('search.index.empty_result'))
         end
       end
     end
 
-    scenario 'Resource search has found averything (empty query)' do
-      %w[question answer comment].each do |resource|
+    scenario 'when query is empty' do
+      [t('helpers.question'), t('helpers.answer'), t('helpers.comment')].each do |resource|
         ThinkingSphinx::Test.run do
-          search_in('', resource)
+          search_in('  ', resource)
 
-          %w[one two three]
-            .each { |body| expect(page).to have_content(body) }
+          expect(page).to have_content(t('search.index.empty_query'))
         end
       end
     end
@@ -92,17 +77,15 @@ feature 'Guest can use search on the site' do
       ThinkingSphinx::Test.run do
         search_in('yoda')
 
-        expect(page).not_to have_content('yoda')
-        expect(page).to have_content('Nothing has been found')
+        expect(page).to have_content(t('search.index.empty_result'))
       end
     end
 
-    scenario 'has found everything (empty query)' do
+    scenario 'has empty query' do
       ThinkingSphinx::Test.run do
-        search_in('')
+        search_in('   ')
 
-        [question1, question2, question3, answer1, answer2, answer3, comment1, comment2, comment3]
-          .each { |resource| expect(page).to have_content(resource.body) }
+        expect(page).to have_content(t('search.index.empty_query'))
       end
     end
   end

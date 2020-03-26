@@ -90,3 +90,18 @@ en:
       user: in users
       start: Start
       in: in
+    index:
+      search_result: "Search result on query: %{query}"
+      empty_result: Nothing has been found
+      empty_query: Your request is empty
+    question:
+      link: Go to the question
+    answer:
+      link: Go to the question
+
+  helpers:
+    all: overall
+    question: in questions
+    answer: in answers
+    comment: in comments
+    user: in users

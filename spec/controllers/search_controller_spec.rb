@@ -16,6 +16,7 @@ describe SearchController, type: :controller do
 
     it 'populates an array of all resources' do
       expect(assigns(:search_result)).to match_array(questions)
+      expect(assigns(:query)).to eq 'some'
     end
 
     it 'renders index view' do

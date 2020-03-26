@@ -3,7 +3,7 @@ require 'rails_helper'
 describe SearchService do
   context 'with resource' do
     it 'search in one resource' do
-      %w[question answer comment user].each do |resource|
+      SearchService::INDEXED_RESOURCES.keys.each do |resource|
         search_params = { q: 'myContent', resource: resource }
         resource_klass = resource.classify.constantize
 

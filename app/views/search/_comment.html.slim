@@ -1,8 +1,4 @@
-.card.border-0
-  .card-body.pb-0.py-0.px-0
-    .row.no-gutters
-      .col-md-10.pl-2
-        h4.card-title = resource.commentable.body.truncate(50)
-        p.card-text = resource.body.truncate(100)
-
-  hr
+.card.mb-4
+  .card-body
+    p.card-text = resource.body.truncate(400)
+    h6= link_to resource.commentable.body.truncate(100), resource.commentable.is_a?(Question) ? question_path(resource.commentable) : question_path(resource.commentable.question)

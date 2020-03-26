@@ -95,3 +95,18 @@ ru:
       search: Поиск
       start: Начать
       in: в
+    index:
+      search_result: "Результаты поиска по запросу: %{query}"
+      empty_result: Ничего не было найдено
+      empty_query: Ваш запрос пустой
+    question:
+      link: Перейти к вопросу
+    answer:
+      link: Перейти к вопросу
+
+  helpers:
+    all: везде
+    question: в вопросах
+    answer: в ответах
+    comment: в комментариях
+    user: в пользователях

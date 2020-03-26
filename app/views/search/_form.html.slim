@@ -2,4 +2,4 @@
   = f.button :submit, t('.start')
 
   = f.input :q, label: false, placeholder: t('.search'), input_html: { class: 'mr-2', size: 50 }
-  = f.input :resource, label: t('.in'), required: false, collection: indexed_collection, selected: 'all', input_html: { class: 'mx-2' }
+  = f.input :resource, label: false, required: false, collection: indexed_collection, selected: 'all', input_html: { class: 'mx-2' }
