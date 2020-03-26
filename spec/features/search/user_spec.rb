@@ -29,7 +29,7 @@ feature 'Guest can use search in the site' do
 
     scenario 'has empty query' do
       ThinkingSphinx::Test.run do
-        search_in('', t('helpers.user'))
+        search_in(' ', t('helpers.user'))
 
         expect(page).to have_content(t('search.index.empty_query'))
       end

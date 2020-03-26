@@ -13,9 +13,9 @@ feature 'Guest can use search on the site' do
   given!(:comment2) { create(:comment, commentable: question2, body: 'correct c two') }
   given!(:comment3) { create(:comment, commentable: answer2, body: 'another c three') }
 
-  describe 'Resource search completes successfully', sphinx: true do
-    background { visit questions_path }
+  background { visit questions_path }
 
+  describe 'Resource search completes successfully', sphinx: true do
     scenario 'in separate resources' do
       mapping = {
         t('helpers.question') => [[question1, question2], question3],
@@ -35,8 +35,6 @@ feature 'Guest can use search on the site' do
   end
 
   describe 'Resource search failed', sphinx: true do
-    background { visit questions_path }
-
     scenario 'when finding nothing' do
       [t('helpers.question'), t('helpers.answer'), t('helpers.comment')].each do |resource|
         ThinkingSphinx::Test.run do
@@ -46,21 +44,9 @@ feature 'Guest can use search on the site' do
         end
       end
     end
-
-    scenario 'when query is empty' do
-      [t('helpers.question'), t('helpers.answer'), t('helpers.comment')].each do |resource|
-        ThinkingSphinx::Test.run do
-          search_in('  ', resource)
-
-          expect(page).to have_content(t('search.index.empty_query'))
-        end
-      end
-    end
   end
 
   describe 'Global search', sphinx: true do
-    background { visit questions_path }
-
     scenario 'completes successfully' do
       ThinkingSphinx::Test.run do
         search_in('another')
@@ -80,13 +66,13 @@ feature 'Guest can use search on the site' do
         expect(page).to have_content(t('search.index.empty_result'))
       end
     end
+  end
 
-    scenario 'has empty query' do
-      ThinkingSphinx::Test.run do
-        search_in('   ')
+  scenario 'Query has empty' do
+    ThinkingSphinx::Test.run do
+      search_in('   ')
 
-        expect(page).to have_content(t('search.index.empty_query'))
-      end
+      expect(page).to have_content(t('search.index.empty_query'))
     end
   end
 end
