@@ -56,6 +56,7 @@ en:
       delete_answer: Delete answer
       edit_answer: Edit answer
       choose_best: Best answer
+      comments: Комментарии
 
   attachments:
     attachment:
@@ -80,3 +81,12 @@ en:
     subscription:
       subscribe: Subscribe
       unsubscribe: Unsubscribe
+  search:
+    form:
+      all: overall
+      question: in questions
+      answer: in answers
+      comment: in comments
+      user: in users
+      start: Start
+      in: in

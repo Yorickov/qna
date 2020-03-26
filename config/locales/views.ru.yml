@@ -60,6 +60,7 @@ ru:
       delete_answer: Удалить ответ
       edit_answer: Редактировать ответ
       choose_best: Лучший ответ
+      comments: Комментарии
 
   attachments:
     attachment:
@@ -84,3 +85,13 @@ ru:
     subscription:
       subscribe: Подписаться
       unsubscribe: Отписаться
+  search:
+    form:
+      all: по всему сайту
+      question: в вопросах
+      answer: в ответах
+      comment: в комментариях
+      user: в пользователях
+      search: Поиск
+      start: Начать
+      in: в

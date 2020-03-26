@@ -22,4 +22,12 @@ module FeatureHelpers
   def clean_mock_auth
     OmniAuth.config.mock_auth[:github] = nil
   end
+
+  def search_in(query, resource = 'all')
+    within '.navbar' do
+      fill_in t('search.form.search'), with: query
+      select(resource, from: t('search.form.in'))
+      click_on t('search.form.start')
+    end
+  end
 end

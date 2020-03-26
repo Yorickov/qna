@@ -87,7 +87,8 @@ group :test do
   gem 'faker', git: 'https://github.com/faker-ruby/faker.git', branch: 'master'
   gem 'i18n-debug', '~> 1.2'
   gem 'pundit-matchers', '~> 1.6.0'
-
+  gem 'database_cleaner-active_record'
+  gem 'database_cleaner-redis'
   # mock-tests
   gem 'webmock', '~> 3.8'
 end
@@ -112,3 +113,7 @@ gem 'oj'
 gem 'sidekiq'
 gem 'sinatra', require: false
 gem 'whenever', require: false
+
+# search
+gem 'mysql2', '~> 0.4.10', :platform => :ruby
+gem 'thinking-sphinx', '~> 4.0'

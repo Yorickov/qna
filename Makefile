@@ -49,4 +49,10 @@ when:
 redis:
 	redis-server
 
+ts-start:
+	RUBYOPT='-W:no-deprecated -W:no-experimental' rake ts:start
+
+ts-stop:
+	RUBYOPT='-W:no-deprecated -W:no-experimental' rake ts:stop
+
 .PHONY:	test
