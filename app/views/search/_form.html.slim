@@ -1,5 +1,5 @@
 = simple_form_for :search, url: search_index_path, method: :get, local: true, html: { class: 'form-inline' } do |f|
   = f.button :submit, t('.start')
 
-  = f.input :q, label: false, placeholder: t('.search'), input_html: { class: 'mr-2', size: 50 }
+  = f.input :q, label: false, placeholder: t('.search'), input_html: { class: 'mr-2' }
   = f.input :resource, label: false, required: false, collection: indexed_collection, selected: 'all', input_html: { class: 'mx-2' }

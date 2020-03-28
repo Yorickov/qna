@@ -1,6 +1,6 @@
 .card-body.py-0
   .row.no-gutters
-    .col-md-1.d-flex.flex-column.align-items-center.justify-content-center
+    .col-md-1.d-flex.flex-column.align-items-center
       - if answer.best?
         .mb-2.best-answer
           = octicon('check', width: 30)
@@ -25,6 +25,7 @@
         .answer-form-node
           = render 'answers/form_edit', answer: answer
 
+      hr
       section.answer-comments
         - if answer.comments.any?
           p= t('.comments')
