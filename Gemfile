@@ -111,16 +111,17 @@ gem 'cocoon', '~> 1.2'
 
 # http-client
 gem 'octokit', '~> 4.0'
-gem 'faraday'
+gem 'faraday', '1.0.1'
 
 # serializers
 gem 'active_model_serializers', '~> 0.10.0'
 gem 'oj'
 
-gem 'sidekiq'
+gem 'sidekiq', '~> 5'
 gem 'sinatra', require: false
 gem 'whenever', require: false
 
 # search
 gem 'mysql2', '~> 0.4.10', :platform => :ruby
 gem 'thinking-sphinx', '~> 4.0'
+gem 'mini_racer'

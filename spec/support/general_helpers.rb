@@ -23,7 +23,7 @@ module GeneralHelpers
           'Accept' => 'application/json',
           'Accept-Encoding' => 'gzip;q=1.0,deflate;q=0.6,identity;q=0.3',
           'Authorization' => "token #{ENV['GITHUB_TOKEN']}",
-          'User-Agent' => 'Faraday v1.0.0'
+          'User-Agent' => 'Faraday v1.0.1'
         }
       )
       .to_return(status: status, body: body, headers: {})
