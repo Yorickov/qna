@@ -74,6 +74,13 @@ group :development do
   # mailer tester
   gem 'letter_opener'
   # gem 'i18n-debug', '~> 1.2'
+
+  gem 'capistrano', require: false
+  gem 'capistrano-bundler', require: false
+  gem 'capistrano-rails', require: false
+  gem 'capistrano-rvm', require: false
+  gem 'capistrano-passenger', require: false
+  gem 'capistrano-sidekiq', require: false
 end
 
 group :test do

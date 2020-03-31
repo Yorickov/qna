@@ -9,6 +9,7 @@ require("@rails/activestorage").start();
 require("channels");
 
 import 'cocoon-js';
+// import '../../../node_modules/bootstrap/dist/js/bootstrap';
 import 'bootstrap/dist/js/bootstrap';
 import '../stylesheets/application.scss';
 import handlers from '../handlers';

@@ -11,22 +11,23 @@
 Question.destroy_all
 User.destroy_all
 
-user1 = User.create(
-  email: 'user1@yandex.ru',
+admin = User.create(
+  email: 'ivanov.dharmabum@yandex.ru',
   password: 'secret1',
   password_confirmation: 'secret1',
-  confirmed_at: Time.now
+  confirmed_at: Time.now,
+  admin: true
 )
 
 user2 = User.create(
-  email: 'user2@yandex.ru',
+  email: 'test0guru@yandex.ru',
   password: 'secret2',
   password_confirmation: 'secret2',
   confirmed_at: Time.now
 )
 
 user3 = User.create(
-  email: 'user3@yandex.ru',
+  email: 'yorickov@gmail.com',
   password: 'secret3',
   password_confirmation: 'secret3',
   confirmed_at: Time.now
@@ -37,7 +38,7 @@ q1, q2, q3 = Question.create(
     {
       title: 'First programming language',
       body: 'Which programming language is best to learn first?',
-      user: user1
+      user: admin
     },
     {
       title: 'Programming book for a beginner?',
@@ -57,12 +58,12 @@ Answer.create(
     {
       body: 'I have no idea',
       question: q2,
-      user: user1
+      user: admin
     },
     {
       body: 'What is REST API?',
       question: q3,
-      user: user1
+      user: admin
     },
     {
       body: 'Structure and Interpretation of Computer Programs',
