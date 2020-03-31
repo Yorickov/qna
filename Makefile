@@ -34,6 +34,9 @@ t:
 push:
 	git push -u origin $(B)
 
+push-m:
+	git push -u origin master
+
 c:
 	RUBYOPT='-W:no-deprecated -W:no-experimental' rails console
 
