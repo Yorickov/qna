@@ -1,4 +1,4 @@
-.voting.d-flex.flex-column.align-items-center.justify-content-center
+.mb-4.voting.d-flex.flex-column.align-items-center.justify-content-center
   - if policy(resource).vote_up?
     = link_to octicon('triangle-up', width: 25), polymorphic_path(resource, action: :vote_up), method: :patch, data: { type: :json }, title: t('.vote_up'), class: 'vote-up', remote: true
   .rating

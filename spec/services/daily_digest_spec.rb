@@ -11,7 +11,7 @@ describe DailyDigest do
         expect(DailyDigestMailer).to receive(:digest).with(user).and_call_original
       end
 
-      subject.send_digest
+      DailyDigest.send_digest
     end
   end
 
@@ -21,7 +21,7 @@ describe DailyDigest do
         expect(DailyDigestMailer).not_to receive(:digest).with(user).and_call_original
       end
 
-      subject.send_digest
+      DailyDigest.send_digest
     end
   end
 end

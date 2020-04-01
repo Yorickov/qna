@@ -7,7 +7,10 @@
 
       = render 'shared/voting', resource: answer
 
-    .col-md-10.pl-2
+      - if !answer.best? && policy(answer).choose_best?
+        = link_to octicon('thumbsup', width: 18), choose_best_answer_path(answer), title: t('.choose_best'), class: 'best-answer-link', method: :patch, data: { confirm: 'Are you sure?' }, remote: true
+
+    .col-md-11.pl-2
       p.card-text = answer.body
 
       - if answer.files.attached?
@@ -35,7 +38,4 @@
         .answer-comment-form
           = render 'comments/form', resource: Comment.new, url: answer_comments_path(answer)
 
-    .col-md-1.d-flex.flex-column.align-items-center.justify-content-center
-      - if !answer.best? && policy(answer).choose_best?
-        = link_to octicon('thumbsup', width: 18), choose_best_answer_path(answer), title: t('.choose_best'), class: 'best-answer-link', method: :patch, data: { confirm: 'Are you sure?' }, remote: true
 hr
