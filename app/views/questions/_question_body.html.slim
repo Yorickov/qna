@@ -37,6 +37,6 @@
           .question-comment-form
             = render 'comments/form', resource: Comment.new, url: question_comments_path(question)
 
-  section.ml-auto.question-subscription
-    = render 'subscriptions/subscription', resource: question
-  hr
+        section.question-subscription.d-flex.justify-content-end
+          = render 'subscriptions/subscription', resource: question
+    hr

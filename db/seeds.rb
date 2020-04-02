@@ -19,17 +19,10 @@ admin = User.create(
   admin: true
 )
 
-user2 = User.create(
+user = User.create(
   email: 'test0guru@yandex.ru',
   password: 'secret2',
   password_confirmation: 'secret2',
-  confirmed_at: Time.now
-)
-
-user3 = User.create(
-  email: 'yorickov@gmail.com',
-  password: 'secret3',
-  password_confirmation: 'secret3',
   confirmed_at: Time.now
 )
 
@@ -43,12 +36,12 @@ q1, q2, q3 = Question.create(
     {
       title: 'Programming book for a beginner?',
       body: 'What programming book would you recommend for learning Elixir?',
-      user: user2
+      user: admin
     },
     {
       title: 'Framework for REST API',
       body: 'What are the best framework to create a REST API in a very short time?',
-      user: user3
+      user: user
     }
   ]
 )
@@ -58,7 +51,7 @@ Answer.create(
     {
       body: 'I have no idea',
       question: q2,
-      user: admin
+      user: user
     },
     {
       body: 'What is REST API?',
@@ -68,22 +61,22 @@ Answer.create(
     {
       body: 'Structure and Interpretation of Computer Programs',
       question: q1,
-      user: user2
+      user: user
     },
     {
       body: 'Ruby on Rails',
       question: q3,
-      user: user2
+      user: admin
     },
     {
       body: 'Cobol',
       question: q1,
-      user: user3
+      user: user
     },
     {
       body: 'Structure and Interpretation of Computer Programs',
       question: q2,
-      user: user3
+      user: user
     }
   ]
 )
