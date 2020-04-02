@@ -58,4 +58,10 @@ ts-start:
 ts-stop:
 	RUBYOPT='-W:no-deprecated -W:no-experimental' rake ts:stop
 
+deploy:
+	RUBYOPT='-W:no-deprecated -W:no-experimental' bundle exec cap production deploy
+
+ssh:
+	ssh deployer@134.209.194.226 -p 2222
+
 .PHONY:	test

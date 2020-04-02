@@ -1,5 +1,5 @@
 class NotificationJob < ApplicationJob
-  queue_as :default
+  queue_as :mailers
 
   def perform(answer)
     Notification.notify(answer)
