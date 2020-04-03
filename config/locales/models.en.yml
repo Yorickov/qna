@@ -28,7 +28,7 @@ en:
         user: User
         image: Image
       comment:
-        body: Comment
+        body: Add comment
 
     errors:
       messages:

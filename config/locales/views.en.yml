@@ -13,7 +13,7 @@ en:
     remove_link: Remove link
     add_award: Add image
     remove_award: Remove image
-    submit_comment: Add comment
+    submit_comment: Send
     send_email: Send email
 
   errors:
@@ -44,8 +44,9 @@ en:
       delete_question: Delete
       edit_question: Edit
       refs: "Refs:"
-      comments: Comments
-
+      author: author
+      created: Created
+      updated: updated
     question:
       answers_count:
         one: Got %{count} anwer
@@ -56,7 +57,7 @@ en:
       delete_answer: Delete answer
       edit_answer: Edit answer
       choose_best: Best answer
-      comments: Комментарии
+      updated: updated
 
   attachments:
     attachment:

@@ -1,2 +1,4 @@
-p= comment.body
 hr
+span #{comment.body}
+span.text-muted
+  |  - #{comment.user}, #{format_time(comment.created_at)}

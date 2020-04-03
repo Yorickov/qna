@@ -13,7 +13,7 @@ ru:
     remove_link: Удалить ссылку
     add_award: Добавить изображение
     remove_award: Удалить изображение
-    submit_comment: Добавить комментарий
+    submit_comment: Отправить
     send_email: Отправить email
 
   errors:
@@ -46,7 +46,9 @@ ru:
       delete_question: Удалить
       edit_question: Редактировать
       refs: "Ссылки:"
-      comments: Комментарии
+      author: автор
+      created: Добавлен
+      updated: изменен
 
     question:
       answers_count:
@@ -60,7 +62,7 @@ ru:
       delete_answer: Удалить ответ
       edit_answer: Редактировать ответ
       choose_best: Лучший ответ
-      comments: Комментарии
+      updated: изменен
 
   attachments:
     attachment:

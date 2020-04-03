@@ -28,7 +28,7 @@ ru:
         user: Пользователь
         image: Изображение
       comment:
-        body: Комментарий
+        body: Добавить комментарий
 
     errors:
       messages:

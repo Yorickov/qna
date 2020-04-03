@@ -21,17 +21,22 @@
         section.answer-links
           = render 'links/index', resource: answer
 
-      - if answer.persisted? && policy(answer).update?
-        section.d-flex.justify-content-end
-          = link_to t('.delete_answer'), answer_path(answer), method: :delete, class: 'card-link', data: { confirm: 'Are you sure?' }, remote: true
-          = link_to t('.edit_answer'), '#', class: 'card-link edit-answer-link', data: { answer_id: answer.id }
-        .answer-form-node
-          = render 'answers/form_edit', answer: answer
+      section.d-flex.justify-content-between.align-items-center.my-3
+        h6.card-subtitle.text-muted.my-2
+          div #{answer.user}, #{format_time(answer.created_at)}
+          - if answer.updated_at > answer.created_at
+            span #{t('.updated')}: #{format_time(answer.updated_at)}
 
-      hr
-      section.answer-comments
+        - if answer.persisted? && policy(answer).update?
+          section.d-flex.justify-content-end
+            = link_to t('.delete_answer'), answer_path(answer), method: :delete, class: 'card-link', data: { confirm: 'Are you sure?' }, remote: true
+            = link_to t('.edit_answer'), '#', class: 'card-link edit-answer-link', data: { answer_id: answer.id }
+
+      .answer-form-node
+        = render 'answers/form_edit', answer: answer
+
+      section.answer-comments.mb-3
         - if answer.comments.any?
-          p= t('.comments')
           = render answer.comments
 
       - if policy(Comment).create?

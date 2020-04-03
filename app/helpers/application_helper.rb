@@ -5,4 +5,8 @@ module ApplicationHelper
     when 'notice' then 'success'
     end
   end
+
+  def format_time(timestamp)
+    timestamp.strftime('%d.%m.%Y, %H:%M')
+  end
 end

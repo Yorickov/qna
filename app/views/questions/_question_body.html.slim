@@ -1,12 +1,18 @@
 .card.border-0(data-question-node-id="#{question.id}")
   .card-body.pb-0.py-0
     .row.no-gutters
+      .col-12
+        h2.card-title.question-title = question.title
+        h6.card-subtitle.mt-2.mb-4.text-muted.d-flex
+          div #{t('.created')} #{question.user} #{format_time(question.created_at)}
+          - if question.updated_at > question.created_at
+            span , #{t('.updated')}: #{format_time(question.updated_at)}
+
+    .row.no-gutters
       .col-md-1.d-flex.flex-column.align-items-center
         = render 'shared/voting', resource: question
 
       .col-md-11.pl-2
-        h2.card-title.question-title = question.title
-
         - if question.award.present?
           .question-image
             = image_tag url_for(question.award.image), title: question.award.title, height: '20', width: '20'
@@ -20,23 +26,22 @@
           section.question-links
             = render 'links/index', resource: question
 
-        - if policy(question).update?
-          section.d-flex.justify-content-end
+        section.d-flex.justify-content-end
+          - if policy(question).update?
             = link_to t('.delete_question'), question_path(question), method: :delete, class: 'card-link', data: { confirm: 'Are you sure?' }
             = link_to t('.edit_question'), '#', class: 'card-link edit-question-link'
+
+          .question-subscription.card-link
+            = render 'subscriptions/subscription', resource: question
 
         section.question-form-node
           = render 'form_edit', question: question
 
-        section.question-comments
+        section.question-comments.mb-3
           - if question.comments.any?
-            p= t('.comments')
             = render question.comments
 
         - if policy(Comment).create?
           .question-comment-form
             = render 'comments/form', resource: Comment.new, url: question_comments_path(question)
-
-        section.question-subscription.d-flex.justify-content-end
-          = render 'subscriptions/subscription', resource: question
     hr
