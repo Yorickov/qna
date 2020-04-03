@@ -9,4 +9,15 @@ module ApplicationHelper
   def format_time(timestamp)
     timestamp.strftime('%d.%m.%Y, %H:%M')
   end
+
+  def github_url(author, repo, options = {})
+    link_to author,
+            "https://github.com/#{author}/#{repo}",
+            target: '_blank',
+            **options
+  end
+
+  def current_year
+    Date.current.in_time_zone.year
+  end
 end

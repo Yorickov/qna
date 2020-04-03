@@ -27,7 +27,7 @@ module FeatureHelpers
     within '.navbar' do
       fill_in t('search.form.search'), with: query
       select(resource, from: 'search_resource')
-      click_on t('search.form.start')
+      find(class: 'search').click
     end
   end
 end
