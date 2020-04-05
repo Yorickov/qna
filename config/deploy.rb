@@ -15,6 +15,8 @@ append :linked_files, 'config/database.yml', 'config/master.key'
 # Default value for linked_dirs is []
 append :linked_dirs, 'log', 'tmp/pids', 'tmp/cache', 'tmp/sockets', 'public/system', 'storage', 'public/packs', '.bundle', 'node_modules'
 
+after 'deploy:publishing', 'unicorn:restart'
+
 # Default branch is :master
 # ask :branch, `git rev-parse --abbrev-ref HEAD`.chomp
 
