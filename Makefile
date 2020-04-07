@@ -65,6 +65,6 @@ ssh:
 	ssh deployer@134.209.194.226 -p 2222
 
 p-log:
-	tail –f log/production.log
+	tail -f log/production.log
 
 .PHONY:	test

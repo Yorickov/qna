@@ -32,8 +32,8 @@ StackOverflow analog: questions, answers, comments, rating, etc.
 ### Backend
 - Ruby on Rails
 - PosrgreSQL
-- Services: Sideqik, Sphinx, etc.
-- Server setup: nginx, Passanger
+- Services: Sideqik, Sphinx, Monit
+- Server setup: nginx, Passanger, Unicorn
 
 ### Frontend
 - Bootstrap 4

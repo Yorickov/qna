@@ -7,7 +7,7 @@ set :repo_url, 'git@github.com:Yorickov/qna.git'
 # Default deploy_to directory is /var/www/my_app_name
 set :deploy_to, '/home/deployer/qna'
 set :deploy_user, 'deployer'
-set :sidekiq_config, -> { File.join(shared_path, 'config', 'sidekiq.yml') }
+# set :sidekiq_config, -> { File.join(shared_path, 'config', 'sidekiq.yml') }
 
 # Default value for :linked_files is []
 append :linked_files, 'config/database.yml', 'config/master.key'

@@ -14,7 +14,7 @@ AllCops:
     - 'vendor/**/*'
     - 'tmp/**/*'
     - '.git/**/*'
-    - 'config/unicorn/'
+    - 'config/unicorn/*'
     - Gemfile
 
 Lint/MissingCopEnableDirective:
