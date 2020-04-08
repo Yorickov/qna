@@ -1,15 +1,16 @@
-.row.justify-content-center
-  .col-12.question-node
-    = render 'question_body', question: @question
+- cache @question do
+  .row.justify-content-center
+    .col-12.question-node
+      = render 'question_body', question: @question
 
-.row.justify-content-center
-  .col-12
-    .answers
-      = render @question.answers
-
-- if policy(Answer).create?
   .row.justify-content-center
     .col-12
-      .answer-form-errors
-      .answer-form
-        = render 'answers/form', resource: [@question, @answer]
+      .answers
+        = render @question.answers
+
+  - if policy(Answer).create?
+    .row.justify-content-center
+      .col-12
+        .answer-form-errors
+        .answer-form
+          = render 'answers/form', resource: [@question, @answer]

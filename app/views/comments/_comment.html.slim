@@ -1,4 +1,5 @@
-hr
-span #{comment.body}
-span.text-muted
-  |  - #{comment.user}, #{format_time(comment.created_at)}
+- cache comment do
+  hr
+  span #{comment.body}
+  span.text-muted
+    |  - #{comment.user}, #{format_time(comment.created_at)}

@@ -129,3 +129,6 @@ gem 'mini_racer'
 
 # deploy
 gem 'unicorn'
+
+# caching
+gem 'redis-rails'

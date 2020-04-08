@@ -26,6 +26,7 @@ StackOverflow analog: questions, answers, comments, rating, etc.
 - Background services (ActiveJob, Sideqik)
 - Fulltext search (Sphinx)
 - Deploy: Capistrano
+- Caching
 
 ## Technologies
 
