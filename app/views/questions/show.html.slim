@@ -1,16 +1,16 @@
-- cache @question do
-  .row.justify-content-center
-    .col-12.question-node
-      = render 'question_body', question: @question
+.row.justify-content-center
+  .col-12.question-node
+    = render 'question_body', question: @question
 
-  .row.justify-content-center
+.row.justify-content-center
+  - cache [@question, collection_cache_key_for(:answer)] do
     .col-12
       .answers
         = render @question.answers
 
-  - if policy(Answer).create?
-    .row.justify-content-center
-      .col-12
-        .answer-form-errors
-        .answer-form
-          = render 'answers/form', resource: [@question, @answer]
+- if policy(Answer).create?
+  .row.justify-content-center
+    .col-12
+      .answer-form-errors
+      .answer-form
+        = render 'answers/form', resource: [@question, @answer]

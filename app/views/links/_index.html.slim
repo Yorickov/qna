@@ -2,11 +2,12 @@ span = t('.refs')
 div
   - resource.links.each do |link|
     .d-flex(data-link-id="#{link.id}")
-      .mr-1
-        - if link.gist?
-          = show_body(link)
-        - else
-          = link_to link.name, link.url
+      - cache [resource, link] do
+        .mr-1
+          - if link.gist?
+            = show_body(link)
+          - else
+            = link_to link.name, link.url
 
       - if policy(resource).destroy?
         = link_to octicon('x', width: 14), link_path(link), title: t('.delete_link'), method: :delete, data: { confirm: 'Are you sure?' }, remote: true

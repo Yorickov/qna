@@ -11,7 +11,8 @@
         = link_to octicon('thumbsup', width: 18), choose_best_answer_path(answer), title: t('.choose_best'), class: 'best-answer-link', method: :patch, data: { confirm: 'Are you sure?' }, remote: true
 
     .col-md-11.pl-2
-      p.card-text = answer.body
+      - cache answer do
+        p.card-text = answer.body
 
       - if answer.files.attached?
         section.answer-files
@@ -35,9 +36,10 @@
       .answer-form-node
         = render 'answers/form_edit', answer: answer
 
-      section.answer-comments.mb-3
-        - if answer.comments.any?
-          = render answer.comments
+      - cache [answer, collection_cache_key_for(:comment)] do
+        section.answer-comments.mb-3
+          - if answer.comments.any?
+            = render answer.comments
 
       - if policy(Comment).create?
         .answer-comment-form

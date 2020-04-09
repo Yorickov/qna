@@ -1,23 +1,26 @@
 .card.border-0(data-question-node-id="#{question.id}")
   .card-body.pb-0.py-0
-    .row.no-gutters
-      .col-12
-        h2.card-title.question-title = question.title
-        h6.card-subtitle.mt-2.mb-4.text-muted.d-flex
-          div #{t('.created')} #{question.user} #{format_time(question.created_at)}
-          - if question.updated_at > question.created_at
-            span , #{t('.updated')}: #{format_time(question.updated_at)}
+    - cache [question, 'question_title'] do
+      .row.no-gutters
+        .col-12
+          h2.card-title.question-title = question.title
+          h6.card-subtitle.mt-2.mb-4.text-muted.d-flex
+            div #{t('.created')} #{question.user} #{format_time(question.created_at)}
+            - if question.updated_at > question.created_at
+              span , #{t('.updated')}: #{format_time(question.updated_at)}
 
     .row.no-gutters
       .col-md-1.d-flex.flex-column.align-items-center
         = render 'shared/voting', resource: question
 
       .col-md-11.pl-2
-        - if question.award.present?
-          .question-image
-            = image_tag url_for(question.award.image), title: question.award.title, height: '20', width: '20'
+        - cache [question, 'question_content'] do
+          - if question.award.present?
+            .question-image
+              = image_tag url_for(question.award.image), title: question.award.title, height: '20', width: '20'
 
-        p.card-text.question-body = question.body
+          p.card-text.question-body = question.body
+
         - if question.files.attached?
           section.question-files
             = render 'attachments/attachment', resource: question
@@ -37,9 +40,10 @@
         section.question-form-node
           = render 'form_edit', question: question
 
-        section.question-comments.mb-3
-          - if question.comments.any?
-            = render question.comments
+        - cache [question, collection_cache_key_for(:comment)] do
+          section.question-comments.mb-3
+            - if question.comments.any?
+              = render question.comments
 
         - if policy(Comment).create?
           .question-comment-form

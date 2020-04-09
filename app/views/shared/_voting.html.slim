@@ -1,8 +1,9 @@
-.mb-4.voting.d-flex.flex-column.align-items-center.justify-content-center
-  - if policy(resource).vote_up?
-    = link_to octicon('triangle-up', width: 25), polymorphic_path(resource, action: :vote_up), method: :patch, data: { type: :json }, title: t('.vote_up'), class: 'vote-up', remote: true
-  .rating
-    span.text-center= resource.rating
-  - if policy(resource).vote_up?
-    = link_to octicon('triangle-down', width: 25), polymorphic_path(resource, action: :vote_down), method: :patch, data: { type: :json }, title: t('.vote_down'), class: 'vote-down', remote: true
-    = link_to octicon('sync', width: 15), polymorphic_path(resource, action: :vote_reset), method: :delete, data: { type: :json }, title: t('.vote_reset'), class: 'vote-reset', remote: true
+- cache [resource, 'voting', user_signed_in?, policy(resource).vote_up?] do
+  .mb-4.voting.d-flex.flex-column.align-items-center.justify-content-center
+    - if policy(resource).vote_up?
+      = link_to octicon('triangle-up', width: 25), polymorphic_path(resource, action: :vote_up), method: :patch, data: { type: :json }, title: t('.vote_up'), class: 'vote-up', remote: true
+    .rating
+      span.text-center= resource.rating
+    - if policy(resource).vote_up?
+      = link_to octicon('triangle-down', width: 25), polymorphic_path(resource, action: :vote_down), method: :patch, data: { type: :json }, title: t('.vote_down'), class: 'vote-down', remote: true
+      = link_to octicon('sync', width: 15), polymorphic_path(resource, action: :vote_reset), method: :delete, data: { type: :json }, title: t('.vote_reset'), class: 'vote-reset', remote: true
