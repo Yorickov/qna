@@ -32,7 +32,25 @@ module Qna
                        request_specs: false
     end
 
-    config.cache_store = :redis_store, 'redis://localhost:6379/0/cache', { expires_in: 90.minutes }
+    # config cache srore
+    config.cache_store = :redis_cache_store, { url: ENV['REDIS_URL'] }
+
+    # cache_servers = %w[redis://cache-01:6379/0 redis://cache-02:6379/0]
+    # config.cache_store = :redis_cache_store, {
+    #   url: cache_servers,
+    #   connect_timeout: 30,
+    #   read_timeout: 0.2,
+    #   write_timeout: 0.2,
+    #   reconnect_attempts: 1,
+    #   error_handler: ->(method:, returning:, exception:) {
+    #     Raven.capture_exception exception, level: 'warning', tags: {
+    #       method: method, returning: returning
+    #     }
+    #   }
+    # }
+
+    # config.cache_store = :redis_store, 'redis://localhost:6379/0/cache', { expires_in: 90.minutes }
+
     # config.action_cable.disable_request_forgery_protection = false
 
     # Settings in config/environments/* take precedence over those specified here.
