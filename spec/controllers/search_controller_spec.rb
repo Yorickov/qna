@@ -1,30 +1,32 @@
-require 'rails_helper'
+# Turned off on Heroku
 
-describe SearchController, type: :controller do
-  let!(:questions) { create_list(:question, 2) }
+# require 'rails_helper'
 
-  describe 'GET #index' do
-    before do
-      allow(SearchService).to receive(:call).and_call_original
-      allow(SearchService)
-        .to receive(:call)
-        .with('q' => 'some', 'resource' => 'any')
-        .and_return(questions)
+# describe SearchController, type: :controller do
+#   let!(:questions) { create_list(:question, 2) }
 
-      get :index, params: { search: { q: 'some', resource: 'any' } }
-    end
+#   describe 'GET #index' do
+#     before do
+#       allow(SearchService).to receive(:call).and_call_original
+#       allow(SearchService)
+#         .to receive(:call)
+#         .with('q' => 'some', 'resource' => 'any')
+#         .and_return(questions)
 
-    it 'populates an array of all resources' do
-      expect(assigns(:search_result)).to match_array(questions)
-      expect(assigns(:query)).to eq 'some'
-    end
+#       get :index, params: { search: { q: 'some', resource: 'any' } }
+#     end
 
-    it 'renders index view' do
-      expect(response).to render_template :index
-    end
+#     it 'populates an array of all resources' do
+#       expect(assigns(:search_result)).to match_array(questions)
+#       expect(assigns(:query)).to eq 'some'
+#     end
 
-    it 'returns http success' do
-      expect(response).to have_http_status(:success)
-    end
-  end
-end
+#     it 'renders index view' do
+#       expect(response).to render_template :index
+#     end
+
+#     it 'returns http success' do
+#       expect(response).to have_http_status(:success)
+#     end
+#   end
+# end

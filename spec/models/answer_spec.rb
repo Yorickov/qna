@@ -89,13 +89,13 @@ describe Answer, type: :model do
       it { expect(answer.to_s).to eq 'something' }
     end
 
-    describe '#notify_user' do
-      let(:answer) { build(:answer) }
+    # describe '#notify_user' do
+    #   let(:answer) { build(:answer) }
 
-      it 'calls NotificationJob' do
-        expect(NotificationJob).to receive(:perform_later).with(answer)
-        answer.save!
-      end
-    end
+    #   it 'calls NotificationJob' do
+    #     expect(NotificationJob).to receive(:perform_later).with(answer)
+    #     answer.save!
+    #   end
+    # end
   end
 end

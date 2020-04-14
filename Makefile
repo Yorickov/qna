@@ -67,4 +67,22 @@ ssh:
 p-log:
 	tail -f log/production.log
 
+server:
+	rails s
+
+h-dbm:
+	heroku run rake db:migrate
+
+h-dbs:
+	heroku run rake db:seed
+
+h-c:
+	heroku run rails console
+
+h-log:
+	heroku logs --tail
+
+h-deploy:
+	git push heroku $(B):master
+
 .PHONY:	test

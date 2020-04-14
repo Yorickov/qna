@@ -1,7 +1,8 @@
 class SearchController < ApplicationController
   def index
-    @query = search_params[:q]
-    @search_result = SearchService.call(search_params)
+    render plain: "Sorry, Search doesn't work on Heroku"
+    # @query = search_params[:q]
+    # @search_result = SearchService.call(search_params)
   end
 
   private
