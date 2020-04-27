@@ -41,4 +41,4 @@ StackOverflow analog: questions, answers, comments, rating, etc.
 - DOM: vanilla js
 
 ## Deploy
-- [DigitalOcean](http://134.209.194.226)
+- [Heroku](https://qna-yo.herokuapp.com/) (Sphinx, Sidekiq, ActionCable turned off)
