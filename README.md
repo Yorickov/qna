@@ -1,6 +1,8 @@
 # QnA
 StackOverflow analog: questions, answers, comments, rating, etc.
 
+*Educational project thinknetica.com, course 3 RoR advanced*
+
 ## Versions
 - Ruby 2.7.0
 - Ruby on Rails 6.0
@@ -20,6 +22,8 @@ StackOverflow analog: questions, answers, comments, rating, etc.
 - Ajax
 - File-management (Active Storage)
 - Pub/Sub (ActionCable)
+- Authentication (Devise)
+- Localization (i18n)
 - oAuth
 - Authorization (CanCanCan, Pundit)
 - Rest API
@@ -41,4 +45,5 @@ StackOverflow analog: questions, answers, comments, rating, etc.
 - DOM: vanilla js
 
 ## Deploy
-- [DigitalOcean](http://134.209.194.226)
+- ~~DigitalOcean~~
+- [Heroku](https://qna-yo.herokuapp.com/) (limited functionality)
